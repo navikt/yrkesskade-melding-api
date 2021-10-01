@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS skademelding (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    json VARCHAR(250) NOT NULL,
+    changed_by VARCHAR(50) NOT NULL,
+    changed_time TIMESTAMP NOT NULL
+    );
