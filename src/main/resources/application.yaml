@@ -1,3 +1,6 @@
+api:
+  client:
+    yrkesskade-mottak-url: https://yrkesskade-melding-mottak.dev.intern.nav.no
 spring:
   datasource:
     url: jdbc:h2:mem:test
