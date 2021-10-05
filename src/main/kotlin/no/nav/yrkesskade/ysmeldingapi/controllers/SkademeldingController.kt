@@ -15,8 +15,7 @@ class SkademeldingController(private val skademeldingService: SkademeldingServic
 
     @PostMapping("/skademelding")
     fun behandleSkademelding(@RequestBody(required = true) skademeldingDto: SkademeldingDto): ResponseEntity<SkademeldingDto> {
-
-        return ResponseEntity.ok().body(skademeldingService.behandleSkademelding(skademeldingDto))
+        return ResponseEntity.ok().body(skademeldingService.sendTilMottak(skademeldingDto))
     }
 
 }

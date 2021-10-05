@@ -1,14 +1,19 @@
 package no.nav.yrkesskade.ysmeldingapi.services
 
+import no.nav.yrkesskade.ysmeldingapi.clients.MottakClient
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
-import no.nav.yrkesskade.ysmeldingapi.repositories.SkademeldingRepository
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.lang.invoke.MethodHandles
 
 @Service
-class SkademeldingService(private val skademeldingRepository: SkademeldingRepository) {
+class SkademeldingService(private val mottakClient: MottakClient) {
 
-    fun behandleSkademelding(skademeldingDto: SkademeldingDto): SkademeldingDto {
-        val lagretSkademelding = skademeldingRepository.save(skademeldingDto.toSkademelding())
-        return lagretSkademelding.toSkademeldingDto()
+    private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
+
+    fun sendTilMottak(skademeldingDto: SkademeldingDto): SkademeldingDto {
+        return mottakClient.sendTilMottak(skademeldingDto).also {
+            log.info("Lagret skademelding $it i mottak")
+        }
     }
 }
