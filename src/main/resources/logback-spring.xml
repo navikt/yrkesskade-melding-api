@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <!--        PatternLayoutEncoder is the default, but keeping it there for clarity-->
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%yellow(%d{HH:mm:ss.SSS} [%thread]) %magenta([%X{correlationId}]) %highlight(%-5level) %cyan(%logger{15}) - %msg %n</pattern>
-        </encoder>
+        <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+            <jsonFormatter
+                    class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+                <prettyPrint>true</prettyPrint>
+            </jsonFormatter>
+            <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>
+        </layout>
     </appender>
 
-    <logger name="org" level="debug" additivity="false">
+    <logger name="no.nav" level="info" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <root level="error">
+    <root level="info">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
