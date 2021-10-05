@@ -24,6 +24,10 @@ spec:
   prometheus:
     enabled: true
     path: "/metrics"
+  accessPolicy:
+    outbound:
+      external:
+        - host: "https://yrkesskade-melding-mottak.dev.intern.nav.no"
   resources:
     limits:
       cpu: "1"
