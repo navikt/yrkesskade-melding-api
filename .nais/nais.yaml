@@ -28,9 +28,11 @@ spec:
     inbound:
       rules:
         - application: "yrkesskade-melding-mottak"
+          namespace: "yrkesskade"
     outbound:
-      external:
-        - host: "https://yrkesskade-melding-mottak.dev.intern.nav.no"
+      rules:
+        - application: "yrkesskade-melding-mottak"
+          namespace: "yrkesskade"
   resources:
     limits:
       cpu: "1"
