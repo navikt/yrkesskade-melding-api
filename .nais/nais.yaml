@@ -25,6 +25,9 @@ spec:
     enabled: true
     path: "/metrics"
   accessPolicy:
+    inbound:
+      rules:
+        - application: "yrkesskade-melding-mottak"
     outbound:
       external:
         - host: "https://yrkesskade-melding-mottak.dev.intern.nav.no"
