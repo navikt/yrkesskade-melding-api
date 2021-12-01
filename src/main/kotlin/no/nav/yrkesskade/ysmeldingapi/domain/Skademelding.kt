@@ -1,7 +1,6 @@
 package no.nav.yrkesskade.ysmeldingapi.domain
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -18,7 +17,7 @@ open class Skademelding(
     fun toSkademeldingDto(): SkademeldingDto {
         return SkademeldingDto(
             this.id ?: 0,
-            jacksonObjectMapper().readValue(skademelding)
+            jacksonObjectMapper().readTree(skademelding)
         )
     }
 }
