@@ -26,4 +26,15 @@ class SkademeldingService(private val mottakClient: MottakClient,
         val lagretSkademelding = skademeldingRepository.save(skademeldingTilLagring.toSkademelding())
         return lagretSkademelding.id!!
     }
+
+    fun hentAlleSkademeldinger(): List<SkademeldingDto> {
+        return skademeldingRepository.findAll().map { it.toSkademeldingDto() }
+    }
+
+    fun hentSkademeldingMedId(id: Int): SkademeldingDto {
+        val skademelding = skademeldingRepository.findById(id)
+            .orElseThrow { RuntimeException("Fant ikke skademelding med id $id") }
+
+        return skademelding.toSkademeldingDto()
+    }
 }
