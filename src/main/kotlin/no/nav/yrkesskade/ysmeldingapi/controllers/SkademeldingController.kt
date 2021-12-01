@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.lang.invoke.MethodHandles
 
 @RestController
@@ -25,20 +26,31 @@ class SkademeldingController(private val skademeldingService: SkademeldingServic
     }
 
     @PostMapping("/midlertidig/skademeldinger")
-    fun mottaSkademelding(@RequestBody(required = true) skademelding: JsonNode): ResponseEntity<Int> {
-        val lagretSkademeldingId = skademeldingService.lagreSkademelding(skademelding)
-        return ResponseEntity.ok().body(lagretSkademeldingId)
+    fun mottaSkademelding(@RequestBody(required = true) skademelding: JsonNode): ResponseEntity<SkademeldingDto> {
+        val lagretSkademeldingDto = skademeldingService.lagreSkademelding(skademelding)
+        val location = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(lagretSkademeldingDto.id)
+            .toUri()
+
+        return ResponseEntity.created(location).body(lagretSkademeldingDto)
     }
 
     @GetMapping("/midlertidig/skademeldinger")
     fun hentSkademeldinger(): ResponseEntity<List<SkademeldingDto>> {
         val skademeldinger = skademeldingService.hentAlleSkademeldinger()
-        return ResponseEntity.ok().body(skademeldinger)
+        return when {
+            skademeldinger.isEmpty() -> ResponseEntity.noContent().build()
+            else -> ResponseEntity.ok().body(skademeldinger)
+        }
     }
 
     @GetMapping("/midlertidig/skademeldinger/{id}")
     fun hentSkademeldingMedId(@PathVariable id: Int): ResponseEntity<SkademeldingDto> {
         val skademelding = skademeldingService.hentSkademeldingMedId(id)
-        return ResponseEntity.ok().body(skademelding)
+        return skademelding
+            .map { ResponseEntity.ok().body(it.toSkademeldingDto()) }
+            .orElse(ResponseEntity.notFound().build())
     }
 }
