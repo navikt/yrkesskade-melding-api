@@ -34,7 +34,7 @@ management:
 spring:
   config:
     activate:
-      on-profile: db
+      on-profile: integration
   datasource:
     url: jdbc:postgresql://localhost:5432/test
     username: test
