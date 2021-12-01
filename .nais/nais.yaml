@@ -35,12 +35,18 @@ spec:
           namespace: "yrkesskade"
   resources:
     limits:
-      cpu: "1"
-      memory: "1Gi"
+      cpu: "2"
+      memory: "2Gi"
     requests:
       cpu: "200m"
-      memory: "256Mi"
+      memory: "1024Mi"
   ingresses: 
   {{#each ingresses as |url|}}
     - {{url}}
   {{/each}}
+  gcp:
+    sqlInstances:
+      - type: POSTGRES_12
+        databases:
+          - name: yrkesskade-api-db
+            envVarPrefix: YRKESSKADE_API_DB

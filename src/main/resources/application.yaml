@@ -1,3 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${YRKESSKADE_API_DB_HOST}:${YRKESSKADE_API_DB_PORT}/${YRKESSKADE_API_DB_DATABASE}
+    username: ${YRKESSKADE_API_DB_USERNAME}
+    password: ${YRKESSKADE_API_DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-test-query: "select 1"
+      max-lifetime: 30000
+      minimum-idle: 1
+      data-source-properties.stringtype: unspecified # Nødvendig for å kunde sende en String til et json-felt i PostgresSql
+  flyway:
+    enabled: true
+  jpa:
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        ddl-auto: none
 api:
   client:
     yrkesskade-mottak-url: https://yrkesskade-melding-mottak.dev.intern.nav.no
@@ -11,3 +30,12 @@ management:
         include: info, health, metrics, prometheus
       base-path: /internal
   metrics.export.prometheus.enabled: true
+---
+spring:
+  config:
+    activate:
+      on-profile: integration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test
+    username: test
+    password: test
