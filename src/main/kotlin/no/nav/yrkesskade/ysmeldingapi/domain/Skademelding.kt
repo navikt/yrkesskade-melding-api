@@ -13,12 +13,12 @@ open class Skademelding(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Uses underlying persistence framework to generate an Id
     var id: Int?,
-    var json: String
+    var skademelding: String
 ) {
     fun toSkademeldingDto(): SkademeldingDto {
         return SkademeldingDto(
             this.id ?: 0,
-            jacksonObjectMapper().readValue(json)
+            jacksonObjectMapper().readValue(skademelding)
         )
     }
 }

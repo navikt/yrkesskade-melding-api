@@ -8,7 +8,7 @@ data class SkademeldingDto(val id: Int? = null, val skademelding: JsonNode) {
     fun toSkademelding(): Skademelding {
         return Skademelding(
             id = id,
-            json = jacksonObjectMapper().writeValueAsString(skademelding),
+            skademelding = jacksonObjectMapper().writeValueAsString(skademelding),
         )
     }
 }
