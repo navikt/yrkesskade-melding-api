@@ -30,3 +30,12 @@ management:
         include: info, health, metrics, prometheus
       base-path: /internal
   metrics.export.prometheus.enabled: true
+---
+spring:
+  config:
+    activate:
+      on-profile: db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test
+    username: test
+    password: test
