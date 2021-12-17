@@ -29,6 +29,9 @@ spec:
       rules:
         - application: "yrkesskade-melding-mottak"
           namespace: "yrkesskade"
+        - application: "yrkesskade-saksbehandling"
+          namespace: "yrkesskade"
+          cluster: "labs-gcp"
     outbound:
       rules:
         - application: "yrkesskade-melding-mottak"
