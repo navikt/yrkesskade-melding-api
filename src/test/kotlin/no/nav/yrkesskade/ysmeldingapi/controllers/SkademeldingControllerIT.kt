@@ -84,7 +84,23 @@ class SkademeldingControllerIT {
     fun `hent skademelding med id som ikke finnes skal returnere 404`() {
         mvc.perform(MockMvcRequestBuilders.get("$SKADEMELDING_PATH/999"))
             .andExpect(status().isNotFound)
+    }
+
+    @Test
+    fun `slett skademelding med id som ikke finnes skal returnere 404`() {
+        mvc.perform(MockMvcRequestBuilders.delete("$SKADEMELDING_PATH/999"))
+            .andExpect(status().isNotFound)
+    }
+
+    @Test
+    fun `slett skademelding med id skal returnere 204`() {
+        val enkelSkademeldingDto = enkelSkademelding()
+        val postRespons = postSkademelding(enkelSkademeldingDto)
             .andReturn().response
+        val url = postRespons.getHeader("Location")
+
+        mvc.perform(MockMvcRequestBuilders.delete(url.orEmpty()))
+            .andExpect(status().isNoContent)
     }
 
     private fun postSkademelding(skademeldingDto: SkademeldingDto) =

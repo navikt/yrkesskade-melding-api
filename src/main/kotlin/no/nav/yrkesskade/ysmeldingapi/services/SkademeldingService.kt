@@ -40,4 +40,9 @@ class SkademeldingService(private val mottakClient: MottakClient,
     fun hentSkademeldingMedId(id: Int): Optional<Skademelding> {
         return skademeldingRepository.findById(id)
     }
+
+    @Transactional
+    fun slettSkademelding(id: Int) {
+        skademeldingRepository.deleteById(id)
+    }
 }

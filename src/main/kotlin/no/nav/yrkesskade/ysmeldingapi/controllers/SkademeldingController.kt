@@ -6,12 +6,7 @@ import no.nav.yrkesskade.ysmeldingapi.services.SkademeldingService
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.lang.invoke.MethodHandles
 
@@ -52,5 +47,16 @@ class SkademeldingController(private val skademeldingService: SkademeldingServic
         return skademelding
             .map { ResponseEntity.ok().body(it.toSkademeldingDto()) }
             .orElse(ResponseEntity.notFound().build())
+    }
+
+    @DeleteMapping("/midlertidig/skademeldinger/{id}")
+    fun slettSkademelding(@PathVariable id: Int): ResponseEntity<Unit> {
+        val skademelding = skademeldingService.hentSkademeldingMedId(id)
+        if (skademelding.isEmpty) {
+            return ResponseEntity.notFound().build()
+        }
+
+        skademeldingService.slettSkademelding(id)
+        return ResponseEntity.noContent().build()
     }
 }
