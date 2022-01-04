@@ -29,7 +29,11 @@ management:
       exposure:
         include: info, health, metrics, prometheus
       base-path: /internal
-  metrics.export.prometheus.enabled: true
+      path-mapping.prometheus: prometheus
+  metrics:
+    export.prometheus.enabled: true
+    tags:
+      application: ${spring.application.name}
 ---
 spring:
   config:

@@ -23,7 +23,7 @@ spec:
     cpuThresholdPercentage: 50
   prometheus:
     enabled: true
-    path: "/metrics"
+    path: "/internal/prometheus"
   accessPolicy:
     inbound:
       rules:
