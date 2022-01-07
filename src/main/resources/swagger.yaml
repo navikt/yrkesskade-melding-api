@@ -1,0 +1,421 @@
+openapi: 3.0.3
+info:
+  title: YS-skademelding API Doc
+  description: Skademeldingsdefinisjon
+  contact:
+    email: yrkesskade@nav.no
+  version: 0.0.1
+servers:
+  - url: 'https://yrkesskade-melding-api.dev.intern.nav.no/api'
+paths:
+  /v1/skademelding/arbeidstaker:
+    post:
+      tags:
+        - Skademelding
+      summary: Sende inn en skademelding
+      operationId: sendSkademelding
+      requestBody:
+        description: Skademeldingsinnholdet samt metadata
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Skademelding'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+components:
+  schemas:
+
+    ################################################### MODELS ###################################################
+    Skademelding:
+      type: object
+      required:
+        - Innmelder
+        - Skadelidt
+        - Skade
+        - Hendelsesfakta
+      properties:
+        innmelder:
+          $ref: '#/components/schemas/Innmelder'
+        skadelidt:
+          $ref: '#/components/schemas/Skadelidt'
+        skade:
+          $ref: '#/components/schemas/Skade'
+        hendelsesfakta:
+          $ref: '#/components/schemas/Hendelsesfakta'
+      nullable: false
+    Innmelder:
+      type: object
+      required:
+        - foedselsnummer
+        - navn
+        - paaVegneAvOrgnr
+        - innmelderrolle
+      properties:
+        foedselsnummer:
+          type: integer
+          format: int64
+          example: 12345699999
+        navn:
+          type: string
+          example: Kari Normann
+        paaVegneAvOrgnr:
+          type: string
+          example: 123456789
+        innmelderrolle:
+          $ref: '#/components/schemas/Innmelderrolle'
+        altinnrolle:
+          $ref: '#/components/schemas/Altinnrolle'
+      nullable: false
+    Skadelidt:
+      type: object
+      required:
+        - foedselsnummer
+        - navn
+        - arbeidsforhold
+      properties:
+        foedselsnummer:
+          type: string
+          example: 12345699999
+        navn:
+          type: string
+          example: Navn Navnesen
+        arbeidsforhold:
+          $ref: '#/components/schemas/Arbeidsforhold'
+      nullable: false
+    Skade:
+      type: object
+      required:
+        - alvorlighetsgrad
+        - legeKontaktet
+        - skadeartTabellC
+        - kroppsdelTabellD
+        - antattSykefravaerTabellH
+      properties:
+        alvorlighetsgrad:
+          $ref: '#/components/schemas/Alvorlighetsgrad'
+        legeKontaktet:
+          $ref: '#/components/schemas/EnkeltSvar'
+        skadeartTabellC:
+          $ref: '#/components/schemas/SkadeartTabellC'
+        kroppsdelTabellD:
+          $ref: '#/components/schemas/KroppsdelTabellD'
+        antattSykefravaerTabellH:
+          $ref: '#/components/schemas/AntattSykefravaerTabellH'
+      nullable: false
+    Hendelsesfakta:
+      type: object
+      required:
+        - tid
+        - naarSkjeddeUlykken
+        - hvorSkjeddeUlykken
+        - ulykkessted
+        - typeUlykkeTabellA
+        - bakgrunnsaarsakTabellB
+        - utfyllendeBeskrivelse
+        - utloesendeFaktorTabellE
+        - arbeidsplassbeskrivelseTabellF
+        - arbeidsforholdsavvikTabellG
+      properties:
+        tid:
+          $ref: '#/components/schemas/Tid'
+        naarSkjeddeUlykken:
+          $ref: '#/components/schemas/NaarSkjeddeUlykken'
+        naarSkjeddeUlykkenFritekst:
+          type: string
+          example: Noe annet
+        hvorSkjeddeUlykken:
+          $ref: '#/components/schemas/HvorSkjeddeUlykken'
+        ulykkessted:
+          type: object
+          required:
+            - sammeSomArbeidsgiversAdresse
+          properties:
+            sammeSomArbeidsgiversAdresse:
+              type: boolean
+              example: false
+            adresse:
+              type: string
+              example: Portveien 2, 1234 Oslo, Norge (fritekst) # bør bli strukturert i fremtiden
+          nullable: false
+        typeUlykkeTabellA:
+          $ref: '#/components/schemas/TypeUlykkeTabellA'
+        bakgrunnsaarsakTabellB:
+          $ref: '#/components/schemas/BakgrunnsaarsakTabellB'
+        utfyllendeBeskrivelse:
+          type: string
+          example: Fabrikklokalet var mørkt og rotete. 1000 tegn
+        utloesendeFaktorTabellE:
+          $ref: '#/components/schemas/UtloesendeFaktorTabellE'
+        arbeidsplassbeskrivelseTabellF:
+          $ref: '#/components/schemas/ArbeidsplassbeskrivelseTabellF'
+        arbeidsforholdsavvikTabellG:
+          $ref: '#/components/schemas/ArbeidsforholdsavvikTabellG'
+      nullable: false
+    Arbeidsforhold:
+      type: object
+      required:
+        - organisasjonsnummer
+        - navn
+        - stillingstittel
+        - yrke
+        - rolletype
+      properties:
+        organisasjonsnummer:
+          type: string
+          example: 123456789
+        navn:
+          type: string
+          example: Forretningsfabrikken AS
+        stillingstittel:
+          type: string
+          example: Senior bananbøyer
+        yrke:
+          type: string
+          example: Fruktmedarbeider
+        rolletype:
+          $ref: '#/components/schemas/Rolletype'
+      nullable: false
+    Tid:
+      type: object
+      required:
+        - tidstype
+      properties:
+        tidspunkt:
+          type: string
+          format: date-time
+        periode:
+          type: object
+          properties:
+            fra:
+              type: string
+              format: date
+            til:
+              type: string
+              format: date
+        ukjent:
+          type: boolean
+          example: false
+        tidstype:
+          $ref: '#/components/schemas/Tidstype'
+
+    ################################################### ENUMS ###################################################
+    TypeUlykkeTabellA:
+      type: string
+      enum:
+        - Støt/treff av gjenstand
+        - Sammenstøt/påkjørsel
+        - Velt
+        - Klemt/fanget
+        - Fall
+        - Stukket/kuttet av skarp/spiss gjenstand
+        - Elektrisk spenning
+        - Høy/lav temperatur
+        - Kjemikalier
+        - Eksplosjon, sprenging, brann
+        - Trusler om vold
+        - Påført voldsskade
+        - Annet
+      example: Fall
+    BakgrunnsaarsakTabellB:
+      type: string
+      enum:
+        - Manglende merking, varsling, skilting
+        - Mangelfulle sikkerhetsrutiner
+        - Utilstrekkelig sikring
+        - Vernetiltak ikke/delvis gjennomført
+        - Verneutstyr satt ut av funksjon
+        - Verneutstyr fjernet
+        - Uautorisert bruk av utstyr
+        - Defekt utstyr
+        - Feil bruk av maskiner og utstyr
+        - Feil pålasting
+        - Feil plassering
+        - Feil løfting
+        - Feil utførelse av oppgaven
+        - Mangelfull opplæring
+        - Angrepet/truet av en annen person
+        - Uforsvarlig «lek», spøk eller veddemål
+        - Påvirkning av alkohol/andre rusmidler
+        - Bedriftsidrett e l
+        - Annet
+      example: Utilstrekkelig sikring
+    SkadeartTabellC:
+      type: string
+      enum:
+        - Bløtdelsskade uten sår (klemskade)
+        - Sårskade
+        - Tap av legemsdel
+        - Forstuing, forvridning
+        - Knokkelbrudd
+        - Varmeskade
+        - Kuldeskade
+        - Etsing
+        - Akutt forgiftning
+        - Psykiske ettervirkninger
+        - Annet
+      example: Varmeskade
+    KroppsdelTabellD:
+      type: string
+      enum:
+        - Hode
+        - Ansikt
+        - Øye, venstre
+        - Øye, høyre
+        - Øre, venstre
+        - Øre, høyre
+        - Tenner
+        - Hals/nakke
+        - Rygg
+        - Ribben/skulderblad
+        - Brystkasse/lunger/hjerte/spiserør
+        - Mave/bekken/fordøyelsesorganer/nyre/urinveier
+        - Skulder, venstre
+        - Skulder, høyre
+        - Arm/albue, venstre
+        - Arm/albue, høyre
+        - Håndledd, venstre
+        - Håndledd, høyre
+        - Hånd, venstre
+        - Hånd, høyre
+        - Fingre, venstre
+        - Fingre, høyre
+        - Hofte, venstre
+        - Hofte høyre
+        - Ben m/kne, venstre
+        - Ben m/kne, høyre
+        - Ankel, venstre
+        - Ankel, høyre
+        - Fot, venstre
+        - Fot, høyre
+        - Tær, venstre
+        - Tær, høyre
+        - Hele kroppen (allmenn forgiftning, allmenn nedkjøling, e.l.)
+      example: Tenner
+    UtloesendeFaktorTabellE:
+      type: string
+      enum:
+        - Kontakt med elektrisk spenning, temperatur, farlige stoffer
+        - Druknet, begravd, omsvøpt
+        - Horisontal eller vertikal kontakt med en stasjonær gjenstand (den skadde er i bevegelse)
+        - Truffet av en gjenstand i bevegelse, kollisjon med
+        - Kontakt med hvass, spiss, ujevn, grov ytre faktor
+        - Fanget, klemt, osv.
+        - Fysisk eller psykisk belastning
+        - Bitt, spark, osv. (dyr eller menneske)
+        - Andre kontakter - skademåter som ikke er inkludert i klassifikasjonen av kontakt – skademåte
+      example: Horisontal eller vertikal kontakt med en stasjonær gjenstand (den skadde er i bevegelse)
+    ArbeidsplassbeskrivelseTabellF:
+      type: string
+      enum:
+        - Plass for industriell virksomhet
+        - Anleggsområde, byggeplass, dagbruddssteinbrudd, dagbruddsgruve
+        - Plass for jordbruk, avl av dyr, fiskeoppdrett, skogbruk
+        - Plass for servicevirksomhet, kontor, fornøyelser, diverse
+        - Helseinstitusjoner
+        - Offentlig sted
+        - Hjemme
+        - Idrettsområde
+        - I luften, over bakkenivå, ekskl. anleggsområder
+        - Under jordoverflaten, ekskl. anleggsområder
+        - På/over vann, ekskl. anleggsområder
+        - I høytrykksomgivelser, ekskl. anleggsområder
+        - Annen arbeidsplass som ikke er inkludert i klassifikasjonen av arbeidsplass
+      example: Plass for industriell virksomhet
+    ArbeidsforholdsavvikTabellG:
+      type: string
+      enum:
+        - Avvik som følge av elektriske problemer, eksplosjon, brann
+        - Avvik som følge av overstrømning, velt, lekkasje, utstrømning, avdamping, utstråling
+        - Bristing, sprengning, oppsplitting, glidning, fall, ytre faktor kollapser
+        - Tap av kontroll (helt eller delvis) over maskin, transportmiddel, utstyr for å forflytte materiale, håndholdt verktøy, gjenstand, dyr
+        - Glidning – snubling og fall – fall av person
+        - Kroppsbevegelse uten fysisk belastning (som vanligvis fører til en ytre skade)
+        - Kroppsbevegelse under eller med fysisk belastning (som vanligvis fører til en indre skade)
+        - Sjokk, frykt, vold, aggresjon, trussel, tilstedeværelse
+        - Andre avvik som ikke er inkludert i klassifikasjonen av avvik
+      example: Glidning – snubling og fall – fall av person
+    AntattSykefravaerTabellH:
+      type: string
+      enum:
+        - Antall tapte dager (fraværsdager) er ukjent
+        - 3 dager eller færre (fraværsdager)
+        - Mer enn 4 dager (fraværsdager)
+        - Dødsulykke
+      example: 3 dager eller færre (fraværsdager)
+    Rolletype:
+      type: string
+      enum:
+        - Arbeidstaker
+        - Militær
+        - Elev
+        - Fiske
+        - Petroleum
+      example: Arbeidstaker
+    EnkeltSvar:
+      type: string
+      enum:
+        - Ja
+        - Nei
+        - Vet ikke
+      example: Ja
+    Alvorlighetsgrad:
+      type: string
+      enum: # flere verdier?
+        - Alvorlig
+        - Livstruende
+        - Dødsfall
+      example: Alvorlig
+    Innmelderrolle:
+      type: string
+      enum: # få denne lista verifisert
+        - Arbeidsgiverrepresentant
+        - Verge
+        - Skadelidt
+        - Pårørende
+        - Helsevesen
+      example: Arbeidsgiverrepresentant
+    Altinnrolle:
+      type: string
+      enum: # helt sikkert uferdig liste
+        - Arbeidsgiverrepresentant
+        - Advokat
+      example: Arbeidsgiverrepresentant
+    NaarSkjeddeUlykken:
+      type: string
+      enum:
+        - I avtalt arbeidstid
+        - Under permisjon
+        - Annet
+      example: I avtalt arbeidstid
+    HvorSkjeddeUlykken:
+      type: string
+      enum:
+        - Vanlig arbeidsplass
+        - På vei til/fra arbeid
+        - Mellom arbeidssteder
+      example: Vanlig arbeidsplass
+    Tidstype:
+      type: string
+      enum:
+        - Tidspunkt
+        - Periode
+        - Ukjent
+      example: Tidspunkt
+
+    ################################################# RESPONSE TYPES #################################################
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      nullable: false
+tags:
+  - name: skademelding
+    description: API-endepunkter som omhandler skademeldingsskjema
