@@ -4,7 +4,7 @@ info:
   description: Skademeldingsdefinisjon
   contact:
     email: yrkesskade@nav.no
-  version: 0.0.1
+  version: 0.0.2
 servers:
   - url: 'https://yrkesskade-melding-api.dev.intern.nav.no/api'
 paths:
@@ -72,15 +72,11 @@ components:
       type: object
       required:
         - foedselsnummer
-        - navn
         - arbeidsforhold
       properties:
         foedselsnummer:
           type: string
           example: 12345699999
-        navn:
-          type: string
-          example: Navn Navnesen
         arbeidsforhold:
           $ref: '#/components/schemas/Arbeidsforhold'
       nullable: false
@@ -136,9 +132,7 @@ components:
               type: boolean
               example: false
             adresse:
-              type: string
-              example: Portveien 2, 1234 Oslo, Norge (fritekst) # bør bli strukturert i fremtiden
-          nullable: false
+              $ref: '#/components/schemas/Adresse'
         typeUlykkeTabellA:
           $ref: '#/components/schemas/TypeUlykkeTabellA'
         bakgrunnsaarsakTabellB:
@@ -153,6 +147,24 @@ components:
         arbeidsforholdsavvikTabellG:
           $ref: '#/components/schemas/ArbeidsforholdsavvikTabellG'
       nullable: false
+    Adresse:
+      type: object
+      required:
+        - adresselinje1
+      properties:
+        adresselinje1:
+          type: string
+          example: Storgaten 12
+        adresselinje2:
+          type: string
+          example: 1234 Plassen
+        adresselinje3:
+          type: string
+          example:
+        land:
+          type: string
+          example: DENMARK
+      nullable: true
     Arbeidsforhold:
       type: object
       required:
@@ -416,6 +428,4 @@ components:
         message:
           type: string
       nullable: false
-tags:
-  - name: skademelding
-    description: API-endepunkter som omhandler skademeldingsskjema
+
