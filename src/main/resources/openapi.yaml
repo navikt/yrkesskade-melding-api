@@ -49,7 +49,8 @@ components:
       type: object
       required:
         - foedselsnummer
-        - navn
+        - fornavn
+        - etternavn
         - paaVegneAvOrgnr
         - innmelderrolle
       properties:
@@ -57,9 +58,15 @@ components:
           type: integer
           format: int64
           example: 12345699999
-        navn:
+        fornavn:
           type: string
-          example: Kari Normann
+          example: Kari
+        mellomnavn:
+          type: string
+          example: Storm
+        etternavn:
+          type: string
+          example: Hansen
         paaVegneAvOrgnr:
           type: string
           example: 123456789
