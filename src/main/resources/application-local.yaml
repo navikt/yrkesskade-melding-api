@@ -1,0 +1,4 @@
+spring:
+  application.name: yrkesskade-melding-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/yrkesskade_melding
