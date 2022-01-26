@@ -1,7 +1,7 @@
 package no.nav.yrkesskade.ysmeldingapi.services
 
 import com.fasterxml.jackson.databind.JsonNode
-import no.nav.yrkesskade.ysmeldingapi.clients.MottakClient
+import no.nav.yrkesskade.ysmeldingapi.client.mottak.MottakClient
 import no.nav.yrkesskade.ysmeldingapi.domain.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.repositories.SkademeldingRepository

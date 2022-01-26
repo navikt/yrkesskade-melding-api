@@ -2,6 +2,7 @@ package no.nav.yrkesskade.ysmeldingapi.repositories
 
 import no.nav.yrkesskade.ysmeldingapi.domain.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.repositories.testutils.docker.PostgresDockerContainer
+import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,14 +13,10 @@ import org.springframework.test.context.ActiveProfiles
 @DataJpaTest
 @ActiveProfiles("integration")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class SkademeldingRepositoryIT {
+class SkademeldingRepositoryIT: AbstractIT() {
 
     @Autowired
     lateinit var repository: SkademeldingRepository
-
-    init {
-        PostgresDockerContainer.container
-    }
 
     @Test
     fun `save one skademelding should return one skademelding`() {

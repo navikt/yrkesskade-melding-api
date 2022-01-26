@@ -1,7 +1,7 @@
 spring:
-  application.name: yrkesskade-melding-api
-  datasource:
-    url: jdbc:postgresql://localhost:5432/yrkesskade_melding
+  config:
+    activate:
+      on-profile: integration
 
 no.nav.security.jwt.issuer.selvbetjening:
   discoveryurl: http://metadata-selvbetjening
@@ -10,7 +10,7 @@ no.nav.security.jwt.issuer.selvbetjening:
 
 mock:
   enabled: true
-  port: 9091
+  port: 9092
 
 api:
   client:
