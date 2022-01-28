@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
 @Component
-class EnhetsregisterClient constructor(
+class EnhetsregisterClient(
     @Value("\${api.client.enhetsregister.url}") val enhetsregisterUrl: String
 ) {
     private val client: Client = ClientBuilder.newClient()

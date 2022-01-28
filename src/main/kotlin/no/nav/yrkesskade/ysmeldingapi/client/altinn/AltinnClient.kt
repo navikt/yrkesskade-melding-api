@@ -15,7 +15,7 @@ import java.lang.RuntimeException
 import java.util.*
 
 @Component
-class AltinnClient constructor(
+class AltinnClient(
     private val autentisertBruker: AutentisertBruker,
     @Value("\${spring.application.name}") val applicationName: String,
     @Value("\${api.client.altinn.proxyUrl}") val proxyUrl: String,

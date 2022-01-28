@@ -7,7 +7,7 @@ import no.nav.yrkesskade.ysmeldingapi.models.OrganisasjonDto
 import org.springframework.stereotype.Service
 
 @Service
-class BrukerinfoService constructor(
+class BrukerinfoService(
     private val altinnClient: AltinnClient,
     private val enhetsregisterClient: EnhetsregisterClient
 ) {
