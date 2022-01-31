@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController
 @ProtectedWithClaims(issuer = ISSUER, claimMap = [LEVEL])
 @RestController
 @RequestMapping(path = ["/api/v1/brukerinfo"], produces = [MediaType.APPLICATION_JSON_VALUE])
-class BrukerinfoController(private val autentisertBruker: AutentisertBruker, private val userInfoService: BrukerinfoService) {
+class BrukerinfoController(private val autentisertBruker: AutentisertBruker, private val brukerinfoService: BrukerinfoService) {
 
     @GetMapping()
     fun hentUserInfo(): ResponseEntity<BrukerinfoDto> {
-        val organisasjoner: List<OrganisasjonDto> = userInfoService.hentOrganisasjonerForFodselsnummer(autentisertBruker.fodselsnummer)
+        val organisasjoner: List<OrganisasjonDto> = brukerinfoService.hentOrganisasjonerForFodselsnummer(autentisertBruker.fodselsnummer)
         return ResponseEntity.ok(BrukerinfoDto(fnr = autentisertBruker.fodselsnummer, organisasjoner = organisasjoner))
     }
 }

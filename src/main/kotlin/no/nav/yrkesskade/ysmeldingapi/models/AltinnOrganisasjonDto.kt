@@ -3,12 +3,12 @@ package no.nav.yrkesskade.ysmeldingapi.models
 import no.nav.arbeidsgiver.altinnrettigheter.proxy.klient.model.AltinnReportee
 
 data class AltinnOrganisasjonDto(
-    var navn: String? = null,
-    var parentOrganisasjonsnummer: String? = null,
-    var organisasjonsnummer: String? = null,
-    var organisasjonsform: String? = null,
-    var status: String? = null,
-    var type: String? = null
+    val navn: String? = null,
+    val parentOrganisasjonsnummer: String? = null,
+    val organisasjonsnummer: String? = null,
+    val organisasjonsform: String? = null,
+    val status: String? = null,
+    val type: String? = null
 ) {
     companion object {
         fun fraAltinnReportee(altinnReportee: AltinnReportee): AltinnOrganisasjonDto {

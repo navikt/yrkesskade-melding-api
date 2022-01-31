@@ -1,11 +1,10 @@
 package no.nav.yrkesskade.ysmeldingapi.models
 
 data class OrganisasjonDto(
-    var organisasjonsnummer: String? = null,
-    var navn: String? = null,
-    var naeringskode: String? = null,
-    var organisasjonsform: String? = null,
-    var status: String? = null,
-    var type: String? = null
-) {
-}
+    val organisasjonsnummer: String? = null,
+    val navn: String? = null,
+    val naeringskode: String? = null,
+    val organisasjonsform: String? = null,
+    val status: String? = null,
+    val type: String? = null
+)

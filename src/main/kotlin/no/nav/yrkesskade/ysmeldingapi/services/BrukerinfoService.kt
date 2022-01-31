@@ -17,14 +17,10 @@ class BrukerinfoService(
         val enheterForOrganisasjonsnummer: HashMap<String, EnhetsregisterOrganisasjonDto> = HashMap()
         altinnOrganisasjoner.forEach {
             it.organisasjonsnummer?.let { organisasjonsnummer ->
-                enheterForOrganisasjonsnummer.put(organisasjonsnummer,
-                    run {
-                        enhetsregisterClient.hentOrganisasjonFraEnhetsregisteret(organisasjonsnummer, false)
-
-                    }
-                )
+                enheterForOrganisasjonsnummer[organisasjonsnummer] = run {
+                    enhetsregisterClient.hentOrganisasjonFraEnhetsregisteret(organisasjonsnummer, false)
+                }
             }
-
         }
 
         return altinnOrganisasjoner.map{
