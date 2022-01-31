@@ -1,5 +1,8 @@
 package no.nav.yrkesskade.ysmeldingapi.config
 
+import org.springdoc.core.SpringDocConfigProperties
+import org.springdoc.core.SpringDocConfiguration
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer

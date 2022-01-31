@@ -1,8 +1,12 @@
 # yrkesskade-melding-api
 API for innsending av melding om yrkesskade, -sykdom og menerstatning.
 
+## Oppsett i IDE
+Det blir generert filer av maven, som blir lagt inn i target/generated-sources. Denne mappen må legges til som source i IDEen.
+- IntelliJ: høyreklikk på generated-sources -> Mark Directory as -> Generated sources root
+
 ## Lokal kjøring
-Applikasjonen kan startes ved å kjøre YrkesskadeMeldingMottakApplication.
+Applikasjonen kan startes ved å kjøre YrkesskadeMeldingApiApplication.
 
 Legg til VM argumentene `-DYRKESSKADE_API_DB_USERNAME=<brukernavn>`og `-DYRKESSKADE_API_DB_PASSWORD=<passord>`
 

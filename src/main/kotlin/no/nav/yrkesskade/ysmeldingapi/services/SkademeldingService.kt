@@ -1,8 +1,8 @@
 package no.nav.yrkesskade.ysmeldingapi.services
 
 import com.fasterxml.jackson.databind.JsonNode
+import no.nav.yrkesskade.ysmeldingapi.domain.SkademeldingEntity
 import no.nav.yrkesskade.ysmeldingapi.client.mottak.MottakClient
-import no.nav.yrkesskade.ysmeldingapi.domain.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.repositories.SkademeldingRepository
 import org.slf4j.LoggerFactory
@@ -37,7 +37,7 @@ class SkademeldingService(private val mottakClient: MottakClient,
         return skademeldingRepository.findAll().map { it.toSkademeldingDto() }
     }
 
-    fun hentSkademeldingMedId(id: Int): Optional<Skademelding> {
+    fun hentSkademeldingMedId(id: Int): Optional<SkademeldingEntity> {
         return skademeldingRepository.findById(id)
     }
 
