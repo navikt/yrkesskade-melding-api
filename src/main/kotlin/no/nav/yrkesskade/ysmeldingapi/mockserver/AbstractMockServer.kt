@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component
 import java.nio.charset.StandardCharsets
 import org.apache.commons.io.IOUtils
 import org.springframework.context.annotation.Profile
-import java.net.URL
 
 const val SERVICE_EDITION = "1"
 const val SERVICE_CODE = "4936"
@@ -46,13 +45,12 @@ fun MappingBuilder.willReturnJson(body: String) {
     matchIfMissing = false
 )
 @Profile("local")
-class MockServer @Autowired constructor(
-    @Value("\${mock.port}") private val port: Int
-) : AbstractMockSever(port) {
+class MockServer(@Value("\${mock.port}") private val port: Int) : AbstractMockSever(port) {
 
     init {
         start()
     }
+    
 }
 
 open class AbstractMockSever (private val port: Int?){
