@@ -50,7 +50,7 @@ class MockServer(@Value("\${mock.port}") private val port: Int) : AbstractMockSe
     init {
         start()
     }
-    
+
 }
 
 open class AbstractMockSever (private val port: Int?){

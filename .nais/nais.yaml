@@ -38,6 +38,7 @@ spec:
           namespace: "yrkesskade"
   envFrom:
     - configmap: loginservice-idporten
+    - secret: yrkesskade-melding-api
   resources:
     limits:
       cpu: "2"
