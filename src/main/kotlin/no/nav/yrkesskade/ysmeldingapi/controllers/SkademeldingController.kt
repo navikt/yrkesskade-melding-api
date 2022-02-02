@@ -1,6 +1,7 @@
 package no.nav.yrkesskade.ysmeldingapi.controllers
 
 import com.fasterxml.jackson.databind.JsonNode
+import no.nav.security.token.support.core.api.Unprotected
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.services.SkademeldingService
 import org.slf4j.LoggerFactory
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.lang.invoke.MethodHandles
 
+@Unprotected
 @RestController
 @RequestMapping(path = ["/api/"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class SkademeldingController(private val skademeldingService: SkademeldingService) {

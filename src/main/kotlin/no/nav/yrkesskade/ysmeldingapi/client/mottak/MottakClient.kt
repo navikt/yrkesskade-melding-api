@@ -1,4 +1,4 @@
-package no.nav.yrkesskade.ysmeldingapi.clients
+package no.nav.yrkesskade.ysmeldingapi.client.mottak
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue

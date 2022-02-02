@@ -1,25 +1,19 @@
 package no.nav.yrkesskade.ysmeldingapi.repositories
 
 import no.nav.yrkesskade.ysmeldingapi.domain.Skademelding
-import no.nav.yrkesskade.ysmeldingapi.repositories.testutils.docker.PostgresDockerContainer
+import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.test.context.ActiveProfiles
+import org.springframework.boot.test.context.SpringBootTest
 
-@DataJpaTest
-@ActiveProfiles("integration")
+@SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class SkademeldingRepositoryIT {
+class SkademeldingRepositoryIT : AbstractIT() {
 
     @Autowired
     lateinit var repository: SkademeldingRepository
-
-    init {
-        PostgresDockerContainer.container
-    }
 
     @Test
     fun `save one skademelding should return one skademelding`() {

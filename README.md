@@ -18,3 +18,10 @@ Dette kan enten installeres lokalt på maskinen eller startes med docker
 ```sql
 CREATE DATABASE yrkesskade_melding
 ```
+
+### Lokal API kall
+Tjenesten krever at brukeren er pålogget før en kan bruke APIet.
+
+#### Lokal
+1. Gjør et kall mot http://localhost:{serverport}/local/cookie
+2. Send cookie fra steg nummer 1 med kall mot API.

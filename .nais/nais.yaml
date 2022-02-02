@@ -36,6 +36,8 @@ spec:
       rules:
         - application: "yrkesskade-melding-mottak"
           namespace: "yrkesskade"
+  envFrom:
+    - configmap: loginservice-idporten
   resources:
     limits:
       cpu: "2"
