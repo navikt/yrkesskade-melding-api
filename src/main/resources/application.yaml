@@ -30,7 +30,7 @@ api:
     enhetsregister:
       url: https://data.brreg.no/enhetsregisteret/api/enheter
     altinn:
-      altinnUrl: https://api-gw-q1.adeo.no # TEST (ta bort -q1 for prod)
+      fallbackUrl: https://api-gw-q1.adeo.no # TEST (ta bort -q1 for prod)
       apiKey: ${ALTINN_HEADER}
       apiGatewayKey: ${APIGW_HEADER}
       proxyUrl: https://arbeidsgiver.dev.intern.nav.no/altinn-rettigheter-proxy #TEST (ta bort dev for prod)

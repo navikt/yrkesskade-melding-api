@@ -2,13 +2,16 @@ package no.nav.yrkesskade.ysmeldingapi.client.enhetsregister
 
 import no.nav.yrkesskade.ysmeldingapi.models.EnhetsregisterOrganisasjonDto
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
+import no.nav.yrkesskade.ysmeldingapi.test.TestMockServerInitialization
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ContextConfiguration
 
 @SpringBootTest
-class EnhetsregisterClientIT: AbstractIT() {
+@ContextConfiguration(initializers = [TestMockServerInitialization::class])
+class EnhetsregisterClientIT : AbstractIT() {
 
     @Autowired lateinit var enhetsregisterClient: EnhetsregisterClient
 

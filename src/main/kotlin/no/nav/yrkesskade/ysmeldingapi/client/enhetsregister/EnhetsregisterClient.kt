@@ -30,7 +30,7 @@ class EnhetsregisterClient(
                 return EnhetsregisterOrganisasjonDto()
             }
 
-            return response.readEntity(EnhetsregisterOrganisasjonDto::class.java)
+            response.readEntity(EnhetsregisterOrganisasjonDto::class.java)
         } catch (e: Exception) {
             throw RuntimeException("Feil ved oppslag mot EnhetsRegisteret: $e", e)
         }

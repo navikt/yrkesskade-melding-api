@@ -2,6 +2,9 @@ spring:
   config:
     activate:
       on-profile: integration
+  datasource:
+    hikari:
+      auto-commit: false
 
 no.nav.security.jwt.issuer.selvbetjening:
   discoveryurl: http://metadata-selvbetjening
@@ -10,7 +13,7 @@ no.nav.security.jwt.issuer.selvbetjening:
 
 mock:
   enabled: true
-  port: 9092
+  port: 10093
 
 api:
   client:

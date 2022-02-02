@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Component
 import java.nio.charset.StandardCharsets
 import org.apache.commons.io.IOUtils
+import org.springframework.context.annotation.Profile
 import java.net.URL
 
 const val SERVICE_EDITION = "1"
@@ -19,6 +20,7 @@ const val SERVICE_CODE = "4936"
 const val FNR_MED_SKJEMATILGANG = "01065500791"
 const val FNR_MED_ORGANISASJONER = "12345678910"
 const val ALTINN_PROXY_PATH = "/altinn/ekstern/altinn/api/serviceowner/reportees*"
+const val ENHETSREGISTER_PATH = "/enhetsregisteret/api/enheter"
 
 fun WireMockServer.stubForGet(urlPattern: UrlPattern, builder: MappingBuilder.() -> Unit) {
     stubFor(get(urlPattern).apply(builder))
@@ -43,20 +45,49 @@ fun MappingBuilder.willReturnJson(body: String) {
     havingValue = "true",
     matchIfMissing = false
 )
+@Profile("local")
 class MockServer @Autowired constructor(
-    @Value("\${mock.port}") private val port: Int,
-    @Value("\${api.client.enhetsregister.url}") private val eregUrl: String
-) {
+    @Value("\${mock.port}") private val port: Int
+) : AbstractMockSever(port) {
+
+    init {
+        start()
+    }
+}
+
+open class AbstractMockSever (private val port: Int?){
+
+    private val mockServer: WireMockServer
 
     init {
         val config = WireMockConfiguration().apply {
-            port(port)
+            if (port != null) {
+                port(port)
+            } else {
+                dynamicPort()
+            }
             extensions(ResponseTemplateTransformer(true))
         }
 
-        WireMockServer(config).apply {
+        mockServer = WireMockServer(config).apply {
             setup()
         }
+    }
+
+    fun start() {
+        if (!mockServer.isRunning) {
+            mockServer.start()
+        }
+    }
+
+    fun stop() {
+        if (mockServer.isRunning) {
+            mockServer.stop()
+        }
+    }
+
+    fun port(): Int {
+        return mockServer.port()
     }
 
     private fun WireMockServer.setup() {
@@ -86,16 +117,13 @@ class MockServer @Autowired constructor(
         }
 
         // Enhetsregisteret
-        stubForAny(urlPathMatching("${URL("$eregUrl/910720120").path}.*")) {
+        stubForAny(urlPathMatching("$ENHETSREGISTER_PATH/910720120.*")) {
             willReturnJson(hentStringFraFil("enhetsregisteret.json"))
         }
 
-        stubForAny(urlPathMatching("${URL("$eregUrl/910720120").path}.*")) {
+        stubForAny(urlPathMatching("$ENHETSREGISTER_PATH/910720120.*")) {
             willReturnJson(hentStringFraFil("enhetsregisteret.json"))
         }
-
-
-        start()
     }
 
     private fun hentStringFraFil(filnavn: String): String {

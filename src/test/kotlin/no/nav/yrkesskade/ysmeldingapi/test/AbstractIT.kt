@@ -7,10 +7,12 @@ import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.support.TestPropertySourceUtils
+import org.springframework.transaction.annotation.Transactional
 
+@Transactional
 @ActiveProfiles("integration")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(initializers = [AbstractIT.DockerPostgresDataSourceInitializer::class])
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 abstract class AbstractIT {
 
     init {

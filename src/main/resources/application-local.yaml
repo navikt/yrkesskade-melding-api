@@ -10,7 +10,7 @@ no.nav.security.jwt.issuer.selvbetjening:
 
 mock:
   enabled: true
-  port: 9091
+  port: 10091
 
 api:
   client:
