@@ -11,8 +11,8 @@ import javax.persistence.Id
 open class Skademelding(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Uses underlying persistence framework to generate an Id
-    var id: Int?,
-    var skademelding: String
+    open var id: Int?,
+    open var skademelding: String
 ) {
     fun toSkademeldingDto(): SkademeldingDto {
         return SkademeldingDto(
