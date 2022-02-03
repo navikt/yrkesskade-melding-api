@@ -92,20 +92,34 @@ components:
       required:
         - alvorlighetsgrad
         - legeKontaktet
-        - skadeartTabellC
-        - kroppsdelTabellD
+        - skadedeDeler
         - antattSykefravaerTabellH
       properties:
         alvorlighetsgrad:
           $ref: '#/components/schemas/Alvorlighetsgrad'
         legeKontaktet:
           $ref: '#/components/schemas/EnkeltSvar'
+        skadedeDeler:
+          $ref: '#/components/schemas/SkadedeDeler'
+        antattSykefravaerTabellH:
+          $ref: '#/components/schemas/AntattSykefravaerTabellH'
+      nullable: false
+    SkadedeDeler:
+      type: array
+      items:
+        $ref: '#/components/schemas/SkadetDel'
+      nullable: false
+    SkadetDel:
+      title: SkadetDel
+      type: object
+      required:
+        - skadeartTabellC
+        - kroppsdelTabellD
+      properties:
         skadeartTabellC:
           $ref: '#/components/schemas/SkadeartTabellC'
         kroppsdelTabellD:
           $ref: '#/components/schemas/KroppsdelTabellD'
-        antattSykefravaerTabellH:
-          $ref: '#/components/schemas/AntattSykefravaerTabellH'
       nullable: false
     Hendelsesfakta:
       type: object
