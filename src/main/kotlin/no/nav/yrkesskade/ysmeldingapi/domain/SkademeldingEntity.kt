@@ -2,12 +2,10 @@ package no.nav.yrkesskade.ysmeldingapi.domain
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
+@Table(name = "skademelding")
 open class SkademeldingEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Uses underlying persistence framework to generate an Id
