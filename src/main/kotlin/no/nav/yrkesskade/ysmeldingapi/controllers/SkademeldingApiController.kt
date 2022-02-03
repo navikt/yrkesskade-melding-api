@@ -5,7 +5,7 @@ import no.nav.yrkesskade.ysmeldingapi.api.SkademeldingApiDelegate
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
-@RestController("\${openapi.ySSkademeldingAPIDoc.base-path:/api}")
+@RestController("/api")
 class SkademeldingApiController(
     @org.springframework.beans.factory.annotation.Autowired(required = false) delegate: SkademeldingApiDelegate?
 ) : SkademeldingApi {

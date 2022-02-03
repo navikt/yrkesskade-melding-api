@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component
 class SkademeldingApiDelegateImpl : SkademeldingApiDelegate {
 
     override fun sendSkademelding(skademelding: Skademelding): ResponseEntity<Unit> {
-        println("test")
         return super.sendSkademelding(skademelding)
     }
 }
