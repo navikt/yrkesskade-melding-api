@@ -8,7 +8,7 @@ info:
 servers:
   - url: 'https://yrkesskade-melding-api.dev.intern.nav.no/api'
 paths:
-  /v1/skademelding/arbeidstaker:
+  /v1/skademeldinger/arbeidstaker:
     post:
       tags:
         - Skademelding

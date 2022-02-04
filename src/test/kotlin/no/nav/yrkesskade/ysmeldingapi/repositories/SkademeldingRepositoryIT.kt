@@ -1,6 +1,7 @@
 package no.nav.yrkesskade.ysmeldingapi.repositories
 
-import no.nav.yrkesskade.ysmeldingapi.domain.Skademelding
+import no.nav.yrkesskade.ysmeldingapi.domain.SkademeldingEntity
+import no.nav.yrkesskade.ysmeldingapi.repositories.testutils.docker.PostgresDockerContainer
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -18,7 +19,7 @@ class SkademeldingRepositoryIT : AbstractIT() {
     @Test
     fun `save one skademelding should return one skademelding`() {
         repository.save(
-            Skademelding(
+            SkademeldingEntity(
                 null,
                 """{"some": "data"}""",
             )
@@ -29,13 +30,13 @@ class SkademeldingRepositoryIT : AbstractIT() {
     @Test
     fun `save two skademeldinger should return two skademeldinger`() {
         repository.save(
-            Skademelding(
+            SkademeldingEntity(
                 null,
                 """{"some": "data"}""",
             )
         )
         repository.save(
-            Skademelding(
+            SkademeldingEntity(
                 null,
                 """{"some more": "data"}""",
             )
