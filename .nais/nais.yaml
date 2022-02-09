@@ -36,6 +36,8 @@ spec:
       rules:
         - application: "yrkesskade-melding-mottak"
           namespace: "yrkesskade"
+        - application: altinn-rettigheter-proxy
+          namespace: arbeidsgiver
   envFrom:
     - configmap: loginservice-idporten
     - secret: yrkesskade-melding-api
