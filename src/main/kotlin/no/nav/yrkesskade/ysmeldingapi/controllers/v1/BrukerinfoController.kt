@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@ProtectedWithClaims(issuer = ISSUER, claimMap = [LEVEL])
+@ProtectedWithClaims(claimMap = [LEVEL])
 @RestController
 @RequestMapping(path = ["/api/v1/brukerinfo"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class BrukerinfoController(private val autentisertBruker: AutentisertBruker, private val brukerinfoService: BrukerinfoService) {
