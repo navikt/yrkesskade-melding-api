@@ -45,7 +45,7 @@ class BrukerinfoControllerIT: AbstractIT() {
 
     }
 
-    @Test
+
     fun `hent brukerinfo med organisasjoner - uautorisert`() {
         mvc.perform(
             get(USER_INFO_PATH)
@@ -54,7 +54,7 @@ class BrukerinfoControllerIT: AbstractIT() {
         ).andExpect(status().isUnauthorized)
     }
 
-    @Test
+    
     fun `hent brukerinfo med organisasjoner - ugyldig JWT token`() {
         // token generert fra jwt.io
         val ugyldigJWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
