@@ -23,5 +23,4 @@ api:
     altinn:
       fallbackUrl: http://localhost:${mock.port}/altinn/
       apiKey: test
-      gatewayApiKey: test
       proxyUrl: http://localhost:${mock.port}/altinn/

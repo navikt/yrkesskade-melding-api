@@ -20,8 +20,7 @@ class AltinnClient(
     @Value("\${spring.application.name}") val applicationName: String,
     @Value("\${api.client.altinn.proxyUrl}") val proxyUrl: String,
     @Value("\${api.client.altinn.fallbackUrl}") val fallbackUrl: String,
-    @Value("\${api.client.altinn.apiKey}") val altinnApiKey: String,
-    @Value("\${api.client.altinn.gatewayApiKey}") val altinnGatewayApiKey: String
+    @Value("\${api.client.altinn.apiKey}") val altinnApiKey: String
     ) {
 
     private val klient: AltinnrettigheterProxyKlient
@@ -29,7 +28,7 @@ class AltinnClient(
     init {
         val proxyKlientConfig = AltinnrettigheterProxyKlientConfig(
             ProxyConfig(applicationName, proxyUrl),
-            AltinnConfig(fallbackUrl, altinnApiKey, altinnGatewayApiKey)
+            AltinnConfig(fallbackUrl, altinnApiKey, "")
         )
         klient = AltinnrettigheterProxyKlient(proxyKlientConfig)
     }
