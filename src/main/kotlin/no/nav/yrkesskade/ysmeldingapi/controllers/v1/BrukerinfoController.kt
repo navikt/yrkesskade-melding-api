@@ -1,6 +1,7 @@
 package no.nav.yrkesskade.ysmeldingapi.controllers.v1
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.security.token.support.core.api.Unprotected
 import no.nav.yrkesskade.ysmeldingapi.models.OrganisasjonDto
 import no.nav.yrkesskade.ysmeldingapi.models.BrukerinfoDto
 import no.nav.yrkesskade.ysmeldingapi.services.BrukerinfoService
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@ProtectedWithClaims(issuer = ISSUER, claimMap = [LEVEL])
+@Unprotected
+//@ProtectedWithClaims(issuer = ISSUER, claimMap = [LEVEL])
 @RestController
 @RequestMapping(path = ["/api/v1/brukerinfo"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class BrukerinfoController(private val autentisertBruker: AutentisertBruker, private val brukerinfoService: BrukerinfoService) {
