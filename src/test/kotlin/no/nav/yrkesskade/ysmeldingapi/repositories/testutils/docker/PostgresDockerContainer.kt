@@ -7,7 +7,6 @@ class PostgresDockerContainer private constructor() : PostgreSQLContainer<Postgr
         const val IMAGE_NAME = "postgres:14"
         val container: PostgresDockerContainer by lazy {
             PostgresDockerContainer().apply {
-                this.addFixedExposedPort(POSTGRESQL_PORT, POSTGRESQL_PORT)
                 this.start()
             }
         }

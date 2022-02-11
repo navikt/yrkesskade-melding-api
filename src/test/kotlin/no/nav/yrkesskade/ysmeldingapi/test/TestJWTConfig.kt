@@ -1,7 +1,6 @@
-package no.nav.yrkesskade.ysmeldingapi.utils
+package no.nav.yrkesskade.ysmeldingapi.test
 
 import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Profile
@@ -13,9 +12,5 @@ import org.springframework.context.annotation.Profile
  */
 @Configuration
 @Import(TokenGeneratorConfiguration::class)
-@ConditionalOnProperty(
-    value = arrayOf("mock.enabled"),
-    havingValue = "true",
-    matchIfMissing = false
-)
-class LocalJWTConfig
+@Profile("integration")
+class TestJWTConfig

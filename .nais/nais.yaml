@@ -38,6 +38,12 @@ spec:
           namespace: "yrkesskade"
         - application: altinn-rettigheter-proxy
           namespace: arbeidsgiver
+  tokenx:
+    enabled: true
+    accessPolicy:
+      inbound:
+        rules:
+          - application: yrkeskade-skjema
   envFrom:
     - configmap: loginservice-idporten
     - secret: yrkesskade-melding-api
