@@ -3,7 +3,6 @@ package no.nav.yrkesskade.ysmeldingapi.test
 import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
-import org.springframework.context.annotation.Profile
 
 /**
  * Setter opp en lokal Tokengenerator i applikasjonen
@@ -12,5 +11,4 @@ import org.springframework.context.annotation.Profile
  */
 @Configuration
 @Import(TokenGeneratorConfiguration::class)
-@Profile("integration")
 class TestJWTConfig
