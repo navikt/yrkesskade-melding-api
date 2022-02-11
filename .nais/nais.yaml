@@ -43,7 +43,7 @@ spec:
     accessPolicy:
       inbound:
         rules:
-          - application: yrkeskade-skjema
+          - application: yrkesskade-skjema
   envFrom:
     - configmap: loginservice-idporten
     - secret: yrkesskade-melding-api
