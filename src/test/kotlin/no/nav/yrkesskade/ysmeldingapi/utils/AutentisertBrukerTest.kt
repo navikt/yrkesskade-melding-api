@@ -14,7 +14,7 @@ import org.mockito.Mockito.mock
 internal class AutentisertBrukerTest {
 
     private val tokenValidationContextHolder = mock(TokenValidationContextHolder::class.java)
-    val tokenValidationContext = mock(TokenValidationContext::class.java)
+    private val tokenValidationContext = mock(TokenValidationContext::class.java)
 
     @BeforeEach
     fun setup() {
