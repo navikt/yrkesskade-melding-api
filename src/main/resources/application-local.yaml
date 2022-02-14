@@ -4,9 +4,9 @@ spring:
 
 no.nav.security.jwt.issuer:
   selvbetjening:
-    discoveryurl: https://fakedings.dev-gcp.nais.io/idporten/.well-known/openid-configuration
+    discoveryurl: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
     accepted_audience: aud-localhost
-    cookiename: localhost-idtoken
+    cookiename: selvbetjening-idtoken
   tokenx:
     discoveryurl: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
     accepted_audience: dev-gcp:yrkesskade:yrkesskade-melding-api

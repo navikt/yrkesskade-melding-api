@@ -2,6 +2,7 @@ package no.nav.yrkesskade.ysmeldingapi.services
 
 import no.nav.yrkesskade.ysmeldingapi.client.altinn.AltinnClient
 import no.nav.yrkesskade.ysmeldingapi.client.enhetsregister.EnhetsregisterClient
+import no.nav.yrkesskade.ysmeldingapi.models.AdresseDto
 import no.nav.yrkesskade.ysmeldingapi.models.EnhetsregisterOrganisasjonDto
 import no.nav.yrkesskade.ysmeldingapi.models.OrganisasjonDto
 import org.springframework.stereotype.Service
@@ -33,5 +34,15 @@ class BrukerinfoService(
                 naeringskode = enheterForOrganisasjonsnummer.get(it.organisasjonsnummer)?.naering?.kode
             )
         }
+    }
+
+    fun hentOrganisasjon(fodselsnummer: String, organisasjonsnummer: String): OrganisasjonDto? {
+        val enhetsregisterOrganisasjon = enhetsregisterClient.hentOrganisasjonFraEnhetsregisteret(organisasjonsnummer, false)
+
+        return OrganisasjonDto(
+            organisasjonsnummer = enhetsregisterOrganisasjon.organisasjonsnummer,
+            naeringskode = enhetsregisterOrganisasjon.naering?.kode,
+            postadresse = enhetsregisterOrganisasjon.postadresse?.let { AdresseDto.fraEnhetsregisterAdresse(it) }
+        )
     }
 }

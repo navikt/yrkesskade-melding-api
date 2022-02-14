@@ -6,13 +6,12 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer
 import com.github.tomakehurst.wiremock.matching.UrlPattern
-import org.springframework.beans.factory.annotation.Autowired
+import org.apache.commons.io.IOUtils
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.nio.charset.StandardCharsets
-import org.apache.commons.io.IOUtils
-import org.springframework.context.annotation.Profile
 
 const val SERVICE_EDITION = "1"
 const val SERVICE_CODE = "4936"
@@ -20,6 +19,8 @@ const val FNR_MED_SKJEMATILGANG = "01065500791"
 const val FNR_MED_ORGANISASJONER = "12345678910"
 const val ALTINN_PROXY_PATH = "/altinn/ekstern/altinn/api/serviceowner/reportees*"
 const val ENHETSREGISTER_PATH = "/enhetsregisteret/api/enheter"
+const val ALTINN_ROLLER_PATH = "/altinn/api/serviceowner/authorization/roles"
+const val ALTINN_RETTIGHETER_PATH = "/altinn/api/serviceowner/authorization/rights"
 
 fun WireMockServer.stubForGet(urlPattern: UrlPattern, builder: MappingBuilder.() -> Unit) {
     stubFor(get(urlPattern).apply(builder))
@@ -91,6 +92,14 @@ open class AbstractMockSever (private val port: Int?){
     private fun WireMockServer.setup() {
 
         // Altinn
+        stubForGet(urlPathMatching("$ALTINN_ROLLER_PATH.*")) {
+            willReturnJson(hentStringFraFil("roller.json"))
+        }
+
+        stubForGet(urlPathMatching("$ALTINN_RETTIGHETER_PATH.*")) {
+            willReturnJson(hentStringFraFil("rettigheter.json"))
+        }
+
         stubForGet(urlPathMatching(ALTINN_PROXY_PATH)) {
             withQueryParam("subject", equalTo(FNR_MED_ORGANISASJONER))
             willReturnJson(hentStringFraFil("organisasjoner.json"))

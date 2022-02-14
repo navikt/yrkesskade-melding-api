@@ -28,3 +28,9 @@ api:
       fallbackUrl: http://localhost:${mock.port}/altinn/
       apiKey: test
       proxyUrl: http://localhost:${mock.port}/altinn/
+
+maskinporten:
+  clientId: foo
+  scopes: bar
+  wellKnownUrl: nav.no
+  clientJwk: yas
