@@ -19,10 +19,14 @@ spring:
         enable_lazy_load_no_trans: true
         ddl-auto: none
 
-no.nav.security.jwt.issuer.selvbetjening:
-  discoveryurl: ${LOGINSERVICE_IDPORTEN_DISCOVERY_URL}
-  accepted_audience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
-  cookiename: selvbetjening-idtoken
+no.nav.security.jwt.issuer:
+  selvbetjening:
+    discoveryurl: ${IDPORTEN_WELL_KNOWN_URL}
+    accepted_audience: ""
+    cookiename: selvbetjening-idtoken
+  tokenx:
+    discoveryurl: ${TOKEN_X_WELL_KNOWN_URL}
+    accepted_audience: dev-gcp:yrkesskade:yrkesskade-melding-api
 
 api:
   client:

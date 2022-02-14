@@ -1,8 +1,8 @@
 package no.nav.yrkesskade.ysmeldingapi.controllers.v1
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.yrkesskade.ysmeldingapi.models.OrganisasjonDto
 import no.nav.yrkesskade.ysmeldingapi.models.BrukerinfoDto
+import no.nav.yrkesskade.ysmeldingapi.models.OrganisasjonDto
 import no.nav.yrkesskade.ysmeldingapi.services.BrukerinfoService
 import no.nav.yrkesskade.ysmeldingapi.utils.AutentisertBruker
 import no.nav.yrkesskade.ysmeldingapi.utils.ISSUER

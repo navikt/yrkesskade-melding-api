@@ -1,12 +1,15 @@
 spring:
-  application.name: yrkesskade-melding-api
   datasource:
     url: jdbc:postgresql://localhost:5432/yrkesskade_melding
 
-no.nav.security.jwt.issuer.selvbetjening:
-  discoveryurl: http://metadata-selvbetjening
-  accepted_audience: aud-localhost
-  cookiename: localhost-idtoken
+no.nav.security.jwt.issuer:
+  selvbetjening:
+    discoveryurl: https://fakedings.dev-gcp.nais.io/idporten/.well-known/openid-configuration
+    accepted_audience: aud-localhost
+    cookiename: localhost-idtoken
+  tokenx:
+    discoveryurl: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
+    accepted_audience: dev-gcp:yrkesskade:yrkesskade-melding-api
 
 mock:
   enabled: true

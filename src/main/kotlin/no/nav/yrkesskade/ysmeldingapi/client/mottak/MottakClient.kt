@@ -1,31 +1,26 @@
 package no.nav.yrkesskade.ysmeldingapi.client.mottak
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
+import javax.ws.rs.client.ClientBuilder
+import javax.ws.rs.client.Entity
+import javax.ws.rs.core.Response
 
 @Component
 class MottakClient(@Value("\${api.client.yrkesskade-mottak-url}") private val mottakBaseUrl: String) {
 
-    private val client = OkHttpClient()
+    private val client = ClientBuilder.newClient()
 
     fun sendTilMottak(skademelding: SkademeldingDto): SkademeldingDto {
-        val postBody = jacksonObjectMapper().writeValueAsString(skademelding)
-        val request = Request.Builder()
-                .url("$mottakBaseUrl/api/skademelding/")
-                .post(postBody.toRequestBody(MediaType.APPLICATION_JSON_VALUE.toMediaType()))
-                .build()
+        val response = client.target("$mottakBaseUrl/api/skademelding/").request(MediaType.APPLICATION_JSON_VALUE).post(
+            Entity.json(skademelding))
 
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw RuntimeException("Unexpected code $response")
-            return jacksonObjectMapper().readValue(response.body!!.string())
+        if (response.statusInfo.family != Response.Status.Family.SUCCESSFUL) {
+            throw RuntimeException("Unexpected code $response")
         }
+
+        return response.readEntity(SkademeldingDto::class.java)
     }
 }
