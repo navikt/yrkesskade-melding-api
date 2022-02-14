@@ -16,7 +16,7 @@ class BrukerinfoService(
     fun hentOrganisasjonerForFodselsnummer(fnr: String): List<OrganisasjonDto> {
         val altinnOrganisasjoner = altinnClient.hentOrganisasjoner(fnr)
         val enheterForOrganisasjonsnummer: HashMap<String, EnhetsregisterOrganisasjonDto> = HashMap()
-        altinnOrganisasjoner.forEach {
+        altinnOrganisasjoner.filterNot { it.type == "Person" }.forEach {
             it.organisasjonsnummer?.let { organisasjonsnummer ->
                 enheterForOrganisasjonsnummer[organisasjonsnummer] = run {
                     enhetsregisterClient.hentOrganisasjonFraEnhetsregisteret(organisasjonsnummer, false)
@@ -42,7 +42,8 @@ class BrukerinfoService(
         return OrganisasjonDto(
             organisasjonsnummer = enhetsregisterOrganisasjon.organisasjonsnummer,
             naeringskode = enhetsregisterOrganisasjon.naering?.kode,
-            postadresse = enhetsregisterOrganisasjon.postadresse?.let { AdresseDto.fraEnhetsregisterAdresse(it) }
+            postadresse = enhetsregisterOrganisasjon.postadresse?.let { AdresseDto.fraEnhetsregisterAdresse(it) },
+            forretningsadresse = enhetsregisterOrganisasjon.forretningsadresse?.let { AdresseDto.fraEnhetsregisterAdresse(it) },
         )
     }
 }
