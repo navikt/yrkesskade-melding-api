@@ -2,7 +2,7 @@ package no.nav.yrkesskade.ysmeldingapi.controllers
 
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
 import no.nav.yrkesskade.ysmeldingapi.test.TestMockServerInitialization
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -45,7 +45,7 @@ class BrukerinfoControllerIT: AbstractIT() {
 
     }
 
-
+    @Test
     fun `hent brukerinfo med organisasjoner - uautorisert`() {
         mvc.perform(
             get(USER_INFO_PATH)
@@ -54,7 +54,22 @@ class BrukerinfoControllerIT: AbstractIT() {
         ).andExpect(status().isUnauthorized)
     }
 
+    @Test
+    fun `hent organisasjon informasjone en bruker har tilgang til`() {
+        // gyldig JWT
+        val jwt = mvc.perform(get("/local/jwt")).andReturn().response.contentAsString
 
+        // Data for eksterne tjenester kommer fra localhost MockServer
+        mvc.perform(
+            get("$USER_INFO_PATH/organisasjoner/90912098")
+                .header(AUTHORIZATION, "Bearer $jwt")
+                .characterEncoding(Charsets.UTF_8)
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(Charsets.UTF_8)
+        ).andExpect(status().isOk)
+    }
+
+    @Test
     fun `hent brukerinfo med organisasjoner - ugyldig JWT token`() {
         // token generert fra jwt.io
         val ugyldigJWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"

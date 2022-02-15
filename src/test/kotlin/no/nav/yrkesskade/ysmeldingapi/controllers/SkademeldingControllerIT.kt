@@ -3,7 +3,6 @@ package no.nav.yrkesskade.ysmeldingapi.controllers
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.ysmeldingapi.fixtures.enkelSkademelding
-import no.nav.yrkesskade.ysmeldingapi.mockserver.MockServer
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
 import org.assertj.core.api.Assertions.assertThat
@@ -12,13 +11,10 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional
@@ -104,7 +100,7 @@ class SkademeldingControllerIT : AbstractIT() {
             MockMvcRequestBuilders.post(SKADEMELDING_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
-                .content(objectMapper.writeValueAsString(skademeldingDto))
+                .content(objectMapper.writeValueAsString(skademeldingDto.skademelding))
         )
             .andExpect(status().isCreated)
             .andExpect(header().exists("Location"))
