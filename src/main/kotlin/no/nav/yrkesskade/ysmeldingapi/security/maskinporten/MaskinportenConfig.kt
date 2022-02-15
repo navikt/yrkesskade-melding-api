@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component
  */
 @Component
 @ConditionalOnProperty(
-    value = arrayOf("mock.enabled"),
-    havingValue = "false",
-    matchIfMissing = false
+    value = arrayOf("maskinporten.client.enabled"),
+    havingValue = "true",
+    matchIfMissing = true
 )
 @ConfigurationProperties("maskinporten")
 class MaskinportenConfig : InitializingBean {

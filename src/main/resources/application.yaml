@@ -24,6 +24,8 @@ no.nav.security.jwt.issuer:
     discoveryurl: ${TOKEN_X_WELL_KNOWN_URL}
     accepted_audience: dev-gcp:yrkesskade:yrkesskade-melding-api
 
+maskinporten.client.enabled: true
+
 api:
   client:
     yrkesskade-mottak-url: https://yrkesskade-melding-mottak.dev.intern.nav.no
