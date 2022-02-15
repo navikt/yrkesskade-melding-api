@@ -1,15 +1,15 @@
 package no.nav.yrkesskade.ysmeldingapi.services
 
 import com.fasterxml.jackson.databind.JsonNode
-import no.nav.yrkesskade.ysmeldingapi.domain.SkademeldingEntity
 import no.nav.yrkesskade.ysmeldingapi.client.mottak.MottakClient
+import no.nav.yrkesskade.ysmeldingapi.domain.SkademeldingEntity
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.repositories.SkademeldingRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.lang.invoke.MethodHandles
-import java.util.Optional
+import java.util.*
 
 @Service
 class SkademeldingService(private val mottakClient: MottakClient,
@@ -26,8 +26,8 @@ class SkademeldingService(private val mottakClient: MottakClient,
     @Transactional
     fun lagreSkademelding(skademelding: JsonNode): SkademeldingDto {
         val skademeldingTilLagring = SkademeldingDto(
-            id = skademelding.get("id")?.asInt(),
-            skademelding = skademelding.get("skademelding")
+            id = null,
+            skademelding = skademelding
         )
         val lagretSkademeldingDto = skademeldingRepository.save(skademeldingTilLagring.toSkademelding())
         return lagretSkademeldingDto.toSkademeldingDto()
