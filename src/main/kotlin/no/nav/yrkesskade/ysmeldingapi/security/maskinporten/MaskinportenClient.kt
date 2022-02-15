@@ -23,7 +23,7 @@ interface MaskinportenClient {
 }
 
 @Component
-@Profile("dev", "prod")
+@Profile("!local", "!test", "!integration")
 class MaskinportenClientImpl(
     @Value("\${api.client.altinn.fallbackUrl}") val altinnUrl: String,
     val config: MaskinportenConfig,
