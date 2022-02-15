@@ -3,10 +3,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/yrkesskade_melding
 
 no.nav.security.jwt.issuer:
-  selvbetjening:
-    discoveryurl: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
-    accepted_audience: aud-localhost
-    cookiename: selvbetjening-idtoken
   tokenx:
     discoveryurl: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
     accepted_audience: dev-gcp:yrkesskade:yrkesskade-melding-api
