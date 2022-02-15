@@ -7,6 +7,8 @@ no.nav.security.jwt.issuer:
     discoveryurl: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
     accepted_audience: dev-gcp:yrkesskade:yrkesskade-melding-api
 
+maskinporten.client.enabled: false
+
 mock:
   enabled: true
   port: 10091

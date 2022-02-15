@@ -26,6 +26,8 @@ api:
       proxyUrl: http://localhost:${mock.port}/altinn/
 
 maskinporten:
+  client:
+    enabled: false
   clientId: foo
   scopes: bar
   wellKnownUrl: nav.no
