@@ -7,10 +7,6 @@ spring:
       auto-commit: false
 
 no.nav.security.jwt.issuer:
-  selvbetjening:
-    discoveryurl: http://metadata-selvbetjening
-    accepted_audience: aud-localhost
-    cookiename: localhost-idtoken
   tokenx:
     discoveryurl: http://metadata-selvbetjening
     accepted_audience: aud-localhost

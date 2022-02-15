@@ -20,10 +20,6 @@ spring:
         ddl-auto: none
 
 no.nav.security.jwt.issuer:
-  selvbetjening:
-    discoveryurl: ${IDPORTEN_WELL_KNOWN_URL}
-    accepted_audience: ""
-    cookiename: selvbetjening-idtoken
   tokenx:
     discoveryurl: ${TOKEN_X_WELL_KNOWN_URL}
     accepted_audience: dev-gcp:yrkesskade:yrkesskade-melding-api
