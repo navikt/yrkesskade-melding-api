@@ -24,9 +24,9 @@ interface MaskinportenClient {
 
 @Component
 @ConditionalOnProperty(
-    value = arrayOf("mock.enabled"),
-    havingValue = "false",
-    matchIfMissing = false
+    value = arrayOf("maskinporten.client.enabled"),
+    havingValue = "true",
+    matchIfMissing = true
 )
 class MaskinportenClientImpl(
     @Value("\${api.client.altinn.fallbackUrl}") val altinnUrl: String,
