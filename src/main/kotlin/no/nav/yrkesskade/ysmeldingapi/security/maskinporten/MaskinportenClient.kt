@@ -24,8 +24,8 @@ interface MaskinportenClient {
 
 @Component
 @ConditionalOnProperty(
-    value = arrayOf("maskinporten.client.enabled"),
-    havingValue = "true",
+    value = arrayOf("mock.enabled"),
+    havingValue = "false",
     matchIfMissing = false
 )
 class MaskinportenClientImpl(
