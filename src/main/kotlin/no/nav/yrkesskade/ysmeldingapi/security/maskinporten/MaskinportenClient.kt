@@ -9,7 +9,6 @@ import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.web.client.RestTemplateBuilder
-import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
 import org.springframework.http.RequestEntity
@@ -24,7 +23,11 @@ interface MaskinportenClient {
 }
 
 @Component
-@Profile("!test & !local & !integration")
+@ConditionalOnProperty(
+    value = arrayOf("maskinporten.client.enabled"),
+    havingValue = "true",
+    matchIfMissing = false
+)
 class MaskinportenClientImpl(
     @Value("\${api.client.altinn.fallbackUrl}") val altinnUrl: String,
     val config: MaskinportenConfig,
