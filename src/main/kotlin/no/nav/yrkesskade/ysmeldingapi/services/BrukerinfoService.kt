@@ -36,7 +36,7 @@ class BrukerinfoService(
         }
     }
 
-    fun hentOrganisasjon(fodselsnummer: String, organisasjonsnummer: String): OrganisasjonDto? {
+    fun hentOrganisasjonForBruker(fodselsnummer: String, organisasjonsnummer: String): OrganisasjonDto? {
         val enhetsregisterOrganisasjon = enhetsregisterClient.hentOrganisasjonFraEnhetsregisteret(organisasjonsnummer, false)
 
         return OrganisasjonDto(
