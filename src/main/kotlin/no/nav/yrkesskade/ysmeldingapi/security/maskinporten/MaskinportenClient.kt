@@ -29,7 +29,7 @@ interface MaskinportenClient {
     matchIfMissing = true
 )
 class MaskinportenClientImpl(
-    @Value("\${api.client.altinn.fallbackUrl}") val altinnUrl: String,
+    @Value("\${api.client.altinn.url}") val altinnUrl: String,
     val config: MaskinportenConfig,
     restTemplateBuilder: RestTemplateBuilder,
 ): MaskinportenClient, InitializingBean {
