@@ -30,11 +30,10 @@ api:
   client:
     yrkesskade-mottak-url: https://yrkesskade-melding-mottak.dev.intern.nav.no
     enhetsregister:
-      url: https://data.brreg.no/enhetsregisteret/api/enheter
+      url: https://data.brreg.no/enhetsregisteret/api
     altinn:
-      fallbackUrl: https://api-gw-q1.adeo.no # TEST (ta bort -q1 for prod)
+      url: https://tt02.altinn.no
       apiKey: ${ALTINN_HEADER}
-      proxyUrl: https://arbeidsgiver.dev.intern.nav.no/altinn-rettigheter-proxy #TEST (ta bort dev for prod)
 management:
   endpoint:
     health:

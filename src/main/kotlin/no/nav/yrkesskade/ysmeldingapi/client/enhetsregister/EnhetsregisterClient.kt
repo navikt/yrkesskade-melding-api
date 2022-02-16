@@ -9,18 +9,35 @@ import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
+private const val UNDERENHET = "underenheter"
+private const val ENHET = "enheter"
+
 @Component
 class EnhetsregisterClient(
     @Value("\${api.client.enhetsregister.url}") val enhetsregisterUrl: String
 ) {
     private val client: Client = ClientBuilder.newClient()
 
-    fun hentOrganisasjonFraEnhetsregisteret(
+    fun hentEnhetFraEnhetsregisteret(
         orgnr: String,
         inkluderHistorikk: Boolean
-    ): EnhetsregisterOrganisasjonDto {
+    ): EnhetsregisterOrganisasjonDto = hentEnhet(orgnr, inkluderHistorikk, ENHET)
+
+    fun hentUnderenhetFraEnhetsregisteret(
+        orgnr: String,
+        inkluderHistorikk: Boolean
+    ): EnhetsregisterOrganisasjonDto = hentEnhet(orgnr, inkluderHistorikk, UNDERENHET)
+
+    /**
+     * Henter en enhet fra enten enheter eller underenheter
+     */
+    private fun hentEnhet(orgnr: String, inkluderHistorikk: Boolean, enhettype: String): EnhetsregisterOrganisasjonDto {
+        if (enhettype != ENHET && enhettype != UNDERENHET) {
+            throw RuntimeException("$enhettype er ikke en gyldig enhetstype. Forventet $ENHET eller $UNDERENHET")
+        }
         return try {
             val response: Response = client.target(enhetsregisterUrl)
+                .path(enhettype)
                 .path(orgnr)
                 .request(MediaType.APPLICATION_JSON)
                 .get()

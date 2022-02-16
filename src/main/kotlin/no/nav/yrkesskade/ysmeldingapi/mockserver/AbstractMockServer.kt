@@ -17,10 +17,11 @@ const val SERVICE_EDITION = "1"
 const val SERVICE_CODE = "4936"
 const val FNR_MED_SKJEMATILGANG = "01065500791"
 const val FNR_MED_ORGANISASJONER = "12345678910"
-const val ALTINN_PROXY_PATH = "/altinn/ekstern/altinn/api/serviceowner/reportees*"
 const val ENHETSREGISTER_PATH = "/enhetsregisteret/api/enheter"
+const val UNDERENHETSREGISTER_PATH = "/enhetsregisteret/api/underenheter"
 const val ALTINN_ROLLER_PATH = "/altinn/api/serviceowner/authorization/roles"
 const val ALTINN_RETTIGHETER_PATH = "/altinn/api/serviceowner/authorization/rights"
+const val ALTINN_REPORTEE_PATH = "/altinn/api/serviceowner/reportees"
 
 fun WireMockServer.stubForGet(urlPattern: UrlPattern, builder: MappingBuilder.() -> Unit) {
     stubFor(get(urlPattern).apply(builder))
@@ -100,35 +101,24 @@ open class AbstractMockSever (private val port: Int?){
             willReturnJson(hentStringFraFil("rettigheter.json"))
         }
 
-        stubForGet(urlPathMatching(ALTINN_PROXY_PATH)) {
-            withQueryParam("subject", equalTo(FNR_MED_ORGANISASJONER))
-            willReturnJson(hentStringFraFil("organisasjoner.json"))
-
-        }
-
-        stubForGet(urlPathMatching("$ALTINN_PROXY_PATH.*")) {
-            withQueryParam("subject", equalTo(FNR_MED_SKJEMATILGANG))
-            withQueryParam("serviceCode", equalTo(SERVICE_CODE))
-            withQueryParam("serviceEdition", equalTo(SERVICE_EDITION))
-            willReturnJson(hentStringFraFil("rettigheterTilSkjema.json"))
-        }
-
-        stubForGet(urlPathEqualTo(ALTINN_PROXY_PATH)) {
-            withQueryParam("subject", notMatching("$FNR_MED_ORGANISASJONER|$FNR_MED_SKJEMATILGANG"))
-            willReturn(
-                aResponse()
-                    .withStatusMessage("Invalid socialSecurityNumber")
-                    .withStatus(400)
-                    .withHeader("Content-Type", "application/octet-stream")
-            )
+        stubForGet(urlPathMatching("$ALTINN_REPORTEE_PATH.*")) {
+            willReturnJson(hentStringFraFil("altinn_reportee.json"))
         }
 
         // Enhetsregisteret
-        stubForAny(urlPathMatching("$ENHETSREGISTER_PATH/910720120.*")) {
+        stubForAny(urlPathMatching("$UNDERENHETSREGISTER_PATH/910460048.*")) {
+            willReturnJson(hentStringFraFil("underenhetregisteret.json"))
+        }
+
+        stubForAny(urlPathMatching("$ENHETSREGISTER_PATH/910521551.*")) {
             willReturnJson(hentStringFraFil("enhetsregisteret.json"))
         }
 
-        stubForAny(urlPathMatching("$ENHETSREGISTER_PATH/910720120.*")) {
+        stubForAny(urlPathMatching("$ENHETSREGISTER_PATH/910460048.*")) {
+            willReturnJson(hentStringFraFil("enhetsregisteret.json"))
+        }
+
+        stubForAny(urlPathMatching("$ENHETSREGISTER_PATH/910460048.*")) {
             willReturnJson(hentStringFraFil("enhetsregisteret.json"))
         }
     }

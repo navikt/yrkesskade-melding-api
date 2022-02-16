@@ -16,11 +16,17 @@ class BrukerinfoService(
     fun hentOrganisasjonerForFodselsnummer(fnr: String): List<OrganisasjonDto> {
         val altinnOrganisasjoner = altinnClient.hentOrganisasjoner(fnr)
         val enheterForOrganisasjonsnummer: HashMap<String, EnhetsregisterOrganisasjonDto> = HashMap()
-        altinnOrganisasjoner.filterNot { it.type == "Person" }.forEach {
-            it.organisasjonsnummer?.let { organisasjonsnummer ->
-                enheterForOrganisasjonsnummer[organisasjonsnummer] = run {
-                    enhetsregisterClient.hentOrganisasjonFraEnhetsregisteret(organisasjonsnummer, false)
-                }
+        altinnOrganisasjoner.forEach {
+            if (it.organisasjonsnummer == null) {
+                return@forEach;
+            }
+
+            if (it.parentOrganisasjonsnummer != null) {
+                enheterForOrganisasjonsnummer[it.parentOrganisasjonsnummer] =
+                    enhetsregisterClient.hentUnderenhetFraEnhetsregisteret(it.organisasjonsnummer, false)
+            } else {
+                enheterForOrganisasjonsnummer[it.organisasjonsnummer] =
+                    enhetsregisterClient.hentEnhetFraEnhetsregisteret(it.organisasjonsnummer, false)
             }
         }
 
@@ -37,7 +43,7 @@ class BrukerinfoService(
     }
 
     fun hentOrganisasjonForBruker(fodselsnummer: String, organisasjonsnummer: String): OrganisasjonDto? {
-        val enhetsregisterOrganisasjon = enhetsregisterClient.hentOrganisasjonFraEnhetsregisteret(organisasjonsnummer, false)
+        val enhetsregisterOrganisasjon = enhetsregisterClient.hentEnhetFraEnhetsregisteret(organisasjonsnummer, false)
 
         return OrganisasjonDto(
             organisasjonsnummer = enhetsregisterOrganisasjon.organisasjonsnummer,
