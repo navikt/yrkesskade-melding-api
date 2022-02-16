@@ -27,11 +27,11 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: "yrkesskade-melding-mottak"
-          namespace: "yrkesskade"
-        - application: "yrkesskade-saksbehandling"
-          namespace: "yrkesskade"
-          cluster: "labs-gcp"
+        - application: yrkesskade-melding-mottak
+        - application: yrkesskade-saksbehandling
+          namespace: yrkesskade
+          cluster: labs-gcp
+        - application: yrkesskade-skjema
     outbound:
       rules:
         - application: "yrkesskade-melding-mottak"
@@ -40,10 +40,6 @@ spec:
           namespace: arbeidsgiver
   tokenx:
     enabled: true
-    accessPolicy:
-      inbound:
-        rules:
-          - application: yrkesskade-skjema
   maskinporten:
     enabled: true
     scopes:
