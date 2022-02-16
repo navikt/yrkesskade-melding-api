@@ -33,6 +33,7 @@ class AltinnClient(
             .path(path)
             .resolveTemplate("subject", autentisertBruker.fodselsnummer)
             .request("application/hal+json")
+            .header("ApiKey", altinnApiKey)
             .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
             .get()
 
@@ -52,6 +53,7 @@ class AltinnClient(
             .resolveTemplate("subject", fnr)
             .resolveTemplate("reportee", organisasjonsnummer)
             .request("application/hal+json")
+            .header("ApiKey", altinnApiKey)
             .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
             .get()
 
@@ -70,6 +72,7 @@ class AltinnClient(
             .resolveTemplate("subject", fnr)
             .resolveTemplate("reportee", organisasjonsnummer)
             .request("application/hal+json")
+            .header("ApiKey", altinnApiKey)
             .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
             .get()
 
