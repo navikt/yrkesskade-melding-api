@@ -28,19 +28,20 @@ class AltinnClient(
     fun hentOrganisasjoner(fnr: String): List<AltinnOrganisasjonDto> {
         val path = "/api/serviceowner/reportees?ForceEIAuthentication&subject={subject}&showConsentReportees=false"
 
+        val token = hentMaskinportenToken().tokenResponse.accessToken;
         val response: Response = restklient.target(altinnUrl)
             .path(path)
             .resolveTemplate("subject", autentisertBruker.fodselsnummer)
             .request("application/hal+json")
             .header("ApiKey", altinnApiKey)
-            .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
+            .header("Authorization", "Bearer ${token}")
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
             val altinnReporteeResponse = response.readEntity(AltinnReporteeResponse::class.java)
             return altinnReporteeResponse.embedded.reportees.filterNot { it.type == "Person" }.map { AltinnOrganisasjonDto.fraAltinnReportee(it) }
         } else {
-            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}}")
+            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}, token: ${token}")
         }
     }
 
