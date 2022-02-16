@@ -22,7 +22,7 @@ class AltinnClient(
 
     init {
         // legger på default headers på alle kall mot Altinn API
-        var altinnClientHeaderRequestFilter = AltinnClientHeaderRequestFilter(altinnApiKey, maskinportenClient)
+        var altinnClientHeaderRequestFilter = AltinnClientHeaderRequestFilter(altinnApiKey)
         restklient = ClientBuilder.newClient().register(altinnClientHeaderRequestFilter)
     }
 
@@ -33,6 +33,7 @@ class AltinnClient(
             .path(path)
             .resolveTemplate("subject", autentisertBruker.fodselsnummer)
             .request("application/hal+json")
+            .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
@@ -51,6 +52,7 @@ class AltinnClient(
             .resolveTemplate("subject", fnr)
             .resolveTemplate("reportee", organisasjonsnummer)
             .request("application/hal+json")
+            .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
@@ -68,6 +70,7 @@ class AltinnClient(
             .resolveTemplate("subject", fnr)
             .resolveTemplate("reportee", organisasjonsnummer)
             .request("application/hal+json")
+            .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
