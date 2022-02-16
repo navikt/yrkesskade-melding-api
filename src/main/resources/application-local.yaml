@@ -21,6 +21,5 @@ api:
     enhetsregister:
       url: http://localhost:${mock.port}/enhetsregisteret/api
     altinn:
-      fallbackUrl: http://localhost:${mock.port}/altinn/
+      url: http://localhost:${mock.port}/altinn/
       apiKey: test
-      proxyUrl: http://localhost:${mock.port}/altinn/

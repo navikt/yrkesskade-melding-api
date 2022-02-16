@@ -13,8 +13,7 @@ import javax.ws.rs.core.Response
 class AltinnClient(
     private val autentisertBruker: AutentisertBruker,
     @Value("\${spring.application.name}") val applicationName: String,
-    @Value("\${api.client.altinn.proxyUrl}") val proxyUrl: String,
-    @Value("\${api.client.altinn.fallbackUrl}") val fallbackUrl: String,
+    @Value("\${api.client.altinn.url}") val altinnUrl: String,
     @Value("\${api.client.altinn.apiKey}") val altinnApiKey: String,
     private val maskinportenClient: MaskinportenClient
     ) {
@@ -30,7 +29,7 @@ class AltinnClient(
     fun hentOrganisasjoner(fnr: String): List<AltinnOrganisasjonDto> {
         val path = "/api/serviceowner/reportees?ForceEIAuthentication&subject={subject}&showConsentReportees=false"
 
-        val response: Response = restklient.target(fallbackUrl)
+        val response: Response = restklient.target(altinnUrl)
             .path(path)
             .resolveTemplate("subject", autentisertBruker.fodselsnummer)
             .request()
@@ -47,7 +46,7 @@ class AltinnClient(
     fun hentRettigheter(fnr: String, organisasjonsnummer: String): AltinnRettighetResponse {
         val path = "/api/serviceowner/authorization/rights?ForceEIAuthentication&subject={subject}&reportee={reportee}"
 
-        val response: Response = restklient.target(fallbackUrl)
+        val response: Response = restklient.target(altinnUrl)
             .path(path)
             .resolveTemplate("subject", fnr)
             .resolveTemplate("reportee", organisasjonsnummer)
@@ -63,7 +62,7 @@ class AltinnClient(
 
     fun hentRoller(fnr: String, organisasjonsnummer: String, spraak: String = "nb"): AltinnRollerDto {
         val path = "/api/serviceowner/authorization/roles?ForceEIAuthentication&language={language}&subject={subject}&reportee={reportee}"
-        val response: Response = restklient.target(fallbackUrl)
+        val response: Response = restklient.target(altinnUrl)
             .path(path)
             .resolveTemplate("language", spraak)
             .resolveTemplate("subject", fnr)
