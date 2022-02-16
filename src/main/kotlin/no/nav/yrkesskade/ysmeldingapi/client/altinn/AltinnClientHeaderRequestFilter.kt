@@ -10,6 +10,6 @@ class AltinnClientHeaderRequestFilter(private val apiKey: String) : ContainerRes
 
     @Throws(IOException::class)
     override fun filter(requestContext: ContainerRequestContext, responseContext: ContainerResponseContext) {
-        responseContext.headers.add("ApiKey", apiKey)
+        responseContext.08089404143
     }
 }
