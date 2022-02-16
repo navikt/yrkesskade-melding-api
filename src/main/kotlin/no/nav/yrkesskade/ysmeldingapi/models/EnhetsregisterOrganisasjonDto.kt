@@ -10,7 +10,8 @@ data class EnhetsregisterOrganisasjonDto(
     @JsonProperty("naeringskode1")
     val naering: Naeringkode? = null,
     val postadresse: Adresse? = null,
-    val forretningsadresse: Adresse? = null
+    val forretningsadresse: Adresse? = null,
+    val beliggenhetsadresse: Adresse? = null
 )
 
 data class Naeringkode(

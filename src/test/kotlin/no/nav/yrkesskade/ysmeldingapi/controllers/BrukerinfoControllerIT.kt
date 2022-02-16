@@ -11,6 +11,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.transaction.annotation.Transactional
@@ -35,12 +36,13 @@ class BrukerinfoControllerIT: AbstractIT() {
                 .header(AUTHORIZATION, "Bearer $jwt")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
-        )
+        ).andDo(print())
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.fnr").value("12345678910"))
             .andExpect(jsonPath("$.organisasjoner").isArray)
-            .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910720120\" && @.naeringskode == \"52.292\")]").exists())
-            .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"810771852\" && @.naeringskode == null && @.navn == \"STOL PÅ TORE\")]").exists())
+            .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910521551\" && @.naeringskode == \"52.292\")]").exists())
+            .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910460048\" && @.naeringskode == \"52.292\")]").exists())
+            .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910441205\" && @.naeringskode == null && @.navn == \"BARDU OG SØRUM REGNSKAP\")]").exists())
             .andExpect(jsonPath("\$.organisasjoner[?(@.organisasjonsnummer != null && @.navn != null && @.type != null && @.status != null && @.organisasjonsform != null)]").exists())
 
     }

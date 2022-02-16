@@ -23,7 +23,7 @@ api:
   client:
     yrkesskade-mottak-url: http://localhost:9080
     enhetsregister:
-      url: http://localhost:${mock.port}/enhetsregisteret/api/enheter
+      url: http://localhost:${mock.port}/enhetsregisteret/api
     altinn:
       fallbackUrl: http://localhost:${mock.port}/altinn/
       apiKey: test
