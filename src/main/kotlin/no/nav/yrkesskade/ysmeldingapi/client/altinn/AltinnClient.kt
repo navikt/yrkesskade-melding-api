@@ -39,7 +39,7 @@ class AltinnClient(
             val altinnReporteeResponse = response.readEntity(AltinnReporteeResponse::class.java)
             return altinnReporteeResponse.embedded.reportees.filterNot { it.type == "Person" }.map { AltinnOrganisasjonDto.fraAltinnReportee(it) }
         } else {
-            throw RuntimeException("Klarte ikke hente roller fra Altinn")
+            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}, melding: ${response.readEntity(String::class.java)}")
         }
     }
 
