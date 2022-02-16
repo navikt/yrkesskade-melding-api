@@ -32,14 +32,14 @@ class AltinnClient(
         val response: Response = restklient.target(altinnUrl)
             .path(path)
             .resolveTemplate("subject", autentisertBruker.fodselsnummer)
-            .request()
+            .request("application/hal+json")
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
             val altinnReporteeResponse = response.readEntity(AltinnReporteeResponse::class.java)
             return altinnReporteeResponse.embedded.reportees.filterNot { it.type == "Person" }.map { AltinnOrganisasjonDto.fraAltinnReportee(it) }
         } else {
-            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}, melding: ${response.readEntity(String::class.java)}")
+            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}}")
         }
     }
 
@@ -50,13 +50,13 @@ class AltinnClient(
             .path(path)
             .resolveTemplate("subject", fnr)
             .resolveTemplate("reportee", organisasjonsnummer)
-            .request()
+            .request("application/hal+json")
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
             return response.readEntity(AltinnRettighetResponse::class.java)
         } else {
-            throw RuntimeException("Klarte ikke hente roller fra Altinn")
+            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
         }
     }
 
@@ -67,13 +67,13 @@ class AltinnClient(
             .resolveTemplate("language", spraak)
             .resolveTemplate("subject", fnr)
             .resolveTemplate("reportee", organisasjonsnummer)
-            .request()
+            .request("application/hal+json")
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
             return response.readEntity(AltinnRollerResponse::class.java).melding
         } else {
-            throw RuntimeException("Klarte ikke hente roller fra Altinn")
+            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
         }
     }
 
