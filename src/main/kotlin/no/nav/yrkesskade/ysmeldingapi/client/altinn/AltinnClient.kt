@@ -3,11 +3,16 @@ package no.nav.yrkesskade.ysmeldingapi.client.altinn
 import no.nav.yrkesskade.ysmeldingapi.models.*
 import no.nav.yrkesskade.ysmeldingapi.security.maskinporten.MaskinportenClient
 import no.nav.yrkesskade.ysmeldingapi.utils.AutentisertBruker
+import org.glassfish.jersey.logging.LoggingFeature
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import java.util.logging.Level
+import java.util.logging.Logger
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.ClientBuilder
+import javax.ws.rs.core.Feature
 import javax.ws.rs.core.Response
+
 
 @Component
 class AltinnClient(
@@ -19,11 +24,13 @@ class AltinnClient(
     ) {
 
     private val restklient: Client
+    private val logger = Logger.getLogger(javaClass.name)
 
     init {
         // legger på default headers på alle kall mot Altinn API
         var altinnClientHeaderRequestFilter = AltinnClientHeaderRequestFilter(altinnApiKey)
-        restklient = ClientBuilder.newClient().register(altinnClientHeaderRequestFilter)
+        val feature: Feature = LoggingFeature(logger, Level.INFO, null, null)
+        restklient = ClientBuilder.newClient().register(altinnClientHeaderRequestFilter).register(feature)
     }
 
     fun hentOrganisasjoner(fnr: String): List<AltinnOrganisasjonDto> {

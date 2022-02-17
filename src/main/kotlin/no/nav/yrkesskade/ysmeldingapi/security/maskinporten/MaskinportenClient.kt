@@ -51,7 +51,7 @@ class MaskinportenClientImpl(
             .issueTime(Date.from(now))
             .expirationTime(Date.from(expire))
             .notBeforeTime(Date.from(now))
-            .claim("scope", "altinn:serviceowner")
+            .claim("scope", "altinn:serviceowner/reportees altinn:serviceowner/rolesandrights")
             .claim("resource", altinnUrl)
             .jwtID(UUID.randomUUID().toString())
             .build()
