@@ -30,7 +30,7 @@ class AltinnClient(
         // legger på default headers på alle kall mot Altinn API
         var altinnClientHeaderRequestFilter = AltinnClientHeaderRequestFilter(altinnApiKey)
         val feature: Feature = LoggingFeature(logger, Level.INFO, null, null)
-        restklient = ClientBuilder.newClient().register(altinnClientHeaderRequestFilter).register(feature)
+        restklient = ClientBuilder.newBuilder().register(altinnClientHeaderRequestFilter).register(feature).build()
     }
 
     fun hentOrganisasjoner(fnr: String): List<AltinnOrganisasjonDto> {
