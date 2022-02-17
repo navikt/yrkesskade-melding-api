@@ -48,8 +48,7 @@ spec:
     enabled: true
     scopes:
       consumes:
-        - name: "altinn:serviceowner/reportees"
-        - name: "altinn:serviceowner/rolesandrights"
+        - name: "altinn:serviceowner"
   envFrom:
     - configmap: loginservice-idporten
     - secret: yrkesskade-melding-api
