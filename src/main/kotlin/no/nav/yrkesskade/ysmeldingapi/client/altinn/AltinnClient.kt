@@ -27,7 +27,7 @@ class AltinnClient(
     }
 
     fun hentOrganisasjoner(fnr: String): List<AltinnOrganisasjonDto> {
-        val path = "/api/serviceowner/reportees?ForceEIAuthentication&subject={subject}&showConsentReportees=false"
+        val path = "/api/serviceowner/reportees?subject={subject}&showConsentReportees=false"
 
         val response: Response = restklient.target(altinnUrl)
             .path(path)
@@ -40,12 +40,12 @@ class AltinnClient(
             val altinnReporteeResponse = response.readEntity(AltinnReporteeResponse::class.java)
             return altinnReporteeResponse.embedded.reportees.filterNot { it.type == "Person" }.map { AltinnOrganisasjonDto.fraAltinnReportee(it) }
         } else {
-            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
+            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status} ${response.}")
         }
     }
 
     fun hentRettigheter(fnr: String, organisasjonsnummer: String): AltinnRettighetResponse {
-        val path = "/api/serviceowner/authorization/rights?ForceEIAuthentication&subject={subject}&reportee={reportee}"
+        val path = "/api/serviceowner/authorization/rights?subject={subject}&reportee={reportee}"
 
         val response: Response = restklient.target(altinnUrl)
             .path(path)
@@ -63,7 +63,7 @@ class AltinnClient(
     }
 
     fun hentRoller(fnr: String, organisasjonsnummer: String, spraak: String = "nb"): AltinnRollerDto {
-        val path = "/api/serviceowner/authorization/roles?ForceEIAuthentication&language={language}&subject={subject}&reportee={reportee}"
+        val path = "/api/serviceowner/authorization/roles?language={language}&subject={subject}&reportee={reportee}"
         val response: Response = restklient.target(altinnUrl)
             .path(path)
             .resolveTemplate("language", spraak)
