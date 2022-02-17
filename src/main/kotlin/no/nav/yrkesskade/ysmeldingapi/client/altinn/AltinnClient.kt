@@ -34,11 +34,12 @@ class AltinnClient(
     }
 
     fun hentOrganisasjoner(fnr: String): List<AltinnOrganisasjonDto> {
-        val path = "/api/serviceowner/reportees?subject={subject}&showConsentReportees=false"
+        val path = "/api/serviceowner/reportees"
 
         val response: Response = restklient.target(altinnUrl)
             .path(path)
-            .resolveTemplate("subject", autentisertBruker.fodselsnummer)
+            .queryParam("subject", autentisertBruker.fodselsnummer)
+            .queryParam("showConsentReportees", "false")
             .request("application/hal+json")
             .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
             .header("ApiKey", altinnApiKey)
@@ -53,12 +54,12 @@ class AltinnClient(
     }
 
     fun hentRettigheter(fnr: String, organisasjonsnummer: String): AltinnRettighetResponse {
-        val path = "/api/serviceowner/authorization/rights?subject={subject}&reportee={reportee}"
+        val path = "/api/serviceowner/authorization/rights"
 
         val response: Response = restklient.target(altinnUrl)
             .path(path)
-            .resolveTemplate("subject", fnr)
-            .resolveTemplate("reportee", organisasjonsnummer)
+            .queryParam("subject", fnr)
+            .queryParam("reportee", organisasjonsnummer)
             .request("application/hal+json")
             .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
             .header("ApiKey", altinnApiKey)
@@ -72,12 +73,12 @@ class AltinnClient(
     }
 
     fun hentRoller(fnr: String, organisasjonsnummer: String, spraak: String = "nb"): AltinnRollerDto {
-        val path = "/api/serviceowner/authorization/roles?language={language}&subject={subject}&reportee={reportee}"
+        val path = "/api/serviceowner/authorization/roles"
         val response: Response = restklient.target(altinnUrl)
             .path(path)
-            .resolveTemplate("language", spraak)
-            .resolveTemplate("subject", fnr)
-            .resolveTemplate("reportee", organisasjonsnummer)
+            .queryParam("language", spraak)
+            .queryParam("subject", fnr)
+            .queryParam("reportee", organisasjonsnummer)
             .request("application/hal+json")
             .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
             .header("ApiKey", altinnApiKey)
