@@ -30,7 +30,7 @@ class AltinnClient(
         // legger på default headers på alle kall mot Altinn API
         var altinnClientHeaderRequestFilter = AltinnClientHeaderRequestFilter(altinnApiKey)
         val feature: Feature = LoggingFeature(logger, Level.INFO, null, null)
-        restklient = ClientBuilder.newBuilder().register(altinnClientHeaderRequestFilter).register(feature).build()
+        restklient = ClientBuilder.newBuilder().register(feature).build()
     }
 
     fun hentOrganisasjoner(fnr: String): List<AltinnOrganisasjonDto> {
@@ -41,6 +41,7 @@ class AltinnClient(
             .resolveTemplate("subject", autentisertBruker.fodselsnummer)
             .request("application/hal+json")
             .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
+            .header("ApiKey", altinnApiKey)
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
@@ -60,6 +61,7 @@ class AltinnClient(
             .resolveTemplate("reportee", organisasjonsnummer)
             .request("application/hal+json")
             .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
+            .header("ApiKey", altinnApiKey)
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
@@ -78,6 +80,7 @@ class AltinnClient(
             .resolveTemplate("reportee", organisasjonsnummer)
             .request("application/hal+json")
             .header("Authorization", "Bearer ${hentMaskinportenToken().tokenResponse.accessToken}")
+            .header("ApiKey", altinnApiKey)
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
