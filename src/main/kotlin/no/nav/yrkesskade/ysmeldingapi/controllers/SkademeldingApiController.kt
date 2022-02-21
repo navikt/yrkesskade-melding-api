@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @ProtectedWithClaims(issuer = ISSUER, claimMap = [LEVEL])
-@RestController("/api}")
+@RestController("/api")
 class SkademeldingApiController(
     @org.springframework.beans.factory.annotation.Autowired(required = false) delegate: SkademeldingApiDelegate?
 ) : SkademeldingApi {
