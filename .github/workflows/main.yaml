@@ -41,7 +41,7 @@ jobs:
         "APIKEY": "${{ secrets.NAIS_DEPLOY_APIKEY }}"
         "CLUSTER": "dev-gcp"
         "RESOURCE": ".nais/nais.yaml"
-        "VARS": ".nais/dev.yaml"
+        "VARS": ".nais/dev/dev.yaml"
   "deployAlertsToDev":
     name: "Deploy alerts to dev"
     needs: "build"
@@ -54,4 +54,4 @@ jobs:
         "APIKEY": "${{ secrets.NAIS_DEPLOY_APIKEY }}"
         "CLUSTER": "dev-gcp"
         "RESOURCE": ".nais/alerts-dev.yaml"
-        "VARS": ".nais/dev.yaml"
+        "VARS": ".nais/dev/dev.yaml"

@@ -49,6 +49,9 @@ spec:
   envFrom:
     - configmap: loginservice-idporten
     - secret: yrkesskade-melding-api
+  env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: {{springProfile}}
   resources:
     limits:
       cpu: "2"
@@ -66,3 +69,5 @@ spec:
         databases:
           - name: yrkesskade-api-db
             envVarPrefix: YRKESSKADE_API_DB
+  kafka:
+    pool: {{kafkaPool}}
