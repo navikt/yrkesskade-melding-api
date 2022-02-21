@@ -5,6 +5,15 @@ spring:
   datasource:
     hikari:
       auto-commit: false
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKERS}
+    consumer:
+      auto-offset-reset: earliest
+      group-id: yrkesskade
+
+kafka:
+  topic:
+    skademelding-innsendt: test
 
 no.nav.security.jwt.issuer:
   tokenx:

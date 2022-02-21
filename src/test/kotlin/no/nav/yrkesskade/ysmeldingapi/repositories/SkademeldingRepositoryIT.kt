@@ -1,13 +1,13 @@
 package no.nav.yrkesskade.ysmeldingapi.repositories
 
 import no.nav.yrkesskade.ysmeldingapi.domain.SkademeldingEntity
-import no.nav.yrkesskade.ysmeldingapi.repositories.testutils.docker.PostgresDockerContainer
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.context.SpringBootTest
+import java.util.*
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -22,6 +22,8 @@ class SkademeldingRepositoryIT : AbstractIT() {
             SkademeldingEntity(
                 null,
                 """{"some": "data"}""",
+                "test-kilde",
+                Date()
             )
         )
         assertThat(repository.findAll().size).isEqualTo(1)
@@ -33,12 +35,16 @@ class SkademeldingRepositoryIT : AbstractIT() {
             SkademeldingEntity(
                 null,
                 """{"some": "data"}""",
+                "test-kilde",
+                Date()
             )
         )
         repository.save(
             SkademeldingEntity(
                 null,
                 """{"some more": "data"}""",
+                "test-kilde",
+                Date()
             )
         )
         assertThat(repository.findAll().size).isEqualTo(2)

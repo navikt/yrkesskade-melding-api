@@ -5,6 +5,7 @@ import no.nav.yrkesskade.ysmeldingapi.client.enhetsregister.EnhetsregisterClient
 import no.nav.yrkesskade.ysmeldingapi.models.AdresseDto
 import no.nav.yrkesskade.ysmeldingapi.models.EnhetsregisterOrganisasjonDto
 import no.nav.yrkesskade.ysmeldingapi.models.OrganisasjonDto
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
 @Service
