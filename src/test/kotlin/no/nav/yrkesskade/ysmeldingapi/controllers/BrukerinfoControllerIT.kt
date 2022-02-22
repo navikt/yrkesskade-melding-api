@@ -37,6 +37,7 @@ class BrukerinfoControllerIT: AbstractIT() {
                 .characterEncoding(Charsets.UTF_8)
         )   .andExpect(status().isOk)
             .andExpect(jsonPath("$.fnr").value("12345678910"))
+            .andExpect(jsonPath("$.navn").value("ROLF BJØRN"))
             .andExpect(jsonPath("$.organisasjoner").isArray)
             .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910521551\" && @.naeringskode == \"52.292\")]").exists())
             .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910460048\" && @.naeringskode == \"52.292\")]").exists())
