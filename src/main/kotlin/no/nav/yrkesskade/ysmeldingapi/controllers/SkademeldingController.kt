@@ -3,7 +3,7 @@ package no.nav.yrkesskade.ysmeldingapi.controllers
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.security.token.support.core.api.Unprotected
-import no.nav.yrkesskade.ysmeldingapi.model.Skademelding
+import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingMetadata
 import no.nav.yrkesskade.ysmeldingapi.services.SkademeldingService

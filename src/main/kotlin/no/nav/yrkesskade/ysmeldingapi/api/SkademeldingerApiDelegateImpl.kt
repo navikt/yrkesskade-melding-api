@@ -1,6 +1,7 @@
 package no.nav.yrkesskade.ysmeldingapi.api
 
-import no.nav.yrkesskade.ysmeldingapi.model.Skademelding
+import no.nav.yrkesskade.skademelding.api.SkademeldingApiDelegate
+import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingMetadata
 import no.nav.yrkesskade.ysmeldingapi.services.SkademeldingService
 import no.nav.yrkesskade.ysmeldingapi.utils.AutentisertBruker

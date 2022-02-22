@@ -1,9 +1,9 @@
 package no.nav.yrkesskade.ysmeldingapi.services
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendingClient
 import no.nav.yrkesskade.ysmeldingapi.domain.SkademeldingEntity
-import no.nav.yrkesskade.ysmeldingapi.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingInnsendtHendelse
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingMetadata
