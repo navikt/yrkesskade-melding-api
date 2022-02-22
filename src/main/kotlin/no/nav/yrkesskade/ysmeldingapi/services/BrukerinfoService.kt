@@ -3,9 +3,11 @@ package no.nav.yrkesskade.ysmeldingapi.services
 import no.nav.yrkesskade.ysmeldingapi.client.altinn.AltinnClient
 import no.nav.yrkesskade.ysmeldingapi.client.enhetsregister.EnhetsregisterClient
 import no.nav.yrkesskade.ysmeldingapi.models.AdresseDto
+import no.nav.yrkesskade.ysmeldingapi.models.AltinnRettighetResponse
 import no.nav.yrkesskade.ysmeldingapi.models.EnhetsregisterOrganisasjonDto
 import no.nav.yrkesskade.ysmeldingapi.models.OrganisasjonDto
 import org.springframework.stereotype.Service
+import javax.ws.rs.BadRequestException
 
 @Service
 class BrukerinfoService(
@@ -51,5 +53,13 @@ class BrukerinfoService(
             postadresse = enhetsregisterOrganisasjon.postadresse?.let { AdresseDto.fraEnhetsregisterAdresse(it) },
             forretningsadresse = enhetsregisterOrganisasjon.forretningsadresse?.let { AdresseDto.fraEnhetsregisterAdresse(it) },
         )
+    }
+
+    fun hentSubjectForFodselsnummerOgOrganisasjon(fodselsnummer: String, organisasjon: OrganisasjonDto): AltinnRettighetResponse? {
+        if (organisasjon.organisasjonsnummer == null) {
+            throw BadRequestException("Organisasjonsnummer kan ikke være tom")
+        }
+
+        return altinnClient.hentRettigheter(fodselsnummer, organisasjon.organisasjonsnummer)
     }
 }

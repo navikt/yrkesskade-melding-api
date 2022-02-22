@@ -22,7 +22,10 @@ class BrukerinfoController(private val autentisertBruker: AutentisertBruker, pri
     @GetMapping()
     fun hentUserInfo(): ResponseEntity<BrukerinfoDto> {
         val organisasjoner: List<OrganisasjonDto> = brukerinfoService.hentOrganisasjonerForFodselsnummer(autentisertBruker.fodselsnummer)
-        return ResponseEntity.ok(BrukerinfoDto(fnr = autentisertBruker.fodselsnummer, organisasjoner = organisasjoner))
+        val altinnRettighetResponse = brukerinfoService.hentSubjectForFodselsnummerOgOrganisasjon(autentisertBruker.fodselsnummer, organisasjoner.first())
+
+        return ResponseEntity.ok(BrukerinfoDto(fnr = autentisertBruker.fodselsnummer, navn = altinnRettighetResponse?.person?.navn
+            ?: "", organisasjoner = organisasjoner))
     }
 
     @GetMapping("/organisasjoner/{organisasjonsnummer}")
