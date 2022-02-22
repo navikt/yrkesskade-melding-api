@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response
 private const val UNDERENHET = "underenheter"
 private const val ENHET = "enheter"
 private const val DEV = "organisasjoner"
+
 @Component
 class EnhetsregisterClient(
     @Value("\${api.client.enhetsregister.url}") val enhetsregisterUrl: String
@@ -38,6 +39,7 @@ class EnhetsregisterClient(
 
         var path = enhettype;
         if (enhetsregisterUrl.contains("/ereg/api/v1")) {
+            // dersom vi er i dev, går må vi bruke "/organisasjoner som path
             path = DEV
         }
 
