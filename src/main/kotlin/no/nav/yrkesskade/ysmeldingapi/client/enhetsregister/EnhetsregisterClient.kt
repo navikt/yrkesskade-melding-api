@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response
 
 private const val UNDERENHET = "underenheter"
 private const val ENHET = "enheter"
-
+private const val DEV = "organisasjoner"
 @Component
 class EnhetsregisterClient(
     @Value("\${api.client.enhetsregister.url}") val enhetsregisterUrl: String
@@ -35,9 +35,15 @@ class EnhetsregisterClient(
         if (enhettype != ENHET && enhettype != UNDERENHET) {
             throw RuntimeException("$enhettype er ikke en gyldig enhetstype. Forventet $ENHET eller $UNDERENHET")
         }
+
+        var path = enhettype;
+        if (enhetsregisterUrl.contains("/ereg/api/v1")) {
+            path = DEV
+        }
+
         return try {
             val response: Response = client.target(enhetsregisterUrl)
-                .path(enhettype)
+                .path(path)
                 .path(orgnr)
                 .request(MediaType.APPLICATION_JSON)
                 .get()
