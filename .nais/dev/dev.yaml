@@ -1,4 +1,4 @@
 ingresses:
 - "https://yrkesskade-melding-api.dev.intern.nav.no"
-springProfileActive: dev
+springProfile: dev
 kafkaPool: nav-dev
