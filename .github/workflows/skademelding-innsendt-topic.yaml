@@ -5,7 +5,7 @@ on:
     branches:
       - 'master'
     paths:
-      - '.nais/*/skademelding-innsendte-topic.yaml'
+      - '.nais/*/skademelding-innsendt-topic.yaml'
 
 jobs:
   deploy-kafka-topics-dev:
@@ -18,7 +18,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           VAR: kafka-pool=nav-dev
-          RESOURCE: .nais/dev/skademelding-innsendte-topic.yaml
+          RESOURCE: .nais/dev/skademelding-innsendt-topic.yaml
 
   deploy-kafka-topics-prod:
     name: Deploy to Aiven Prod
@@ -31,4 +31,4 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           VAR: kafka-pool=nav-prod
-          RESOURCE: .nais/prod/skademelding-innsendte-topic.yaml
+          RESOURCE: .nais/prod/skademelding-innsendt-topic.yaml

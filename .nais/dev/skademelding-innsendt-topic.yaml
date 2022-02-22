@@ -1,12 +1,12 @@
 apiVersion: kafka.nais.io/v1
 kind: Topic
 metadata:
-  name: skademelding-innsendte
+  name: privat-yrkesskade-skademeldingInnsendt
   namespace: yrkesskade
   labels:
     team: yrkesskade
 spec:
-  pool: nav-prod
+  pool: nav-dev
   config:
     cleanupPolicy: compact
     minimumInSyncReplicas: 1
@@ -17,7 +17,7 @@ spec:
   acl:
     - team: yrkesskade
       application: yrkesskade-melding-api
-      access: readwrite
+      access: write
     - team: yrkesskade
       application: yrkesskade-melding-mottak
       access: read

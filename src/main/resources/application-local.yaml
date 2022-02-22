@@ -19,7 +19,7 @@ spring:
 # bruk oneshot for å opprette topic
 kafka:
   topic:
-    skademelding-innsendt: melding-mottak
+    skademelding-innsendt: privat-yrkesskade-skademeldingInnsendt
 
 no.nav.security.jwt.issuer:
   tokenx:
