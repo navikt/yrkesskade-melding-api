@@ -1,12 +1,13 @@
 package no.nav.yrkesskade.ysmeldingapi.services
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import no.nav.yrkesskade.model.SkademeldingInnsendtHendelse
+import no.nav.yrkesskade.model.SkademeldingMetadata
 import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendingClient
 import no.nav.yrkesskade.ysmeldingapi.domain.SkademeldingEntity
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
-import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingInnsendtHendelse
-import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingMetadata
 import no.nav.yrkesskade.ysmeldingapi.repositories.SkademeldingRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -20,6 +21,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 ) {
 
     private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
+    private val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
     fun sendTilMottak(skademeldingInnsendtHendelse: SkademeldingInnsendtHendelse): SkademeldingInnsendtHendelse {
         return skademeldingInnsendingClient.sendTilMottak(skademeldingInnsendtHendelse).also {
@@ -31,7 +33,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
     fun lagreSkademelding(skademelding: Skademelding, skademeldingMetadata: SkademeldingMetadata): SkademeldingDto {
         val skademeldingTilLagring = SkademeldingDto(
             id = null,
-            skademelding = jacksonObjectMapper().valueToTree(skademelding), // konverter til JsonNode
+            skademelding = objectMapper.valueToTree(skademelding), // konverter til JsonNode
             kilde = skademeldingMetadata.kilde,
             mottattTidspunkt = skademeldingMetadata.tidspunktMottatt
         )

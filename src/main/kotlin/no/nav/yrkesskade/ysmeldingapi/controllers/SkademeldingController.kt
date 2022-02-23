@@ -1,11 +1,13 @@
 package no.nav.yrkesskade.ysmeldingapi.controllers
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.security.token.support.core.api.Unprotected
+import no.nav.yrkesskade.model.SkademeldingMetadata
+import no.nav.yrkesskade.model.Spraak
 import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
-import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingMetadata
 import no.nav.yrkesskade.ysmeldingapi.services.SkademeldingService
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
@@ -13,7 +15,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.lang.invoke.MethodHandles
-import java.util.*
+import java.time.Instant
 import javax.servlet.http.HttpServletRequest
 
 @Unprotected
@@ -22,12 +24,14 @@ import javax.servlet.http.HttpServletRequest
 class SkademeldingController(private val skademeldingService: SkademeldingService) {
     private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
 
+    val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
+
     @PostMapping("/midlertidig/skademeldinger")
     fun mottaSkademelding(@RequestBody(required = true) skademelding: JsonNode, httpServletRequest: HttpServletRequest): ResponseEntity<SkademeldingDto> {
         val lagretSkademeldingDto = skademeldingService
             .lagreSkademelding(
-                jacksonObjectMapper().treeToValue(skademelding, Skademelding::class.java),
-                SkademeldingMetadata(kilde = httpServletRequest.getHeader("x-nav-ys-kilde") ?: "ukjent", tidspunktMottatt = Date())
+                objectMapper.treeToValue(skademelding, Skademelding::class.java),
+                SkademeldingMetadata(kilde = httpServletRequest.getHeader("x-nav-ys-kilde") ?: "ukjent", tidspunktMottatt = Instant.now(), spraak = Spraak.NB)
             )
 
         val location = ServletUriComponentsBuilder

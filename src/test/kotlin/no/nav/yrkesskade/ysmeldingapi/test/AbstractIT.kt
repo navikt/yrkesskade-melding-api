@@ -1,8 +1,11 @@
 package no.nav.yrkesskade.ysmeldingapi.test
 
+import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendtKafkaConsumer
 import no.nav.yrkesskade.ysmeldingapi.test.docker.KafkaDockerContainer
 import no.nav.yrkesskade.ysmeldingapi.test.docker.PostgresDockerContainer
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.test.annotation.DirtiesContext
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional
 @ContextConfiguration(initializers = [AbstractIT.DockerConfigInitializer::class])
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DirtiesContext
+@SpringBootTest
 abstract class AbstractIT {
 
     init {
@@ -34,4 +38,8 @@ abstract class AbstractIT {
             );
         }
     }
+
+    @Autowired
+    lateinit var mottakConsumer: SkademeldingInnsendtKafkaConsumer
+
 }

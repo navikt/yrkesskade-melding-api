@@ -1,5 +1,6 @@
 package no.nav.yrkesskade.ysmeldingapi.controllers
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.ysmeldingapi.fixtures.enkelSkademelding
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
@@ -22,7 +23,7 @@ class SkademeldingApiControllerIT: AbstractIT() {
     @Autowired
     lateinit var mvc: MockMvc
 
-    val objectMapper = jacksonObjectMapper()
+    val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
     @Test
     fun `mottaSkademelding skal ta imot enkel skademelding`() {
@@ -46,6 +47,6 @@ class SkademeldingApiControllerIT: AbstractIT() {
             .andExpect(MockMvcResultMatchers.header().exists("Location"))
 
     companion object {
-        private const val SKADEMELDING_PATH = "/api/v1/skademeldinger/arbeidstaker"
+        private const val SKADEMELDING_PATH = "/api/v1/skademeldinger"
     }
 }

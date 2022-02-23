@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.context.SpringBootTest
-import java.util.*
+import java.time.Instant
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -23,7 +23,7 @@ class SkademeldingRepositoryIT : AbstractIT() {
                 null,
                 """{"some": "data"}""",
                 "test-kilde",
-                Date()
+                Instant.now()
             )
         )
         assertThat(repository.findAll().size).isEqualTo(1)
@@ -36,7 +36,7 @@ class SkademeldingRepositoryIT : AbstractIT() {
                 null,
                 """{"some": "data"}""",
                 "test-kilde",
-                Date()
+                Instant.now()
             )
         )
         repository.save(
@@ -44,7 +44,7 @@ class SkademeldingRepositoryIT : AbstractIT() {
                 null,
                 """{"some more": "data"}""",
                 "test-kilde",
-                Date()
+                Instant.now()
             )
         )
         assertThat(repository.findAll().size).isEqualTo(2)
