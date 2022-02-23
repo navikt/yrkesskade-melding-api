@@ -55,7 +55,13 @@ class BrukerinfoService(
         )
     }
 
-    fun hentSubjectForFodselsnummerOgOrganisasjon(fodselsnummer: String, organisasjon: OrganisasjonDto): AltinnRettighetResponse? {
+    fun hentSubjectForFodselsnummerOgOrganisasjon(fodselsnummer: String, organisasjon: OrganisasjonDto?): AltinnRettighetResponse? {
+        // sjekk om organisasjon er satt
+        if (organisasjon == null) {
+            return null
+        }
+
+        // organisasjon skal alltid har organisasjonsnummer
         if (organisasjon.organisasjonsnummer == null) {
             throw BadRequestException("Organisasjonsnummer kan ikke være tom")
         }

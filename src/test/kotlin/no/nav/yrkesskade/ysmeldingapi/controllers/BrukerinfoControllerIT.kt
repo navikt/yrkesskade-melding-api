@@ -47,6 +47,24 @@ class BrukerinfoControllerIT: AbstractIT() {
     }
 
     @Test
+    fun `hent brukerinfo som ikke har organisasjoner - autentisert`() {
+        // gyldig JWT
+        val jwt = mvc.perform(get("/local/jwt?subject=01234567891")).andReturn().response.contentAsString
+
+        // Data for eksterne tjenester kommer fra localhost MockServer
+        mvc.perform(
+            get(USER_INFO_PATH)
+                .header(AUTHORIZATION, "Bearer $jwt")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(Charsets.UTF_8)
+        )   .andExpect(status().isOk)
+            .andExpect(jsonPath("$.fnr").value("01234567891"))
+            .andExpect(jsonPath("$.navn").value(""))
+            .andExpect(jsonPath("$.organisasjoner").isEmpty)
+
+    }
+
+    @Test
     fun `hent brukerinfo med organisasjoner - uautorisert`() {
         mvc.perform(
             get(USER_INFO_PATH)
