@@ -40,7 +40,7 @@ class EnhetsregisterClient(
         var path = enhettype;
         if (enhetsregisterUrl.contains("/ereg/api/v1")) {
             // dersom vi er i dev, går må vi bruke "/organisasjoner som path
-            path = DEV
+            // path = DEV # feilet
         }
 
         return try {
