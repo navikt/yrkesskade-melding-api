@@ -17,6 +17,7 @@ const val SERVICE_EDITION = "1"
 const val SERVICE_CODE = "4936"
 const val FNR_UTEN_ORGANISASJONER = "01234567891"
 const val FNR_MED_ORGANISASJONER = "12345678910"
+const val FNR_MED_ORGANISJON_UTEN_ORGNUMMER = "23456789101"
 const val ENHETSREGISTER_PATH = "/enhetsregisteret/api/enheter"
 const val UNDERENHETSREGISTER_PATH = "/enhetsregisteret/api/underenheter"
 const val ALTINN_ROLLER_PATH = "/altinn/api/serviceowner/authorization/roles"
@@ -101,14 +102,14 @@ open class AbstractMockSever (private val port: Int?){
             willReturnJson(hentStringFraFil("rettigheter.json"))
         }
 
-        stubForGet(urlPathMatching("$ALTINN_REPORTEE_PATH.*")) {
-            withQueryParam("subject", equalTo(FNR_MED_ORGANISASJONER))
-            willReturnJson(hentStringFraFil("altinn_reportee_12345678910.json"))
-        }
+        val altinnReporteeStubs : Array<String> =
+            arrayOf(FNR_MED_ORGANISASJONER, FNR_UTEN_ORGANISASJONER, FNR_MED_ORGANISJON_UTEN_ORGNUMMER)
 
-        stubForGet(urlPathMatching("$ALTINN_REPORTEE_PATH.*")) {
-            withQueryParam("subject", equalTo(FNR_UTEN_ORGANISASJONER))
-            willReturnJson(hentStringFraFil("altinn_reportee_01234567891.json"))
+        altinnReporteeStubs.forEach {
+            stubForGet(urlPathMatching("$ALTINN_REPORTEE_PATH.*")) {
+                withQueryParam("subject", equalTo(it))
+                willReturnJson(hentStringFraFil("altinn_reportee_${it}.json"))
+            }
         }
 
         // Enhetsregisteret
