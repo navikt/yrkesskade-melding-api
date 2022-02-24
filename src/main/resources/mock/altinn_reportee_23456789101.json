@@ -1,0 +1,17 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://www.altinn.no/api/serviceowner/reportees?subject={subject}"
+    }
+  },
+  "_embedded": {
+    "reportees": [
+      {
+        "Name": "BIRI OG TORPO REGNSKAP",
+        "Type": "Enterprise",
+        "OrganizationForm": "AS",
+        "Status": "Active"
+      }
+    ]
+  }
+}

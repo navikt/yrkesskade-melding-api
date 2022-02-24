@@ -1,5 +1,8 @@
 package no.nav.yrkesskade.ysmeldingapi.controllers
 
+import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_MED_ORGANISASJONER
+import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_MED_ORGANISJON_UTEN_ORGNUMMER
+import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_UTEN_ORGANISASJONER
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
 import no.nav.yrkesskade.ysmeldingapi.test.TestMockServerInitialization
 import org.junit.jupiter.api.Test
@@ -11,8 +14,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional
@@ -36,13 +38,47 @@ class BrukerinfoControllerIT: AbstractIT() {
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
         )   .andExpect(status().isOk)
-            .andExpect(jsonPath("$.fnr").value("12345678910"))
+            .andExpect(jsonPath("$.fnr").value(FNR_MED_ORGANISASJONER))
+            .andExpect(jsonPath("$.navn").value("ROLF BJØRN"))
             .andExpect(jsonPath("$.organisasjoner").isArray)
             .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910521551\" && @.naeringskode == \"52.292\")]").exists())
             .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910460048\" && @.naeringskode == \"52.292\")]").exists())
             .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910441205\" && @.naeringskode == null && @.navn == \"BARDU OG SØRUM REGNSKAP\")]").exists())
             .andExpect(jsonPath("\$.organisasjoner[?(@.organisasjonsnummer != null && @.navn != null && @.type != null && @.status != null && @.organisasjonsform != null)]").exists())
 
+    }
+
+    @Test
+    fun `hent brukerinfo som ikke har organisasjoner - autentisert`() {
+        // gyldig JWT
+        val jwt = mvc.perform(get("/local/jwt?subject=${FNR_UTEN_ORGANISASJONER}")).andReturn().response.contentAsString
+
+        // Data for eksterne tjenester kommer fra localhost MockServer
+        mvc.perform(
+            get(USER_INFO_PATH)
+                .header(AUTHORIZATION, "Bearer $jwt")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(Charsets.UTF_8)
+        )   .andExpect(status().isOk)
+            .andExpect(jsonPath("$.fnr").value(FNR_UTEN_ORGANISASJONER))
+            .andExpect(jsonPath("$.navn").value(""))
+            .andExpect(jsonPath("$.organisasjoner").isEmpty)
+
+    }
+
+    @Test
+    fun `hent brukerinfo med organisasjon uten organisasjonsnummer - autentisert`() {
+        // gyldig JWT
+        val jwt = mvc.perform(get("/local/jwt?subject=${FNR_MED_ORGANISJON_UTEN_ORGNUMMER}")).andReturn().response.contentAsString
+
+        // Data for eksterne tjenester kommer fra localhost MockServer
+        mvc.perform(
+            get(USER_INFO_PATH)
+                .header(AUTHORIZATION, "Bearer $jwt")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(Charsets.UTF_8)
+        )   .andExpect(status().isBadRequest)
+            .andExpect(content().string("Organisasjonsnummer kan ikke være tom"))
     }
 
     @Test

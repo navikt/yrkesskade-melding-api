@@ -15,8 +15,9 @@ import java.nio.charset.StandardCharsets
 
 const val SERVICE_EDITION = "1"
 const val SERVICE_CODE = "4936"
-const val FNR_MED_SKJEMATILGANG = "01065500791"
+const val FNR_UTEN_ORGANISASJONER = "01234567891"
 const val FNR_MED_ORGANISASJONER = "12345678910"
+const val FNR_MED_ORGANISJON_UTEN_ORGNUMMER = "23456789101"
 const val ENHETSREGISTER_PATH = "/enhetsregisteret/api/enheter"
 const val UNDERENHETSREGISTER_PATH = "/enhetsregisteret/api/underenheter"
 const val ALTINN_ROLLER_PATH = "/altinn/api/serviceowner/authorization/roles"
@@ -101,8 +102,14 @@ open class AbstractMockSever (private val port: Int?){
             willReturnJson(hentStringFraFil("rettigheter.json"))
         }
 
-        stubForGet(urlPathMatching("$ALTINN_REPORTEE_PATH.*")) {
-            willReturnJson(hentStringFraFil("altinn_reportee.json"))
+        val altinnReporteeStubs : Array<String> =
+            arrayOf(FNR_MED_ORGANISASJONER, FNR_UTEN_ORGANISASJONER, FNR_MED_ORGANISJON_UTEN_ORGNUMMER)
+
+        altinnReporteeStubs.forEach {
+            stubForGet(urlPathMatching("$ALTINN_REPORTEE_PATH.*")) {
+                withQueryParam("subject", equalTo(it))
+                willReturnJson(hentStringFraFil("altinn_reportee_${it}.json"))
+            }
         }
 
         // Enhetsregisteret
