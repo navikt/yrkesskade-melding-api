@@ -20,6 +20,6 @@
     </logger>
 
     <root level="info">
-        <appender-ref ref="STDOUT_JSON"/>
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

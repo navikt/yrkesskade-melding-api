@@ -42,7 +42,7 @@ class BrukerinfoControllerIT: AbstractIT() {
             .andExpect(jsonPath("$.navn").value("ROLF BJØRN"))
             .andExpect(jsonPath("$.organisasjoner").isArray)
             .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910521551\" && @.naeringskode == \"52.292\")]").exists())
-            .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910460048\" && @.naeringskode == \"52.292\")]").exists())
+            .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910460048\" && @.naeringskode == \"52.292\" && @.antallAnsatte == 50)]").exists())
             .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910441205\" && @.naeringskode == null && @.navn == \"BARDU OG SØRUM REGNSKAP\")]").exists())
             .andExpect(jsonPath("\$.organisasjoner[?(@.organisasjonsnummer != null && @.navn != null && @.type != null && @.status != null && @.organisasjonsform != null)]").exists())
 
@@ -97,12 +97,16 @@ class BrukerinfoControllerIT: AbstractIT() {
 
         // Data for eksterne tjenester kommer fra localhost MockServer
         mvc.perform(
-            get("$USER_INFO_PATH/organisasjoner/90912098")
+            get("$USER_INFO_PATH/organisasjoner/910521551")
                 .header(AUTHORIZATION, "Bearer $jwt")
                 .characterEncoding(Charsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
-        ).andExpect(status().isOk)
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.organisasjonsnummer").value("910521551"))
+            .andExpect(jsonPath("$.antallAnsatte").value(50))
+            .andExpect(jsonPath("$.organisasjonsform").value("AS"))
     }
 
     @Test
