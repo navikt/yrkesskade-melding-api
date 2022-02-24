@@ -1,7 +1,11 @@
 package no.nav.yrkesskade.ysmeldingapi.services
 
-import com.fasterxml.jackson.databind.JsonNode
-import no.nav.yrkesskade.ysmeldingapi.client.mottak.MottakClient
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import no.nav.yrkesskade.model.SkademeldingInnsendtHendelse
+import no.nav.yrkesskade.model.SkademeldingMetadata
+import no.nav.yrkesskade.skademelding.model.Skademelding
+import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendingClient
 import no.nav.yrkesskade.ysmeldingapi.domain.SkademeldingEntity
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.repositories.SkademeldingRepository
@@ -12,25 +16,36 @@ import java.lang.invoke.MethodHandles
 import java.util.*
 
 @Service
-class SkademeldingService(private val mottakClient: MottakClient,
-                          private val skademeldingRepository: SkademeldingRepository) {
+class SkademeldingService(private val skademeldingInnsendingClient: SkademeldingInnsendingClient,
+                          private val skademeldingRepository: SkademeldingRepository
+) {
 
     private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
+    private val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
-    fun sendTilMottak(skademeldingDto: SkademeldingDto): SkademeldingDto {
-        return mottakClient.sendTilMottak(skademeldingDto).also {
+    fun sendTilMottak(skademeldingInnsendtHendelse: SkademeldingInnsendtHendelse): SkademeldingInnsendtHendelse {
+        return skademeldingInnsendingClient.sendTilMottak(skademeldingInnsendtHendelse).also {
             log.info("Lagret skademelding $it i mottak")
-        }
+        }!!
     }
 
     @Transactional
-    fun lagreSkademelding(skademelding: JsonNode): SkademeldingDto {
+    fun lagreSkademelding(skademelding: Skademelding, skademeldingMetadata: SkademeldingMetadata): SkademeldingDto {
         val skademeldingTilLagring = SkademeldingDto(
             id = null,
-            skademelding = skademelding
+            skademelding = objectMapper.valueToTree(skademelding), // konverter til JsonNode
+            kilde = skademeldingMetadata.kilde,
+            mottattTidspunkt = skademeldingMetadata.tidspunktMottatt
         )
-        val lagretSkademeldingDto = skademeldingRepository.save(skademeldingTilLagring.toSkademelding())
-        return lagretSkademeldingDto.toSkademeldingDto()
+
+        // lagre i database - returnerer entity
+        val lagretSkademeldingDto = skademeldingRepository.save(skademeldingTilLagring.toSkademelding()).toSkademeldingDto()
+
+        // send til mottak dersom databaselagring er ok
+        sendTilMottak(SkademeldingInnsendtHendelse(skademelding = skademelding, metadata = skademeldingMetadata))
+
+        // returner lagrede skademelding
+        return lagretSkademeldingDto
     }
 
     fun hentAlleSkademeldinger(): List<SkademeldingDto> {

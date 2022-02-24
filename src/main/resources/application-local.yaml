@@ -1,6 +1,25 @@
+KAFKA_BROKERS: http://localhost:9092
+KAFKA_SCHEMA_REGISTRY: http://localhost:8081
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/yrkesskade_melding
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKERS}
+    properties:
+      security.protocol: SASL_PLAINTEXT
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username="igroup" password="itest";
+      schema.registry.url: ${KAFKA_SCHEMA_REGISTRY}
+    consumer:
+      group-id: srvc01
+
+# bruk oneshot for å opprette topic
+kafka:
+  topic:
+    skademelding-innsendt: privat-yrkesskade-skademeldingInnsendt
 
 no.nav.security.jwt.issuer:
   tokenx:

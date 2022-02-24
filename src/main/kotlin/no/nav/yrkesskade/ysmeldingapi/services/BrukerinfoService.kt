@@ -6,6 +6,7 @@ import no.nav.yrkesskade.ysmeldingapi.models.AdresseDto
 import no.nav.yrkesskade.ysmeldingapi.models.AltinnRettighetResponse
 import no.nav.yrkesskade.ysmeldingapi.models.EnhetsregisterOrganisasjonDto
 import no.nav.yrkesskade.ysmeldingapi.models.OrganisasjonDto
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import javax.ws.rs.BadRequestException
 

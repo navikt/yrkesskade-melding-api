@@ -1,9 +1,14 @@
 package no.nav.yrkesskade.ysmeldingapi.test
 
-import no.nav.yrkesskade.ysmeldingapi.repositories.testutils.docker.PostgresDockerContainer
+import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendtKafkaConsumer
+import no.nav.yrkesskade.ysmeldingapi.test.docker.KafkaDockerContainer
+import no.nav.yrkesskade.ysmeldingapi.test.docker.PostgresDockerContainer
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.support.TestPropertySourceUtils
@@ -11,22 +16,30 @@ import org.springframework.transaction.annotation.Transactional
 
 @Transactional
 @ActiveProfiles("integration")
-@ContextConfiguration(initializers = [AbstractIT.DockerPostgresDataSourceInitializer::class])
+@ContextConfiguration(initializers = [AbstractIT.DockerConfigInitializer::class])
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@DirtiesContext
+@SpringBootTest
 abstract class AbstractIT {
 
     init {
         PostgresDockerContainer.container
+        KafkaDockerContainer.container
     }
 
-    class DockerPostgresDataSourceInitializer: ApplicationContextInitializer<ConfigurableApplicationContext> {
+    class DockerConfigInitializer: ApplicationContextInitializer<ConfigurableApplicationContext> {
         override fun initialize(applicationContext: ConfigurableApplicationContext) {
             TestPropertySourceUtils.addInlinedPropertiesToEnvironment(
                 applicationContext,
                 "spring.datasource.url=" + PostgresDockerContainer.container.jdbcUrl,
                 "spring.datasource.username=" + PostgresDockerContainer.container.username,
-                "spring.datasource.password=" + PostgresDockerContainer.container.password
+                "spring.datasource.password=" + PostgresDockerContainer.container.password,
+                "spring.kafka.bootstrap-servers=" + KafkaDockerContainer.container.bootstrapServers
             );
         }
     }
+
+    @Autowired
+    lateinit var mottakConsumer: SkademeldingInnsendtKafkaConsumer
+
 }

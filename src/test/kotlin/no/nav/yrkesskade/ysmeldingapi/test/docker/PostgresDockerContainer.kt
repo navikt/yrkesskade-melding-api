@@ -1,4 +1,4 @@
-package no.nav.yrkesskade.ysmeldingapi.repositories.testutils.docker
+package no.nav.yrkesskade.ysmeldingapi.test.docker
 
 import org.testcontainers.containers.PostgreSQLContainer
 
