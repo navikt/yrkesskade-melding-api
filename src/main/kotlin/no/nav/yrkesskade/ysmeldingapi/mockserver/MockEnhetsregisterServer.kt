@@ -7,14 +7,18 @@ import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemp
 import org.apache.commons.io.IOUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Profile
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.stereotype.Component
 import java.lang.invoke.MethodHandles
 import java.nio.charset.StandardCharsets
 
 @Component
-@Profile("local")
+@ConditionalOnProperty(
+    value = arrayOf("mock.enhetsregister.port"),
+    havingValue = "10094",
+    matchIfMissing = false
+)
 class MockEnhetsregisterServer(@Value("\${mock.enhetsregister.port}") private val port: Int) {
     private val ENHETSREGISTER_PATH = "/enhetsregisteret/api/"
     private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
@@ -65,7 +69,7 @@ class MockEnhetsregisterServer(@Value("\${mock.enhetsregister.port}") private va
                 return@forEach
             }
             val orgnummer = filnavn.substring(0, filnavn.indexOf('.'))
-            log.info("Setter opp stub for enhetsregister for organisasjon ${orgnummer} til -> mock/enhetsregister/${filnavn}")
+            log.info("Wiremock stub ${ENHETSREGISTER_PATH}([enheter/underenheter]*)/${orgnummer} til -> mock/enhetsregister/${filnavn}")
             stubForAny(WireMock.urlPathMatching("$ENHETSREGISTER_PATH([enheter|underenheter]*)/${orgnummer}.*")) {
                 willReturnJson(hentStringFraFil(filnavn))
             }
