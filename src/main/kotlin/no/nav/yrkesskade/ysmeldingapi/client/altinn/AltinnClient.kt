@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.logging.Level
 import java.util.logging.Logger
+import javax.ws.rs.BadRequestException
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.core.Feature
@@ -87,7 +88,7 @@ class AltinnClient(
         if (response.status == Response.Status.OK.statusCode) {
             return response.readEntity(AltinnRollerResponse::class.java).melding
         } else {
-            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
+            throw BadRequestException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
         }
     }
 
