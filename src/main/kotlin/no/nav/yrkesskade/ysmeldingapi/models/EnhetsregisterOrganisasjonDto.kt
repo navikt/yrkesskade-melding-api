@@ -13,7 +13,6 @@ data class EnhetsregisterOrganisasjonDto(
     val forretningsadresse: Adresse? = null,
     val beliggenhetsadresse: Adresse? = null,
     val antallAnsatte: Int? = null,
-    @JsonProperty("organisasjonsform")
     val organisasjonsform: Organisasjonsform? = null
 )
 
