@@ -2,11 +2,7 @@ package no.nav.yrkesskade.ysmeldingapi.services
 
 import no.nav.yrkesskade.ysmeldingapi.client.altinn.AltinnClient
 import no.nav.yrkesskade.ysmeldingapi.client.enhetsregister.EnhetsregisterClient
-import no.nav.yrkesskade.ysmeldingapi.models.AdresseDto
-import no.nav.yrkesskade.ysmeldingapi.models.AltinnRettighetResponse
-import no.nav.yrkesskade.ysmeldingapi.models.EnhetsregisterOrganisasjonDto
-import no.nav.yrkesskade.ysmeldingapi.models.OrganisasjonDto
-import org.springframework.kafka.core.KafkaTemplate
+import no.nav.yrkesskade.ysmeldingapi.models.*
 import org.springframework.stereotype.Service
 import javax.ws.rs.BadRequestException
 
@@ -68,5 +64,13 @@ class BrukerinfoService(
         }
 
         return altinnClient.hentRettigheter(fodselsnummer, organisasjon.organisasjonsnummer)
+    }
+
+    fun hentRollerForFodselsnummerOgOrganisasjon(fodselsnummer: String, organisasjonsnummer: String?): List<AltinnRolleDto> {
+        if (organisasjonsnummer == null) {
+            return emptyList()
+        }
+
+        return altinnClient.hentRoller(fodselsnummer, organisasjonsnummer).roller
     }
 }

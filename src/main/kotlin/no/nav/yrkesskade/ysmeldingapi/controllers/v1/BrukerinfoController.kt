@@ -1,6 +1,7 @@
 package no.nav.yrkesskade.ysmeldingapi.controllers.v1
 
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.yrkesskade.ysmeldingapi.models.AltinnRolleDto
 import no.nav.yrkesskade.ysmeldingapi.models.BrukerinfoDto
 import no.nav.yrkesskade.ysmeldingapi.models.OrganisasjonDto
 import no.nav.yrkesskade.ysmeldingapi.services.BrukerinfoService
@@ -35,7 +36,13 @@ class BrukerinfoController(private val autentisertBruker: AutentisertBruker, pri
 
     @GetMapping("/organisasjoner/{organisasjonsnummer}")
     fun hentOrganisasjon(@PathVariable("organisasjonsnummer") organisasjonsnummer: String) : ResponseEntity<OrganisasjonDto> {
-        val organisasjon = brukerinfoService.hentOrganisasjonForBruker(autentisertBruker.fodselsnummer, organisasjonsnummer);
+        val organisasjon = brukerinfoService.hentOrganisasjonForBruker(autentisertBruker.fodselsnummer, organisasjonsnummer)
         return ResponseEntity.ok(organisasjon)
+    }
+
+    @GetMapping("/organisasjoner/{organisasjonsnummer}/roller")
+    fun hentRoller(@PathVariable("organisasjonsnummer") organisasjonsnummer: String) : ResponseEntity<List<AltinnRolleDto>> {
+        val roller = brukerinfoService.hentRollerForFodselsnummerOgOrganisasjon(autentisertBruker.fodselsnummer, organisasjonsnummer)
+        return ResponseEntity.ok(roller)
     }
 }
