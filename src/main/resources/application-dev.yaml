@@ -18,3 +18,12 @@ spring:
           location: ${KAFKA_KEYSTORE_PATH}
           password: ${KAFKA_CREDSTORE_PASSWORD}
         key.password: ${KAFKA_CREDSTORE_PASSWORD}
+
+mock:
+  enhetsregister:
+    port: 10094
+
+api:
+  client:
+    enhetsregister:
+      url: http://localhost:${mock.enhetsregister.port}/enhetsregisteret/api

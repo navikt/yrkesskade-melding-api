@@ -31,12 +31,14 @@ maskinporten.client.enabled: false
 mock:
   enabled: true
   port: 10091
+  enhetsregister:
+    port: 10094
 
 api:
   client:
     yrkesskade-mottak-url: http://localhost:9080
     enhetsregister:
-      url: http://localhost:${mock.port}/enhetsregisteret/api
+      url: http://localhost:${mock.enhetsregister.port}/enhetsregisteret/api
     altinn:
       url: http://localhost:${mock.port}/altinn/
       apiKey: test

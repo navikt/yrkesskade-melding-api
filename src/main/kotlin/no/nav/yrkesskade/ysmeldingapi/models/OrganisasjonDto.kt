@@ -8,7 +8,8 @@ data class OrganisasjonDto(
     val status: String? = null,
     val type: String? = null,
     val postadresse: AdresseDto? = null,
-    val forretningsadresse: AdresseDto? = null
+    val forretningsadresse: AdresseDto? = null,
+    val antallAnsatte: Int? = 0
 )
 
 data class AdresseDto(

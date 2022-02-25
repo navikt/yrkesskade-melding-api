@@ -22,6 +22,7 @@ class EnhetsregisterClientIT : AbstractIT() {
         assertThat(organisasjon).isNotNull()
         assertThat(organisasjon.naering?.kode).isNotNull()
         assertThat(organisasjon.forretningsadresse).isNotNull()
+        assertThat(organisasjon.antallAnsatte).isEqualTo(50)
     }
 
     @Test
@@ -43,6 +44,7 @@ class EnhetsregisterClientIT : AbstractIT() {
         assertThat(organisasjon.naering?.kode).isNotNull()
         assertThat(organisasjon.forretningsadresse).isNull()
         assertThat(organisasjon.beliggenhetsadresse).isNotNull()
+        assertThat(organisasjon.antallAnsatte).isEqualTo(50)
     }
 
     @Test
