@@ -13,11 +13,7 @@
             <repositories>
                 <repository>
                     <id>github</id>
-                    <name>yrkesskade-backend-felles</name>
                     <url>https://maven.pkg.github.com/navikt/yrkesskade-backend-felles</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
                 </repository>
             </repositories>
         </profile>
