@@ -13,14 +13,6 @@
             <repositories>
                 <repository>
                     <id>github</id>
-                    <name>teamdokumenthandtering-avro-schemas</name>
-                    <url>https://maven.pkg.github.com/navikt/teamdokumenthandtering-avro-schemas</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-                <repository>
-                    <id>github-yrkesskade</id>
                     <name>yrkesskade-backend-felles</name>
                     <url>https://maven.pkg.github.com/navikt/yrkesskade-backend-felles</url>
                     <snapshots>
@@ -34,11 +26,6 @@
     <servers>
         <server>
             <id>github</id>
-            <username>${GITHUB_USERNAME}</username>
-            <password>${GITHUB_TOKEN}</password>
-        </server>
-        <server>
-            <id>github-yrkesskade</id>
             <username>${GITHUB_USERNAME}</username>
             <password>${GITHUB_TOKEN}</password>
         </server>
