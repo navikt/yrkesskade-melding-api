@@ -25,6 +25,14 @@
 		<springdoc-openapi-ui.version>1.6.5</springdoc-openapi-ui.version>
 		<yrkesskade-felles-backend.version>b6944c7c_202202221532</yrkesskade-felles-backend.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/navikt/yrkesskade-backend-felles</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<!-- domene dependencies -->
 		<dependency>
