@@ -20,7 +20,10 @@ jobs:
       with:
         "java-version": "11"
     - name: "compile and run tests"
-      run: "mvn install"
+      env:
+        GITHUB_USERNAME: navikt
+        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      run: "mvn install --settings .m2/maven-settings.xml --file pom.xml"
     - name: "Login to GitHub Docker Registry"
       uses: "docker/login-action@v1"
       with:
