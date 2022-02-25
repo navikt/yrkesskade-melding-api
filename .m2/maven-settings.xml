@@ -19,6 +19,14 @@
                         <enabled>true</enabled>
                     </snapshots>
                 </repository>
+                <repository>
+                    <id>github-yrkesskade</id>
+                    <name>yrkesskade-backend-felles</name>
+                    <url>https://maven.pkg.github.com/navikt/yrkesskade-backend-felles</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
             </repositories>
         </profile>
     </profiles>
@@ -26,6 +34,11 @@
     <servers>
         <server>
             <id>github</id>
+            <username>${GITHUB_USERNAME}</username>
+            <password>${GITHUB_TOKEN}</password>
+        </server>
+        <server>
+            <id>github-yrkesskade</id>
             <username>${GITHUB_USERNAME}</username>
             <password>${GITHUB_TOKEN}</password>
         </server>
