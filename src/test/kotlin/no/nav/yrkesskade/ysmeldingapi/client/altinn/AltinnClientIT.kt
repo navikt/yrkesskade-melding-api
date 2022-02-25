@@ -17,7 +17,7 @@ internal class AltinnClientIT : AbstractIT() {
 
     @Test
     fun `hent roller for en person og organisasjon`() {
-        val roller = altinnClient.hentRoller("fnr", "test", "nb")
+        val roller = altinnClient.hentRoller("12345678910", "test", "nb")
         assertThat(roller).isNotNull()
     }
 

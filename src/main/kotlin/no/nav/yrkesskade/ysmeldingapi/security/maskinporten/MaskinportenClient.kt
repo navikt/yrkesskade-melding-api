@@ -87,6 +87,10 @@ class MaskinportenClientImpl(
 
         logger.info("Fetched new access token. Expires in {} seconds.", tokenResponse.expiresInSeconds)
 
+        if (true) { // TODO YSMOD-72 - bruk notProd flagget
+            logger.info("maskinporten token: ${tokenResponse.accessToken}")
+        }
+
         return TokenResponseWrapper(
             requestedAt = requestedAt,
             tokenResponse = tokenResponse,

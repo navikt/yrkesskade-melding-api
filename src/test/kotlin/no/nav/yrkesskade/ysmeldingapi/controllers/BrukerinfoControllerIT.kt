@@ -106,6 +106,36 @@ class BrukerinfoControllerIT: AbstractIT() {
     }
 
     @Test
+    fun `hent roller en bruker har tilgang til`() {
+        // gyldig JWT
+        val jwt = mvc.perform(get("/local/jwt")).andReturn().response.contentAsString
+
+        // Data for eksterne tjenester kommer fra localhost MockServer
+        mvc.perform(
+            get("$USER_INFO_PATH/organisasjoner/90912098/roller")
+                .header(AUTHORIZATION, "Bearer $jwt")
+                .characterEncoding(Charsets.UTF_8)
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(Charsets.UTF_8)
+        ).andExpect(status().isOk)
+    }
+
+    @Test
+    fun `hent roller for en bruker uten treff`() {
+        // gyldig JWT
+        val jwt = mvc.perform(get("/local/jwt?subject=01234567891")).andReturn().response.contentAsString
+
+        // Data for eksterne tjenester kommer fra localhost MockServer
+        mvc.perform(
+            get("$USER_INFO_PATH/organisasjoner/90912098/roller")
+                .header(AUTHORIZATION, "Bearer $jwt")
+                .characterEncoding(Charsets.UTF_8)
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(Charsets.UTF_8)
+        ).andExpect(status().is4xxClientError)
+    }
+
+    @Test
     fun `hent brukerinfo med organisasjoner - ugyldig JWT token`() {
         // token generert fra jwt.io
         val ugyldigJWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"

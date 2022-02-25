@@ -95,10 +95,13 @@ open class AbstractMockSever (private val port: Int?){
 
         // Altinn
         stubForGet(urlPathMatching("$ALTINN_ROLLER_PATH.*")) {
+            withHeader("ApiKey", equalTo("test"))
+            withQueryParam("subject", equalTo(FNR_MED_ORGANISASJONER))
             willReturnJson(hentStringFraFil("roller.json"))
         }
 
         stubForGet(urlPathMatching("$ALTINN_RETTIGHETER_PATH.*")) {
+            withHeader("ApiKey", equalTo("test"))
             willReturnJson(hentStringFraFil("rettigheter.json"))
         }
 
@@ -108,6 +111,7 @@ open class AbstractMockSever (private val port: Int?){
         altinnReporteeStubs.forEach {
             stubForGet(urlPathMatching("$ALTINN_REPORTEE_PATH.*")) {
                 withQueryParam("subject", equalTo(it))
+                withHeader("ApiKey", equalTo("test"))
                 willReturnJson(hentStringFraFil("altinn_reportee_${it}.json"))
             }
         }
