@@ -1,0 +1,51 @@
+{
+  "organisasjonsnummer" : "910460048",
+  "navn" : "HOLUM OG SVARSTAD REGNSKAP",
+  "organisasjonsform" : {
+    "kode" : "DA",
+    "beskrivelse" : "Delt ansvar",
+    "_links" : {
+      "self" : {
+        "href" : "http://localhost/enhetsregisteret/api/organisasjonsformer/DA"
+      }
+    }
+  },
+  "postadresse" : {
+    "land" : "Norge",
+    "landkode" : "NO",
+    "postnummer" : "0122",
+    "poststed" : "OSLO",
+    "adresse" : [ "Postboks 1752 Vika", "" ],
+    "kommune" : "OSLO",
+    "kommunenummer" : "0301"
+  },
+  "registreringsdatoEnhetsregisteret" : "2017-10-20",
+  "registrertIMvaregisteret" : true,
+  "naeringskode1" : {
+    "beskrivelse" : "Skipsmegling",
+    "kode" : "52.292"
+  },
+  "antallAnsatte" : 20,
+  "forretningsadresse" : {
+    "land" : "Norge",
+    "landkode" : "NO",
+    "postnummer" : "0101",
+    "poststed" : "OSLO",
+    "adresse" : [ "Tyvholmen 35", null, null, "" ],
+    "kommune" : "OSLO",
+    "kommunenummer" : "0301"
+  },
+  "stiftelsesdato" : "2020-10-20",
+  "registrertIForetaksregisteret" : true,
+  "registrertIStiftelsesregisteret" : false,
+  "registrertIFrivillighetsregisteret" : false,
+  "konkurs" : false,
+  "underAvvikling" : false,
+  "underTvangsavviklingEllerTvangsopplosning" : false,
+  "maalform" : "Bokmål",
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost/enhetsregisteret/api/enheter/112233445"
+    }
+  }
+}

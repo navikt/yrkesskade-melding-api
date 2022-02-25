@@ -11,12 +11,20 @@ data class EnhetsregisterOrganisasjonDto(
     val naering: Naeringkode? = null,
     val postadresse: Adresse? = null,
     val forretningsadresse: Adresse? = null,
-    val beliggenhetsadresse: Adresse? = null
+    val beliggenhetsadresse: Adresse? = null,
+    val antallAnsatte: Int? = null,
+    val organisasjonsform: Organisasjonsform? = null
 )
 
 data class Naeringkode(
     val beskrivelse: String? = null,
     val kode: String? = null
+)
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class Organisasjonsform(
+    val kode: String? = null,
+    val beskrivelse: String? = null
 )
 
 data class Adresse(

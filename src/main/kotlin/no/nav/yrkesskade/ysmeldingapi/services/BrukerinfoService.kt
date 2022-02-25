@@ -31,12 +31,13 @@ class BrukerinfoService(
 
         return altinnOrganisasjoner.map{
             OrganisasjonDto(
-                organisasjonsform = it.organisasjonsform,
+                organisasjonsform = enheterForOrganisasjonsnummer.get(it.organisasjonsnummer)?.organisasjonsform?.kode,
                 organisasjonsnummer = it.organisasjonsnummer,
                 type = it.type,
                 navn = it.navn,
                 status = it.status,
-                naeringskode = enheterForOrganisasjonsnummer.get(it.organisasjonsnummer)?.naering?.kode
+                naeringskode = enheterForOrganisasjonsnummer.get(it.organisasjonsnummer)?.naering?.kode,
+                antallAnsatte = enheterForOrganisasjonsnummer.get(it.organisasjonsnummer)?.antallAnsatte
             )
         }
     }
@@ -49,6 +50,8 @@ class BrukerinfoService(
             naeringskode = enhetsregisterOrganisasjon.naering?.kode,
             postadresse = enhetsregisterOrganisasjon.postadresse?.let { AdresseDto.fraEnhetsregisterAdresse(it) },
             forretningsadresse = enhetsregisterOrganisasjon.forretningsadresse?.let { AdresseDto.fraEnhetsregisterAdresse(it) },
+            organisasjonsform = enhetsregisterOrganisasjon.organisasjonsform?.kode,
+            antallAnsatte = enhetsregisterOrganisasjon.antallAnsatte
         )
     }
 
