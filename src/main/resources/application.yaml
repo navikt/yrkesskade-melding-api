@@ -22,7 +22,7 @@ spring:
 
 kafka:
   topic:
-    skademelding-innsendt: yrkesskade.privat-yrkesskade-skademeldingInnsendt
+    skademelding-innsendt: yrkesskade.privat-yrkesskade-skademeldinginnsendt
 
 no.nav.security.jwt.issuer:
   tokenx:

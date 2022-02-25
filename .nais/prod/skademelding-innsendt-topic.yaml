@@ -1,7 +1,7 @@
 apiVersion: kafka.nais.io/v1
 kind: Topic
 metadata:
-  name: privat-yrkesskade-skademeldingInnsendt
+  name: privat-yrkesskade-skademeldinginnsendt
   namespace: yrkesskade
   labels:
     team: yrkesskade
