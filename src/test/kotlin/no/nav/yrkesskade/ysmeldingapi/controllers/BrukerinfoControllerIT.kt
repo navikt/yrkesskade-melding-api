@@ -136,7 +136,8 @@ class BrukerinfoControllerIT: AbstractIT() {
                 .characterEncoding(Charsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
-        ).andExpect(status().is4xxClientError)
+        ).andExpect(status().isOk)
+            .andExpect(jsonPath("$").isEmpty)
     }
 
     @Test

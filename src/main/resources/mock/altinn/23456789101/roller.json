@@ -1,0 +1,25 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://tt02.altinn.no/api/serviceowner/authorization/roles?subject=811077062&reportee=23114702129"
+    }
+  },
+  "_embedded": {
+    "roles": [
+      {
+        "RoleId": 491068,
+        "RoleType": "Altinn",
+        "RoleDefinitionId": 11,
+        "RoleName": "Reporter/sender",
+        "RoleDescription": "Access to selected forms and services",
+        "Delegator": "ERLING ENGENES",
+        "DelegatedTime": "2019-08-26T12:39:29.113",
+        "_links": {
+          "roledefinition": {
+            "href": "https://tt02.altinn.no/api/serviceowner/roledefinitions/11"
+          }
+        }
+      }
+    ]
+  }
+}

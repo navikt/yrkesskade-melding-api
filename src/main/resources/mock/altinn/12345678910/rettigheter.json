@@ -1,0 +1,20 @@
+{
+  "Subject": {
+    "Name": "ROLF BJØRN",
+    "Type": "Person",
+    "SocialSecurityNumber": "06117701547"
+  },
+  "Reportee": {
+    "Name": "KIRKENES OG AUSTBØ",
+    "Type": "Enterprise",
+    "OrganizationNumber": "910021451",
+    "Status": "Active"
+  },
+  "Rights": [
+  ],
+  "_links": {
+    "self": {
+      "href": "https://www.altinn.no/api/serviceowner/authorization/rights?subject={subject}&reportee={reportee}"
+    }
+  }
+}

@@ -7,10 +7,13 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer
 import com.github.tomakehurst.wiremock.matching.UrlPattern
 import org.apache.commons.io.IOUtils
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Profile
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.stereotype.Component
+import java.lang.invoke.MethodHandles
 import java.nio.charset.StandardCharsets
 
 const val SERVICE_EDITION = "1"
@@ -58,6 +61,8 @@ class MockServer(@Value("\${mock.port}") private val port: Int) : AbstractMockSe
 
 open class AbstractMockSever (private val port: Int?){
 
+    private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
+
     private val mockServer: WireMockServer
 
     init {
@@ -94,27 +99,34 @@ open class AbstractMockSever (private val port: Int?){
     private fun WireMockServer.setup() {
 
         // Altinn
-        stubForGet(urlPathMatching("$ALTINN_ROLLER_PATH.*")) {
-            withHeader("ApiKey", equalTo("test"))
-            withHeader("authorization", containing("Bearer"))
-            withQueryParam("subject", equalTo(FNR_MED_ORGANISASJONER))
-            willReturnJson(hentStringFraFil("roller.json"))
-        }
 
-        stubForGet(urlPathMatching("$ALTINN_RETTIGHETER_PATH.*")) {
-            withHeader("ApiKey", equalTo("test"))
-            willReturnJson(hentStringFraFil("rettigheter.json"))
-        }
+        val resolver = PathMatchingResourcePatternResolver(AbstractMockSever::class.java.classLoader)
+        val resources = resolver.getResources("classpath:mock/altinn/*/reportee.json")
+        resources.forEach {
+            val mappe = it.file.parentFile.name!!
 
-        val altinnReporteeStubs : Array<String> =
-            arrayOf(FNR_MED_ORGANISASJONER, FNR_UTEN_ORGANISASJONER, FNR_MED_ORGANISJON_UTEN_ORGNUMMER)
-
-        altinnReporteeStubs.forEach {
+            log.info("Wiremock stub ${ALTINN_REPORTEE_PATH} til -> mock/altinn/${mappe}/reportee.json")
             stubForGet(urlPathMatching("$ALTINN_REPORTEE_PATH.*")) {
-                withQueryParam("subject", equalTo(it))
+                withQueryParam("subject", equalTo(mappe))
                 withHeader("authorization", containing("Bearer"))
                 withHeader("ApiKey", equalTo("test"))
-                willReturnJson(hentStringFraFil("altinn_reportee_${it}.json"))
+                willReturnJson(hentStringFraFil("altinn/${mappe}/reportee.json"))
+            }
+
+            log.info("Wiremock stub ${ALTINN_ROLLER_PATH} til -> mock/altinn/${mappe}/roller.json")
+            stubForGet(urlPathMatching("$ALTINN_ROLLER_PATH.*")) {
+                withQueryParam("subject", equalTo(mappe))
+                withHeader("authorization", containing("Bearer"))
+                withHeader("ApiKey", equalTo("test"))
+                willReturnJson(hentStringFraFil("altinn/${mappe}/roller.json"))
+            }
+
+            log.info("Wiremock stub ${ALTINN_RETTIGHETER_PATH} til -> mock/altinn/${mappe}/rettigheter.json")
+            stubForGet(urlPathMatching("$ALTINN_RETTIGHETER_PATH.*")) {
+                withQueryParam("subject", equalTo(mappe))
+                withHeader("authorization", containing("Bearer"))
+                withHeader("ApiKey", equalTo("test"))
+                willReturnJson(hentStringFraFil("altinn/${mappe}/rettigheter.json"))
             }
         }
 
