@@ -26,8 +26,7 @@
     "kode" : "52.292"
   },
   "antallAnsatte" : 50,
-  "overordnetEnhet" : "112233445",
-  "beliggenhetsadresse" : {
+  "forretningsadresse" : {
     "land" : "Norge",
     "landkode" : "NO",
     "postnummer" : "0122",
@@ -36,13 +35,17 @@
     "kommune" : "OSLO",
     "kommunenummer" : "0301"
   },
-  "nedleggelsesdato" : "2018-10-20",
+  "stiftelsesdato" : "2021-10-20",
+  "registrertIForetaksregisteret" : true,
+  "registrertIStiftelsesregisteret" : false,
+  "registrertIFrivillighetsregisteret" : false,
+  "konkurs" : false,
+  "underAvvikling" : false,
+  "underTvangsavviklingEllerTvangsopplosning" : false,
+  "maalform" : "Bokmål",
   "_links" : {
     "self" : {
-      "href" : "http://localhost/enhetsregisteret/api/underenheter/811306622"
-    },
-    "overordnetEnhet" : {
-      "href" : "http://localhost/enhetsregisteret/api/enheter/910441205"
+      "href" : "http://localhost/enhetsregisteret/api/enheter/811306622"
     }
   }
 }
