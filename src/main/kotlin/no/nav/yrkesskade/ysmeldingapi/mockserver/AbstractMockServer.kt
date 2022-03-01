@@ -96,6 +96,7 @@ open class AbstractMockSever (private val port: Int?){
         // Altinn
         stubForGet(urlPathMatching("$ALTINN_ROLLER_PATH.*")) {
             withHeader("ApiKey", equalTo("test"))
+            withHeader("authorization", containing("Bearer"))
             withQueryParam("subject", equalTo(FNR_MED_ORGANISASJONER))
             willReturnJson(hentStringFraFil("roller.json"))
         }
@@ -111,6 +112,7 @@ open class AbstractMockSever (private val port: Int?){
         altinnReporteeStubs.forEach {
             stubForGet(urlPathMatching("$ALTINN_REPORTEE_PATH.*")) {
                 withQueryParam("subject", equalTo(it))
+                withHeader("authorization", containing("Bearer"))
                 withHeader("ApiKey", equalTo("test"))
                 willReturnJson(hentStringFraFil("altinn_reportee_${it}.json"))
             }
