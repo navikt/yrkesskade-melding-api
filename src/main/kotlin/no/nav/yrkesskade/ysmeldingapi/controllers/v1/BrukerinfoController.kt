@@ -41,7 +41,7 @@ class BrukerinfoController(private val autentisertBruker: AutentisertBruker, pri
     }
 
     @GetMapping("/organisasjoner/{organisasjonsnummer}/roller")
-    fun hentRoller(@PathVariable("organisasjonsnummer") organisasjonsnummer: String) : ResponseEntity<List<AltinnRolleDto>> {
+    fun hentRoller(@PathVariable("organisasjonsnummer") organisasjonsnummer: String) : ResponseEntity<Array<AltinnRolleDto>> {
         val roller = brukerinfoService.hentRollerForFodselsnummerOgOrganisasjon(autentisertBruker.fodselsnummer, organisasjonsnummer)
         return ResponseEntity.ok(roller)
     }

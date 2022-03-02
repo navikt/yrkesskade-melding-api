@@ -69,11 +69,11 @@ class BrukerinfoService(
         return altinnClient.hentRettigheter(fodselsnummer, organisasjon.organisasjonsnummer)
     }
 
-    fun hentRollerForFodselsnummerOgOrganisasjon(fodselsnummer: String, organisasjonsnummer: String?): List<AltinnRolleDto> {
+    fun hentRollerForFodselsnummerOgOrganisasjon(fodselsnummer: String, organisasjonsnummer: String?): Array<AltinnRolleDto> {
         if (organisasjonsnummer == null) {
-            return emptyList()
+            return emptyArray()
         }
 
-        return altinnClient.hentRoller(fodselsnummer, organisasjonsnummer).roller
+        return altinnClient.hentRoller(fodselsnummer, organisasjonsnummer)
     }
 }
