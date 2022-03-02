@@ -11,13 +11,11 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Profile
-import org.springframework.core.io.DefaultResourceLoader
+import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.stereotype.Component
 import org.springframework.util.FileCopyUtils
 import java.io.IOException
-import java.io.InputStreamReader
-import java.io.UncheckedIOException
 import java.lang.invoke.MethodHandles
 import java.nio.charset.StandardCharsets
 
@@ -105,18 +103,16 @@ open class AbstractMockSever (private val port: Int?){
     private fun WireMockServer.setup() {
 
         // Altinn
-
-        val resolver = PathMatchingResourcePatternResolver(AbstractMockSever::class.java.classLoader)
-        val resources = resolver.getResources("classpath:mock/altinn/*/reportee.json")
-        resources.forEach {
-            val mappe = it.file.parentFile.name!!
+        val reportees = arrayOf("01234567891", "12345678910", "23456789101")
+        reportees.forEach {
+            val mappe = it
 
             log.info("Wiremock stub ${ALTINN_REPORTEE_PATH} til -> mock/altinn/${mappe}/reportee.json")
             stubForGet(urlPathMatching("$ALTINN_REPORTEE_PATH.*")) {
                 withQueryParam("subject", equalTo(mappe))
                 withHeader("authorization", containing("Bearer"))
                 withHeader("ApiKey", equalTo("test"))
-                willReturnJson(hentStringFraResource("altinn/${mappe}/reportee.json"))
+                willReturnJson(hentStringFraFil("altinn/${mappe}/reportee.json"))
             }
 
             log.info("Wiremock stub ${ALTINN_ROLLER_PATH} til -> mock/altinn/${mappe}/roller.json")
@@ -124,7 +120,7 @@ open class AbstractMockSever (private val port: Int?){
                 withQueryParam("subject", equalTo(mappe))
                 withHeader("authorization", containing("Bearer"))
                 withHeader("ApiKey", equalTo("test"))
-                willReturnJson(hentStringFraResource("altinn/${mappe}/roller.json"))
+                willReturnJson(hentStringFraFil("altinn/${mappe}/roller.json"))
             }
 
             log.info("Wiremock stub ${ALTINN_RETTIGHETER_PATH} til -> mock/altinn/${mappe}/rettigheter.json")
@@ -132,7 +128,7 @@ open class AbstractMockSever (private val port: Int?){
                 withQueryParam("subject", equalTo(mappe))
                 withHeader("authorization", containing("Bearer"))
                 withHeader("ApiKey", equalTo("test"))
-                willReturnJson(hentStringFraResource("altinn/${mappe}/rettigheter.json"))
+                willReturnJson(hentStringFraFil("altinn/${mappe}/rettigheter.json"))
             }
         }
 
@@ -154,23 +150,9 @@ open class AbstractMockSever (private val port: Int?){
         }
     }
 
-    private fun hentStringFraResource(resourceLocation: String): String {
-        val resourceLoader = DefaultResourceLoader()
-        val resource = resourceLoader.getResource("classpath:mock/${resourceLocation}")
-
-        try {
-            InputStreamReader(
-                resource.getInputStream(),
-                StandardCharsets.UTF_8
-            ).use { reader -> return FileCopyUtils.copyToString(reader) }
-        } catch (e: IOException) {
-            throw UncheckedIOException(e)
-        }
-    }
-
     private fun hentStringFraFil(filnavn: String): String {
         return IOUtils.toString(
-            AbstractMockSever::class.java.classLoader.getResourceAsStream("mock/$filnavn"),
+            MockServer::class.java.classLoader.getResourceAsStream("mock/$filnavn"),
             StandardCharsets.UTF_8
         )
     }
