@@ -14,7 +14,8 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional
@@ -78,7 +79,7 @@ class BrukerinfoControllerIT: AbstractIT() {
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
         )   .andExpect(status().isBadRequest)
-            .andExpect(content().string("Organisasjonsnummer kan ikke være tom"))
+            .andExpect(jsonPath("$.melding").value("Organisasjonsnummer kan ikke være tom"))
     }
 
     @Test
@@ -136,7 +137,8 @@ class BrukerinfoControllerIT: AbstractIT() {
                 .characterEncoding(Charsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
-        ).andExpect(status().is4xxClientError)
+        ).andExpect(status().isOk)
+            .andExpect(jsonPath("$").isEmpty)
     }
 
     @Test

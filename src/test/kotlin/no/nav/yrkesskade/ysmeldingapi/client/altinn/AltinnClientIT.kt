@@ -23,7 +23,7 @@ internal class AltinnClientIT : AbstractIT() {
 
     @Test
     fun `hent rettigheter for en person og organisasjon`() {
-        val rettigheter = altinnClient.hentRettigheter("fnr", "test")
+        val rettigheter = altinnClient.hentRettigheter("12345678910", "test")
         assertThat(rettigheter).isNotNull();
     }
 }
