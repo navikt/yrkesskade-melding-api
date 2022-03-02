@@ -87,9 +87,7 @@ class AltinnClient(
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
-            val resultat = response.readEntity(String::class.java)
-            logger.info("deserialize: ${resultat}")
-            return jacksonObjectMapper().readValue(resultat, AltinnRollerResponse::class.java).melding
+            return response.readEntity(AltinnRollerResponse::class.java).melding
         } else {
             throw BadRequestException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
         }
