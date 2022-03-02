@@ -1,5 +1,6 @@
 package no.nav.yrkesskade.ysmeldingapi.client.altinn
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.ysmeldingapi.models.*
 import no.nav.yrkesskade.ysmeldingapi.security.maskinporten.MaskinportenClient
 import no.nav.yrkesskade.ysmeldingapi.utils.AutentisertBruker
@@ -86,8 +87,9 @@ class AltinnClient(
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
-            logger.info("deserialize: ${response.readEntity(String::class.java)}")
-            return response.readEntity(Array<AltinnRolleDto>::class.java)
+            val resultat = response.readEntity(String::class.java)
+            logger.info("deserialize: ${resultat}")
+            return jacksonObjectMapper().readValue(resultat, Array<AltinnRolleDto>::class.java)
         } else {
             throw BadRequestException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
         }
