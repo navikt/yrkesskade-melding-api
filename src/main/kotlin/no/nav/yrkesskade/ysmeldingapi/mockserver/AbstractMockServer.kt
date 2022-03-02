@@ -19,9 +19,6 @@ import java.io.IOException
 import java.lang.invoke.MethodHandles
 import java.nio.charset.StandardCharsets
 
-
-const val SERVICE_EDITION = "1"
-const val SERVICE_CODE = "4936"
 const val FNR_UTEN_ORGANISASJONER = "01234567891"
 const val FNR_MED_ORGANISASJONER = "12345678910"
 const val FNR_MED_ORGANISJON_UTEN_ORGNUMMER = "23456789101"
@@ -152,7 +149,7 @@ open class AbstractMockSever (private val port: Int?){
 
     private fun hentStringFraFil(filnavn: String): String {
         return IOUtils.toString(
-            MockServer::class.java.classLoader.getResourceAsStream("mock/$filnavn"),
+            AbstractMockSever::class.java.classLoader.getResourceAsStream("mock/$filnavn"),
             StandardCharsets.UTF_8
         )
     }
