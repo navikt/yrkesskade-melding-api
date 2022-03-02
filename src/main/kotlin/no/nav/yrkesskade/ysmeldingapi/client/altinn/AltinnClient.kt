@@ -86,6 +86,7 @@ class AltinnClient(
             .get()
 
         if (response.status == Response.Status.OK.statusCode) {
+            logger.info("deserialize: ${response.readEntity(String::class.java)}")
             return response.readEntity(Array<AltinnRolleDto>::class.java)
         } else {
             throw BadRequestException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
