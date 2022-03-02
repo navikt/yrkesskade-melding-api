@@ -74,7 +74,7 @@ class AltinnClient(
         }
     }
 
-    fun hentRoller(fnr: String, organisasjonsnummer: String, spraak: String = "nb"): Array<AltinnRolleDto> {
+    fun hentRoller(fnr: String, organisasjonsnummer: String, spraak: String = "nb"): AltinnRollerDto {
         val path = "/api/serviceowner/authorization/roles"
         val response: Response = restklient.target(altinnUrl)
             .path(path)
@@ -89,7 +89,7 @@ class AltinnClient(
         if (response.status == Response.Status.OK.statusCode) {
             val resultat = response.readEntity(String::class.java)
             logger.info("deserialize: ${resultat}")
-            return jacksonObjectMapper().readValue(resultat, Array<AltinnRolleDto>::class.java)
+            return jacksonObjectMapper().readValue(resultat, AltinnRollerResponse::class.java).melding
         } else {
             throw BadRequestException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
         }

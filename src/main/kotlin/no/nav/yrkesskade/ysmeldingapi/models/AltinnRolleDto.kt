@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class AltinnRolleDto(
+    @JsonProperty("RoleId")
+    val rolleId: String?,
     @JsonProperty("RoleType")
     val rolletype: String,
     @JsonProperty("RoleDefinitionId")

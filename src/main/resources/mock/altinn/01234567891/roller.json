@@ -1,2 +1,12 @@
-[
-]
+{
+  "_links": {
+    "self": {
+      "href": "https://tt02.altinn.no/api/serviceowner/authorization/roles?subject=811077062&reportee=23114702129"
+    }
+  },
+  "_embedded": {
+    "roles": [
+
+    ]
+  }
+}
