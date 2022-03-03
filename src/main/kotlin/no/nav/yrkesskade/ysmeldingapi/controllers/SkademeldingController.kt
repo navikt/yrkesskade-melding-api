@@ -7,9 +7,11 @@ import no.nav.security.token.support.core.api.Unprotected
 import no.nav.yrkesskade.model.SkademeldingMetadata
 import no.nav.yrkesskade.model.Spraak
 import no.nav.yrkesskade.skademelding.model.Skademelding
+import no.nav.yrkesskade.ysmeldingapi.config.CorrelationInterceptor
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.services.SkademeldingService
 import org.slf4j.LoggerFactory
+import org.slf4j.MDC
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -31,7 +33,11 @@ class SkademeldingController(private val skademeldingService: SkademeldingServic
         val lagretSkademeldingDto = skademeldingService
             .lagreSkademelding(
                 objectMapper.treeToValue(skademelding, Skademelding::class.java),
-                SkademeldingMetadata(kilde = httpServletRequest.getHeader("x-nav-ys-kilde") ?: "ukjent", tidspunktMottatt = Instant.now(), spraak = Spraak.NB)
+                SkademeldingMetadata(
+                    kilde = httpServletRequest.getHeader("x-nav-ys-kilde") ?: "ukjent",
+                    tidspunktMottatt = Instant.now(),
+                    spraak = Spraak.NB,
+                    navCallId = MDC.get(CorrelationInterceptor.CORRELATION_ID_LOG_VAR_NAME))
             )
 
         val location = ServletUriComponentsBuilder

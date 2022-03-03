@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import java.time.Instant
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 @SpringBootTest
@@ -31,14 +32,15 @@ class SkademeldingInnsendtClientIT : AbstractIT() {
             metadata = SkademeldingMetadata(
                 kilde = "test",
                 tidspunktMottatt = Instant.now(),
-                spraak = Spraak.NB
+                spraak = Spraak.NB,
+                navCallId = UUID.randomUUID().toString()
             )
         )
         assertThat(skademeldingInnsendtHendelse.skademelding).isNotNull()
         assertThat(skademeldingInnsendtHendelse.metadata.kilde).isEqualTo("test")
         skademeldingInnsendingClient.sendTilMottak(skademeldingInnsendtHendelse)
         mottakConsumer.getLatch().await(10000, TimeUnit.MILLISECONDS)
-        assertThat(mottakConsumer.getPayload()).contains("\"norskIdentitetsnummer\":3093242309")
+        assertThat(mottakConsumer.getPayload()).contains("\"norskIdentitetsnummer\":\"3093242309\"")
         assertThat(mottakConsumer.getPayload()).contains("\"kilde\":\"${skademeldingInnsendtHendelse.metadata.kilde}\"")
     }
 }

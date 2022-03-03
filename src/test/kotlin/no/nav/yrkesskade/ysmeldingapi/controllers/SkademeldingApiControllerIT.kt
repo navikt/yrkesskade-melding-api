@@ -53,7 +53,7 @@ class SkademeldingApiControllerIT: AbstractIT() {
             .andExpect(status().isForbidden)
             .andExpect(
                 jsonPath("$.melding")
-                    .value("$FNR_UTEN_ORGANISASJONER har ikke tilgang til å sende skademelding for organisasjon 123456789")
+                    .value("Bruker har ikke tilgang til å sende skademelding for organisasjon 123456789")
             )
     }
 

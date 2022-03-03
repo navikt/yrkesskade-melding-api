@@ -11,6 +11,10 @@ spring:
       auto-offset-reset: earliest
       group-id: yrkesskade
 
+funksjonsbrytere:
+  enabled: false
+NAIS_CLUSTER_NAME: lokal
+
 kafka:
   topic:
     skademelding-innsendt: test
