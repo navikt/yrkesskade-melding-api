@@ -5,7 +5,7 @@ import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
 import no.nav.yrkesskade.ysmeldingapi.test.TestMockServerInitialization
 import no.nav.yrkesskade.ysmeldingapi.utils.AutentisertBruker
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.fail
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
@@ -39,11 +39,10 @@ internal class AltinnClientIT : AbstractIT() {
     @Test
     fun `hent organisasjoner fra altinn som feiler`() {
         `when`(autentisertBruker.fodselsnummer).thenReturn("1")
-        try {
+        val exception = assertThrows(AltinnException::class.java) {
             altinnClient.hentOrganisasjoner("1")
-            fail("organisasjoner skulle sendt en feil")
-        } catch (altinnException : AltinnException) {
-            assertThat(altinnException.httpStatus).isEqualTo(400)
         }
+
+        assertThat(exception.httpStatus).isEqualTo(400)
     }
 }
