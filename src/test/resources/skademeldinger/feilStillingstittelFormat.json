@@ -1,0 +1,45 @@
+{
+  "innmelder": {
+    "norskIdentitetsnummer": "12345678910",
+    "paaVegneAv": "910437127",
+    "innmelderrolle": "Virksomhetsrepresentant",
+    "altinnrolleIDer": []
+  },
+  "skadelidt": {
+    "norskIdentitetsnummer": "08089408327",
+    "dekningsforhold": {
+      "stillingstittelTilDenSkadelidte": "Applikasjonsprogrammerere",
+      "organisasjonsnummer": "910437127",
+      "navnPaaVirksomheten": "BIRI OG TORPO REGNSKAP",
+      "rolletype": "Arbeidstaker"
+    }
+  },
+  "skade": {
+    "alvorlighetsgrad": "Alvorlig kreftsykdom",
+    "skadedeDeler": [
+      {
+        "skadeartTabellC": "Tap av legemsdel",
+        "kroppsdelTabellD": "Øye, venstre"
+      }
+    ],
+    "antattSykefravaerTabellH": "Fraværsdager ukjent"
+  },
+  "hendelsesfakta": {
+    "tid": { "tidstype": "Ukjent" },
+    "naarSkjeddeUlykken": "Under full sykemelding",
+    "hvorSkjeddeUlykken": "På arbeidsstedet inne",
+    "ulykkessted": {
+      "sammeSomVirksomhetensAdresse": true,
+      "adresse": {
+        "adresselinje1": "",
+        "adresselinje2": "",
+        "adresselinje3": "",
+        "land": ""
+      }
+    },
+    "aarsakUlykkeTabellAogE": ["Sammenstøt med gjenstand eller påkjørsel"],
+    "bakgrunnsaarsakTabellBogG": ["Uautorisert bruk av utstyr"],
+    "utfyllendeBeskrivelse": "Test",
+    "stedsbeskrivelseTabellF": "Hjemme"
+  }
+}

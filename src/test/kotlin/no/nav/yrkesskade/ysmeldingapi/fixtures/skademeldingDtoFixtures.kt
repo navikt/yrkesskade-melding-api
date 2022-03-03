@@ -22,6 +22,10 @@ fun enkelSkademelding(): SkademeldingDto {
     )
 }
 
+fun skademeldingMedFeilStillingstittelFormat(): String {
+    return Files.readString(Path.of("src/test/resources/skademeldinger/feilStillingstittelFormat.json"))
+}
+
 fun fullSkademelding(): Skademelding {
     return Skademelding(
         innmelder = arbeidsgiverInnmelder(),

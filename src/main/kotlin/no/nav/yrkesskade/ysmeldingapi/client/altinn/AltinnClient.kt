@@ -1,6 +1,6 @@
 package no.nav.yrkesskade.ysmeldingapi.client.altinn
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import no.nav.yrkesskade.ysmeldingapi.exceptions.AltinnException
 import no.nav.yrkesskade.ysmeldingapi.models.*
 import no.nav.yrkesskade.ysmeldingapi.security.maskinporten.MaskinportenClient
 import no.nav.yrkesskade.ysmeldingapi.utils.AutentisertBruker
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.logging.Level
 import java.util.logging.Logger
-import javax.ws.rs.BadRequestException
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.core.Feature
@@ -51,7 +50,7 @@ class AltinnClient(
             val altinnReporteeResponse = response.readEntity(AltinnReporteeResponse::class.java)
             return altinnReporteeResponse.embedded.reportees.filterNot { it.type == "Person" }.map { AltinnOrganisasjonDto.fraAltinnReportee(it) }
         } else {
-            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
+            throw AltinnException("Klarte ikke hente virksomheter fra Altinn", response.status)
         }
     }
 
@@ -70,7 +69,7 @@ class AltinnClient(
         if (response.status == Response.Status.OK.statusCode) {
             return response.readEntity(AltinnRettighetResponse::class.java)
         } else {
-            throw RuntimeException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
+            throw AltinnException("Klarte ikke hente rettigheter fra Altinn", response.status)
         }
     }
 
@@ -89,7 +88,7 @@ class AltinnClient(
         if (response.status == Response.Status.OK.statusCode) {
             return response.readEntity(AltinnRollerResponse::class.java).melding
         } else {
-            throw BadRequestException("Klarte ikke hente roller fra Altinn - Status kode: ${response.status}")
+            throw AltinnException("Klarte ikke hente roller fra Altinn", response.status)
         }
     }
 
