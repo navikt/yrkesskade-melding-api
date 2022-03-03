@@ -3,6 +3,7 @@ package no.nav.yrkesskade.ysmeldingapi.controllers
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.ysmeldingapi.fixtures.enkelSkademelding
+import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedFeilStillingstittelFormat
 import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_UTEN_ORGANISASJONER
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
@@ -36,7 +37,7 @@ class SkademeldingApiControllerIT: AbstractIT() {
         assertThat(jwt).isNotNull()
 
         val enkelSkademeldingDto = enkelSkademelding()
-        postSkademelding(enkelSkademeldingDto, jwt)
+        postSkademelding(skademeldingDtoTilString(enkelSkademeldingDto), jwt)
             .andExpect(status().isCreated)
             .andExpect(header().exists("Location"))
     }
@@ -48,7 +49,7 @@ class SkademeldingApiControllerIT: AbstractIT() {
         assertThat(jwt).isNotNull()
 
         val enkelSkademeldingDto = enkelSkademelding()
-        postSkademelding(enkelSkademeldingDto, jwt)
+        postSkademelding(skademeldingDtoTilString(enkelSkademeldingDto), jwt)
             .andExpect(status().isForbidden)
             .andExpect(
                 jsonPath("$.melding")
@@ -56,14 +57,28 @@ class SkademeldingApiControllerIT: AbstractIT() {
             )
     }
 
-    private fun postSkademelding(skademeldingDto: SkademeldingDto, token: String) =
+    @Test
+    fun `motta skademelding med feil format på stillingstittel`() {
+        // gyldig JWT
+        val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
+        assertThat(jwt).isNotNull()
+
+        postSkademelding(skademeldingMedFeilStillingstittelFormat(), jwt)
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.melding").isNotEmpty)
+    }
+
+    private fun postSkademelding(skademelding: String, token: String) =
         mvc.perform(
             MockMvcRequestBuilders.post(SKADEMELDING_PATH)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
-                .content(objectMapper.writeValueAsString(skademeldingDto.skademelding))
+                .content(skademelding)
         )
+
+    private fun skademeldingDtoTilString(skademeldingDto: SkademeldingDto): String =
+        objectMapper.writeValueAsString(skademeldingDto.skademelding)
 
     companion object {
         private const val SKADEMELDING_PATH = "/api/v1/skademeldinger"

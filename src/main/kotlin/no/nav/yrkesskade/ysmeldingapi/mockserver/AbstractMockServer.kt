@@ -11,16 +11,14 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Profile
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.stereotype.Component
-import org.springframework.util.FileCopyUtils
-import java.io.IOException
 import java.lang.invoke.MethodHandles
 import java.nio.charset.StandardCharsets
 
 const val FNR_UTEN_ORGANISASJONER = "01234567891"
 const val FNR_MED_ORGANISASJONER = "12345678910"
 const val FNR_MED_ORGANISJON_UTEN_ORGNUMMER = "23456789101"
+const val FNR_MED_EXCEPTION = "1"
 const val ENHETSREGISTER_PATH = "/enhetsregisteret/api/enheter"
 const val UNDERENHETSREGISTER_PATH = "/enhetsregisteret/api/underenheter"
 const val ALTINN_ROLLER_PATH = "/altinn/api/serviceowner/authorization/roles"
@@ -126,6 +124,17 @@ open class AbstractMockSever (private val port: Int?){
                 withHeader("ApiKey", equalTo("test"))
                 willReturnJson(hentStringFraFil("altinn/${mappe}/rettigheter.json"))
             }
+        }
+
+        // Altinn bruker med exception
+        stubForGet(urlPathMatching("$ALTINN_REPORTEE_PATH.*")) {
+            withQueryParam("subject", equalTo(FNR_MED_EXCEPTION))
+            willReturn(
+                aResponse().apply {
+                    withStatus(400)
+                    withBody("Sannsynlig feil fra Altinn")
+                }
+            )
         }
 
         // Enhetsregisteret

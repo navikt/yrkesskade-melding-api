@@ -1,5 +1,6 @@
 package no.nav.yrkesskade.ysmeldingapi.controllers
 
+import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_MED_EXCEPTION
 import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_MED_ORGANISASJONER
 import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_MED_ORGANISJON_UTEN_ORGNUMMER
 import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_UTEN_ORGANISASJONER
@@ -65,6 +66,21 @@ class BrukerinfoControllerIT: AbstractIT() {
             .andExpect(jsonPath("$.navn").value(""))
             .andExpect(jsonPath("$.organisasjoner").isEmpty)
 
+    }
+
+    @Test
+    fun `hent brukerinfo med feil fra altinn - autentisert`() {
+        // gyldig JWT
+        val jwt = mvc.perform(get("/local/jwt?subject=${FNR_MED_EXCEPTION}")).andReturn().response.contentAsString
+
+        // Data for eksterne tjenester kommer fra localhost MockServer
+        mvc.perform(
+            get(USER_INFO_PATH)
+                .header(AUTHORIZATION, "Bearer $jwt")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(Charsets.UTF_8)
+        )   .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.melding").value("Klarte ikke hente virksomheter fra Altinn"))
     }
 
     @Test
