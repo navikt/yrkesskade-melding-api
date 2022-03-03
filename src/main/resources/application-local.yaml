@@ -1,5 +1,6 @@
 KAFKA_BROKERS: http://localhost:9092
 KAFKA_SCHEMA_REGISTRY: http://localhost:8081
+NAIS_CLUSTER_NAME: lokal
 
 spring:
   datasource:
@@ -20,6 +21,9 @@ spring:
 kafka:
   topic:
     skademelding-innsendt: privat-yrkesskade-skademelding-innsendt
+
+funksjonsbrytere:
+  enabled: false
 
 no.nav.security.jwt.issuer:
   tokenx:
