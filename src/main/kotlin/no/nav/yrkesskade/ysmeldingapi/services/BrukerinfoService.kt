@@ -50,6 +50,7 @@ class BrukerinfoService(
             naeringskode = enhetsregisterOrganisasjon.naering?.kode,
             postadresse = enhetsregisterOrganisasjon.postadresse?.let { AdresseDto.fraEnhetsregisterAdresse(it) },
             forretningsadresse = enhetsregisterOrganisasjon.forretningsadresse?.let { AdresseDto.fraEnhetsregisterAdresse(it) },
+            beliggenhetsadresse = enhetsregisterOrganisasjon.beliggenhetsadresse?.let { AdresseDto.fraEnhetsregisterAdresse(it) },
             organisasjonsform = enhetsregisterOrganisasjon.organisasjonsform?.kode,
             antallAnsatte = enhetsregisterOrganisasjon.antallAnsatte
         )
