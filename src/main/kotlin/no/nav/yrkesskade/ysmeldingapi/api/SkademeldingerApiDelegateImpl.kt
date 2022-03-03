@@ -4,9 +4,13 @@ import no.nav.yrkesskade.model.SkademeldingMetadata
 import no.nav.yrkesskade.model.Spraak
 import no.nav.yrkesskade.skademelding.api.SkademeldingApiDelegate
 import no.nav.yrkesskade.skademelding.model.Skademelding
+import no.nav.yrkesskade.ysmeldingapi.config.CorrelationInterceptor
+import no.nav.yrkesskade.ysmeldingapi.config.FeatureToggleService
+import no.nav.yrkesskade.ysmeldingapi.config.FeatureToggles
 import no.nav.yrkesskade.ysmeldingapi.services.BrukerinfoService
 import no.nav.yrkesskade.ysmeldingapi.services.SkademeldingService
 import no.nav.yrkesskade.ysmeldingapi.utils.AutentisertBruker
+import org.slf4j.MDC
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
@@ -19,7 +23,8 @@ class SkademeldingApiDelegateImpl(
     private val skademeldingService: SkademeldingService,
     private val autentisertBruker: AutentisertBruker,
     private val httpServletRequest: HttpServletRequest,
-    private val brukerinfoService: BrukerinfoService
+    private val brukerinfoService: BrukerinfoService,
+    private val featureToggleService: FeatureToggleService
     ) : SkademeldingApiDelegate {
 
     override fun sendSkademelding(skademelding: Skademelding): ResponseEntity<Unit> {
@@ -31,14 +36,16 @@ class SkademeldingApiDelegateImpl(
             RolleMedSkjemaTilgang.values().any { it.altinnRolledefinisjonId == rolledefinisjonId }
         }
 
-        if (!harTilgang) {
-            throw ForbiddenException("${autentisertBruker.fodselsnummer} har ikke tilgang til å sende skademelding for organisasjon ${organisasjonsnummer}")
+        if (!harTilgang && !featureToggleService.isEnabled(FeatureToggles.ER_IKKE_PROD.toggleId, false)) {
+            // brukeren har ikke tilgang til skjema innsending og vi er i produksjon
+            throw ForbiddenException("Bruker har ikke tilgang til å sende skademelding for organisasjon ${organisasjonsnummer}")
         }
 
         val skademeldingMetadata = SkademeldingMetadata(
             tidspunktMottatt = Instant.now(),
             kilde = httpServletRequest.getHeader("x-nav-ys-kilde") ?: "ukjent",
-            spraak = Spraak.NB
+            spraak = Spraak.NB,
+            navCallId = MDC.get(CorrelationInterceptor.CORRELATION_ID_LOG_VAR_NAME)
         )
         val lagretSkademeldingDto = skademeldingService.lagreSkademelding(skademelding, skademeldingMetadata)
         val location = ServletUriComponentsBuilder

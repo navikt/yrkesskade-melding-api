@@ -3,7 +3,7 @@ package no.nav.yrkesskade.ysmeldingapi.config
 import org.slf4j.MDC
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
-import java.util.UUID
+import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -43,7 +43,7 @@ class CorrelationInterceptor : HandlerInterceptor {
     }
 
     companion object {
-        private const val CORRELATION_ID_HEADER_NAME = "X-Correlation-Id"
-        private const val CORRELATION_ID_LOG_VAR_NAME = "correlationId"
+        private const val CORRELATION_ID_HEADER_NAME = "Nav-CallId"
+        const val CORRELATION_ID_LOG_VAR_NAME = "correlationId"
     }
 }

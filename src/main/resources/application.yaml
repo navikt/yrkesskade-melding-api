@@ -19,6 +19,12 @@ spring:
         enable_lazy_load_no_trans: true
         ddl-auto: none
 
+funksjonsbrytere:
+  enabled: true
+  unleash:
+    uri: https://unleash.nais.io/api/
+    cluster: ${NAIS_CLUSTER_NAME}
+    applicationName: ${spring.application.name}
 
 kafka:
   topic:
