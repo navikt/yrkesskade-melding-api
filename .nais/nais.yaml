@@ -38,6 +38,8 @@ spec:
           namespace: "yrkesskade"
         - application: altinn-rettigheter-proxy
           namespace: arbeidsgiver
+    external:
+      - host: unleash.nais.io
   tokenx:
     enabled: true
   maskinporten:
