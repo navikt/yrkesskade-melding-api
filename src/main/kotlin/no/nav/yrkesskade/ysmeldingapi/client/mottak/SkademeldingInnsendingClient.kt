@@ -1,7 +1,5 @@
 package no.nav.yrkesskade.ysmeldingapi.client.mottak
 
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.model.SkademeldingInnsendtHendelse
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.KafkaTemplate
