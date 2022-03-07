@@ -14,7 +14,6 @@ class SkademeldingInnsendingClient(
     @Value("\${kafka.topic.skademelding-innsendt}") private val mottakTopic: String,
     private val skademeldingKafkaTemplate: KafkaTemplate<String, SkademeldingInnsendtHendelse>
 ) {
-    val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
     fun sendTilMottak(skademelding: SkademeldingInnsendtHendelse): SkademeldingInnsendtHendelse {
         val future: ListenableFuture<SendResult<String, SkademeldingInnsendtHendelse>> = skademeldingKafkaTemplate.send(mottakTopic, skademelding)
