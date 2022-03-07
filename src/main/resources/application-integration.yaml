@@ -10,6 +10,7 @@ spring:
     consumer:
       auto-offset-reset: earliest
       group-id: yrkesskade
+    client-id: yrkesskade
 
 funksjonsbrytere:
   enabled: false

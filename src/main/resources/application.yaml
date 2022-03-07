@@ -1,5 +1,7 @@
 spring:
   application.name: yrkesskade-melding-api
+  kafka:
+    client-id: yrkesskade-melding-api
   datasource:
     url: jdbc:postgresql://${YRKESSKADE_API_DB_HOST}:${YRKESSKADE_API_DB_PORT}/${YRKESSKADE_API_DB_DATABASE}
     username: ${YRKESSKADE_API_DB_USERNAME}
