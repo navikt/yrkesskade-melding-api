@@ -16,11 +16,13 @@ spring:
       schema.registry.url: ${KAFKA_SCHEMA_REGISTRY}
     consumer:
       group-id: srvc01
+    producer:
+      client-id: srvp01
 
 # bruk oneshot for å opprette topic
 kafka:
   topic:
-    skademelding-innsendt: privat-yrkesskade-skademelding-innsendt
+    skademelding-innsendt: privat-yrkesskade-skademeldinginnsendt
 
 funksjonsbrytere:
   enabled: false
