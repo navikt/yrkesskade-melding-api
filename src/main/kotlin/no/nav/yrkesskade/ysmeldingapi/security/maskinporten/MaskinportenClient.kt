@@ -4,7 +4,7 @@ import com.nimbusds.jose.JWSAlgorithm
 import com.nimbusds.jose.JWSHeader
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
-import org.slf4j.LoggerFactory
+import no.nav.yrkesskade.ysmeldingapi.utils.getLogger
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
@@ -31,9 +31,9 @@ interface MaskinportenClient {
 class MaskinportenClientImpl(
     @Value("\${api.client.altinn.url}") val altinnUrl: String,
     val config: MaskinportenConfig,
-    restTemplateBuilder: RestTemplateBuilder,
+    restTemplateBuilder: RestTemplateBuilder
 ): MaskinportenClient, InitializingBean {
-    private val logger = LoggerFactory.getLogger(javaClass)
+    private val logger = getLogger(javaClass)
     private val restTemplate = restTemplateBuilder.build()
     private lateinit var wellKnownResponse: WellKnownResponse
 
@@ -87,7 +87,7 @@ class MaskinportenClientImpl(
 
         logger.info("Fetched new access token. Expires in {} seconds.", tokenResponse.expiresInSeconds)
 
-        if (true) { // TODO YSMOD-72 - bruk notProd flagget
+        if (false) { // TODO YSMOD-72 - bruk notProd flagget
             logger.info("maskinporten token: ${tokenResponse.accessToken}")
         }
 

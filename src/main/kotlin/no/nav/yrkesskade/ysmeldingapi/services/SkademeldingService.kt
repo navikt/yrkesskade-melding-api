@@ -9,7 +9,8 @@ import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendingClient
 import no.nav.yrkesskade.ysmeldingapi.domain.SkademeldingEntity
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.repositories.SkademeldingRepository
-import org.slf4j.LoggerFactory
+import no.nav.yrkesskade.ysmeldingapi.utils.getLogger
+import no.nav.yrkesskade.ysmeldingapi.utils.getSecureLogger
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.lang.invoke.MethodHandles
@@ -20,12 +21,13 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
                           private val skademeldingRepository: SkademeldingRepository
 ) {
 
-    private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
+    private val log = getLogger(MethodHandles.lookup().lookupClass())
+    private val secureLog = getSecureLogger()
     private val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
     fun sendTilMottak(skademeldingInnsendtHendelse: SkademeldingInnsendtHendelse): SkademeldingInnsendtHendelse {
         return skademeldingInnsendingClient.sendTilMottak(skademeldingInnsendtHendelse).also {
-            log.info("Lagret skademelding $it i mottak")
+            secureLog.info("Sendt skademelding $it til mottak")
         }!!
     }
 

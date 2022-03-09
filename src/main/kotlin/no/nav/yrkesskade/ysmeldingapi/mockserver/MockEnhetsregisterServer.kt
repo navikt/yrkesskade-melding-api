@@ -4,8 +4,8 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer
+import no.nav.yrkesskade.ysmeldingapi.utils.getLogger
 import org.apache.commons.io.IOUtils
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets
 )
 class MockEnhetsregisterServer(@Value("\${mock.enhetsregister.port}") private val port: Int) {
     private val ENHETSREGISTER_PATH = "/enhetsregisteret/api/"
-    private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
+    private val log = getLogger(MethodHandles.lookup().lookupClass())
 
     private val mockServer: WireMockServer
 

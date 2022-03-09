@@ -6,7 +6,7 @@ import no.finn.unleash.UnleashContextProvider
 import no.finn.unleash.util.UnleashConfig
 import no.nav.yrkesskade.featureflag.strategy.ByClusterName
 import no.nav.yrkesskade.featureflag.strategy.IsNotProdStrategy
-import org.slf4j.LoggerFactory
+import no.nav.yrkesskade.ysmeldingapi.utils.getLogger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
@@ -88,7 +88,7 @@ class FeatureToggleConfig(
     }
 
     companion object {
-        private val logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
+        private val logger = getLogger(MethodHandles.lookup().lookupClass())
     }
 }
 

@@ -10,13 +10,11 @@ import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.config.CorrelationInterceptor
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.services.SkademeldingService
-import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
-import java.lang.invoke.MethodHandles
 import java.time.Instant
 import javax.servlet.http.HttpServletRequest
 
@@ -24,8 +22,6 @@ import javax.servlet.http.HttpServletRequest
 @RestController
 @RequestMapping(path = ["/api/"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class SkademeldingController(private val skademeldingService: SkademeldingService) {
-    private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
-
     val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
     @PostMapping("/midlertidig/skademeldinger")
