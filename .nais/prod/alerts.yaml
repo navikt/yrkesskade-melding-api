@@ -8,7 +8,7 @@ metadata:
 spec:
   receivers:
     slack:
-      channel: "yrkesskade-alerts-dev"
+      channel: "yrkesskade-alerts-prod"
       prependText: "<!here> | "
   alerts:
   - alert: "yrkesskade-melding-api er nede"

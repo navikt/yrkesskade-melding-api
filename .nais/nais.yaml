@@ -73,3 +73,5 @@ spec:
             envVarPrefix: YRKESSKADE_API_DB
   kafka:
     pool: {{kafkaPool}}
+  secureLogs:
+    enabled: true

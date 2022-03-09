@@ -75,7 +75,7 @@ jobs:
           "CLUSTER": "prod-gcp"
           "RESOURCE": ".nais/nais.yaml"
           "VARS": ".nais/prod/prod.yaml"
-    "deployAlertsToDev":
+    "deployAlertsToProd":
       name: "Deploy alerts to prod"
       needs: "build"
       runs-on: "ubuntu-18.04"
