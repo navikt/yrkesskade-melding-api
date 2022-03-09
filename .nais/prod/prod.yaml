@@ -1,0 +1,4 @@
+ingresses:
+- "https://yrkesskade-melding-api.intern.nav.no"
+springProfile: prod
+kafkaPool: nav-prod
