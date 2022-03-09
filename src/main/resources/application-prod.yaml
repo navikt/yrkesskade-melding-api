@@ -22,3 +22,8 @@ spring:
 no.nav.security.jwt.issuer:
   tokenx:
     accepted_audience: prod-gcp:yrkesskade:yrkesskade-melding-api
+
+api:
+  client:
+    altinn:
+      url: https://www.altinn.no
