@@ -18,3 +18,7 @@ spring:
           location: ${KAFKA_KEYSTORE_PATH}
           password: ${KAFKA_CREDSTORE_PASSWORD}
         key.password: ${KAFKA_CREDSTORE_PASSWORD}
+
+no.nav.security.jwt.issuer:
+  tokenx:
+    accepted_audience: prod-gcp:yrkesskade:yrkesskade-melding-api
