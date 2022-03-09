@@ -6,13 +6,7 @@
         </encoder>
     </appender>
     <appender name="STDOUT_JSON" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
-            <jsonFormatter
-                    class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
-                <prettyPrint>true</prettyPrint>
-            </jsonFormatter>
-            <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>
-        </layout>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
 
     <logger name="no.nav" level="info" additivity="false">
@@ -21,11 +15,28 @@
 
     <springProfile name="!dev &amp; !prod">
         <root level="info">
-            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="STDOUT_JSON"/>
         </root>
     </springProfile>
 
     <springProfile  name="dev | prod">
+        <appender name="secureJson" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>/secure-logs/secure.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                <fileNamePattern>/secure-logs/secure.log.%i</fileNamePattern>
+                <minIndex>1</minIndex>
+                <maxIndex>1</maxIndex>
+            </rollingPolicy>
+            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <maxFileSize>50MB</maxFileSize>
+            </triggeringPolicy>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        </appender>
+
+        <logger name="secure" level="info" additivity="false">
+            <appender-ref ref="secureJson"/>
+        </logger>
+
         <root level="info">
             <appender-ref ref="STDOUT_JSON"/>
         </root>
