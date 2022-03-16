@@ -28,10 +28,7 @@ class AltinnClient(
     private val logger = Logger.getLogger(javaClass.name)
 
     init {
-        // legger på default headers på alle kall mot Altinn API
-        var altinnClientHeaderRequestFilter = AltinnClientHeaderRequestFilter(altinnApiKey)
-        val feature: Feature = LoggingFeature(logger, Level.INFO, null, null)
-        restklient = ClientBuilder.newBuilder().register(feature).build()
+        restklient = ClientBuilder.newBuilder().build()
     }
 
     fun hentOrganisasjoner(fnr: String): List<AltinnOrganisasjonDto> {
