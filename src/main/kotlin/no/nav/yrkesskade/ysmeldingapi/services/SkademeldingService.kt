@@ -6,7 +6,6 @@ import no.nav.yrkesskade.model.SkademeldingInnsendtHendelse
 import no.nav.yrkesskade.model.SkademeldingMetadata
 import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendingClient
-import no.nav.yrkesskade.ysmeldingapi.domain.SkademeldingEntity
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.repositories.SkademeldingRepository
 import no.nav.yrkesskade.ysmeldingapi.utils.getLogger
@@ -48,18 +47,5 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 
         // returner lagrede skademelding
         return lagretSkademeldingDto
-    }
-
-    fun hentAlleSkademeldinger(): List<SkademeldingDto> {
-        return skademeldingRepository.findAll().map { it.toSkademeldingDto() }
-    }
-
-    fun hentSkademeldingMedId(id: Int): Optional<SkademeldingEntity> {
-        return skademeldingRepository.findById(id)
-    }
-
-    @Transactional
-    fun slettSkademelding(id: Int) {
-        skademeldingRepository.deleteById(id)
     }
 }
