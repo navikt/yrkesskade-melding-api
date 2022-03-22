@@ -1,7 +1,9 @@
 package no.nav.yrkesskade.ysmeldingapi.api
 
+import no.nav.yrkesskade.model.SkademeldingBeriketData
 import no.nav.yrkesskade.model.SkademeldingMetadata
 import no.nav.yrkesskade.model.Spraak
+import no.nav.yrkesskade.model.Systemkilde
 import no.nav.yrkesskade.skademelding.api.SkademeldingApiDelegate
 import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.config.CorrelationInterceptor
@@ -25,7 +27,7 @@ class SkademeldingApiDelegateImpl(
     private val httpServletRequest: HttpServletRequest,
     private val brukerinfoService: BrukerinfoService,
     private val featureToggleService: FeatureToggleService
-    ) : SkademeldingApiDelegate {
+) : SkademeldingApiDelegate {
 
     override fun sendSkademelding(skademelding: Skademelding): ResponseEntity<Unit> {
         // sjekk at autentisert bruker har tilgang til å poste skademelding
@@ -50,7 +52,13 @@ class SkademeldingApiDelegateImpl(
             spraak = Spraak.NB,
             navCallId = MDC.get(CorrelationInterceptor.CORRELATION_ID_LOG_VAR_NAME)
         )
-        val lagretSkademeldingDto = skademeldingService.lagreSkademelding(skademelding, skademeldingMetadata)
+        val skademeldingBeriketData = SkademeldingBeriketData(
+            innmeldersOrganisasjonsnavn = brukerinfoService.hentOrganisasjonForBruker(
+                skademelding.innmelder!!.norskIdentitetsnummer,
+                skademelding.innmelder!!.paaVegneAv
+            )?.navn.orEmpty() to Systemkilde.ENHETSREGISTERET
+        )
+        val lagretSkademeldingDto = skademeldingService.lagreSkademelding(skademelding, skademeldingMetadata, skademeldingBeriketData)
         val location = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")

@@ -2,6 +2,7 @@ package no.nav.yrkesskade.ysmeldingapi.services
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import no.nav.yrkesskade.model.SkademeldingBeriketData
 import no.nav.yrkesskade.model.SkademeldingInnsendtHendelse
 import no.nav.yrkesskade.model.SkademeldingMetadata
 import no.nav.yrkesskade.skademelding.model.Skademelding
@@ -31,7 +32,11 @@ class SkademeldingService(
     }
 
     @Transactional
-    fun lagreSkademelding(skademelding: Skademelding, skademeldingMetadata: SkademeldingMetadata): SkademeldingDto {
+    fun lagreSkademelding(
+        skademelding: Skademelding,
+        skademeldingMetadata: SkademeldingMetadata,
+        skademeldingBeriketData: SkademeldingBeriketData
+    ): SkademeldingDto {
         val skademeldingTilLagring = SkademeldingDto(
             id = null,
             skademelding = objectMapper.valueToTree(skademelding), // konverter til JsonNode
@@ -43,7 +48,13 @@ class SkademeldingService(
         val lagretSkademeldingDto = skademeldingRepository.save(skademeldingTilLagring.toSkademelding()).toSkademeldingDto()
 
         // send til mottak dersom databaselagring er ok
-        sendTilMottak(SkademeldingInnsendtHendelse(skademelding = skademelding, metadata = skademeldingMetadata))
+        sendTilMottak(
+            SkademeldingInnsendtHendelse(
+                skademelding = skademelding,
+                metadata = skademeldingMetadata,
+                beriketData = skademeldingBeriketData
+            )
+        )
 
         // returner lagrede skademelding
         return lagretSkademeldingDto
