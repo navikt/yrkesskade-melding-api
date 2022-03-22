@@ -30,7 +30,10 @@ class SkademeldingApiDelegateImpl(
     override fun sendSkademelding(skademelding: Skademelding): ResponseEntity<Unit> {
         // sjekk at autentisert bruker har tilgang til å poste skademelding
         val organisasjonsnummer = skademelding.innmelder?.paaVegneAv
-        val roller = brukerinfoService.hentRollerForFodselsnummerOgOrganisasjon(autentisertBruker.fodselsnummer, organisasjonsnummer)
+        val roller = brukerinfoService.hentRollerForFodselsnummerOgOrganisasjon(
+            autentisertBruker.fodselsnummer,
+            organisasjonsnummer
+        )
         val harTilgang = roller.any {
             val rolledefinisjonId = it.rolledefinisjonId
             RolleMedSkjemaTilgang.values().any { it.altinnRolledefinisjonId == rolledefinisjonId }
@@ -38,7 +41,7 @@ class SkademeldingApiDelegateImpl(
 
         if (!harTilgang && !featureToggleService.isEnabled(FeatureToggles.ER_IKKE_PROD.toggleId, false)) {
             // brukeren har ikke tilgang til skjema innsending og vi er i produksjon
-            throw ForbiddenException("Bruker har ikke tilgang til å sende skademelding for organisasjon ${organisasjonsnummer}")
+            throw ForbiddenException("Bruker har ikke tilgang til å sende skademelding for organisasjon $organisasjonsnummer")
         }
 
         val skademeldingMetadata = SkademeldingMetadata(

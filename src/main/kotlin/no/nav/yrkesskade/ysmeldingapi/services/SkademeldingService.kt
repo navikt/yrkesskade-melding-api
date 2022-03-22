@@ -13,11 +13,11 @@ import no.nav.yrkesskade.ysmeldingapi.utils.getSecureLogger
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.lang.invoke.MethodHandles
-import java.util.*
 
 @Service
-class SkademeldingService(private val skademeldingInnsendingClient: SkademeldingInnsendingClient,
-                          private val skademeldingRepository: SkademeldingRepository
+class SkademeldingService(
+    private val skademeldingInnsendingClient: SkademeldingInnsendingClient,
+    private val skademeldingRepository: SkademeldingRepository
 ) {
 
     private val log = getLogger(MethodHandles.lookup().lookupClass())
@@ -27,7 +27,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
     fun sendTilMottak(skademeldingInnsendtHendelse: SkademeldingInnsendtHendelse): SkademeldingInnsendtHendelse {
         return skademeldingInnsendingClient.sendTilMottak(skademeldingInnsendtHendelse).also {
             secureLog.info("Sendt skademelding $it til mottak")
-        }!!
+        }
     }
 
     @Transactional

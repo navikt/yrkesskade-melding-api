@@ -26,7 +26,8 @@ class SkademeldingInnsendtClientIT : AbstractIT() {
 
     @Test
     fun `send melding til mottak`() {
-        val skademelding: Skademelding = objectMapper.treeToValue(enkelSkademelding().skademelding, Skademelding::class.java)
+        val skademelding: Skademelding =
+            objectMapper.treeToValue(enkelSkademelding().skademelding, Skademelding::class.java)
         val skademeldingInnsendtHendelse = SkademeldingInnsendtHendelse(
             skademelding = skademelding,
             metadata = SkademeldingMetadata(
