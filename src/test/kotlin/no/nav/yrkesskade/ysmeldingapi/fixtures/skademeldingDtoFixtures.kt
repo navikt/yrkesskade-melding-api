@@ -13,7 +13,6 @@ import java.time.Instant
 private val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
 fun enkelSkademelding(): SkademeldingDto {
-    val skademelding = Files.readString(Path.of("src/test/resources/skademeldinger/enkelSkademelding.json"))
     return SkademeldingDto(
         null,
         objectMapper.valueToTree(fullSkademelding()),

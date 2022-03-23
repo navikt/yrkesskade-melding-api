@@ -36,7 +36,7 @@ class BrukerinfoController(private val autentisertBruker: AutentisertBruker, pri
 
     @GetMapping("/organisasjoner/{organisasjonsnummer}")
     fun hentOrganisasjon(@PathVariable("organisasjonsnummer") organisasjonsnummer: String) : ResponseEntity<OrganisasjonDto> {
-        val organisasjon = brukerinfoService.hentOrganisasjonForBruker(autentisertBruker.fodselsnummer, organisasjonsnummer)
+        val organisasjon = brukerinfoService.hentOrganisasjonForBruker(organisasjonsnummer)
         return ResponseEntity.ok(organisasjon)
     }
 
