@@ -6,6 +6,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.ysmeldingapi.fixtures.enkelSkademelding
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
+import no.nav.yrkesskade.ysmeldingapi.test.TestMockServerInitialization
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.`is`
 import org.junit.jupiter.api.Test
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
@@ -21,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
+@ContextConfiguration(initializers = [TestMockServerInitialization::class])
 class SkademeldingControllerIT : AbstractIT() {
 
     @Autowired

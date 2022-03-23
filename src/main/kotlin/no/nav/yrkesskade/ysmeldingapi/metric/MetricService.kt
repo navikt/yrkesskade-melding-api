@@ -19,10 +19,14 @@ class MetricService(
     private val log = getLogger(MetricService::class.java)
 
     fun insertMetrikk(record: SkademeldingInnsendtHendelse) {
-        val enhet = enhetsregisterClient.hentEnhetFraEnhetsregisteret(record.skademelding.innmelder!!.paaVegneAv, false)
+        var enhet = enhetsregisterClient.hentEnhetFraEnhetsregisteret(record.skademelding.innmelder!!.paaVegneAv, false)
         if (enhet == null) {
-            log.error("Kunne ikke finne enhet i enhetsregisteret for ${record.skademelding.innmelder!!.paaVegneAv}")
-            return
+            enhet = enhetsregisterClient.hentUnderenhetFraEnhetsregisteret(record.skademelding.innmelder!!.paaVegneAv, false)
+
+            if (enhet == null) {
+                log.error("Kunne ikke finne enhet i enhetsregisteret for ${record.skademelding.innmelder!!.paaVegneAv}")
+                return
+            }
         }
 
         val skademeldingMetrikkPayload = SkademeldingMetrikkPayload(
