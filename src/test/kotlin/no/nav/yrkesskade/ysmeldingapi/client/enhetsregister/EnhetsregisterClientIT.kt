@@ -17,7 +17,7 @@ class EnhetsregisterClientIT : AbstractIT() {
 
     @Test
     fun `hent enhet fra enhetsregister som finnes`() {
-        val organisasjon: EnhetsregisterOrganisasjonDto = enhetsregisterClient.hentEnhetFraEnhetsregisteret("910521551", false)
+        val organisasjon: EnhetsregisterOrganisasjonDto = enhetsregisterClient.hentEnhetFraEnhetsregisteret("910521551")
 
         assertThat(organisasjon).isNotNull()
         assertThat(organisasjon.naering?.kode).isNotNull()
@@ -27,7 +27,7 @@ class EnhetsregisterClientIT : AbstractIT() {
 
     @Test
     fun `hent enhet fra enhetsregister som ikke finnes`() {
-        val organisasjon: EnhetsregisterOrganisasjonDto = enhetsregisterClient.hentEnhetFraEnhetsregisteret("910437127", false)
+        val organisasjon: EnhetsregisterOrganisasjonDto = enhetsregisterClient.hentEnhetFraEnhetsregisteret("910437127")
 
         // dersom enhetsregisteret returner 404 (NotFound) - vil klienten lage ett tomt objekt
         assertThat(organisasjon).isNotNull()
@@ -37,7 +37,7 @@ class EnhetsregisterClientIT : AbstractIT() {
 
     @Test
     fun `hent underenhet fra enhetsregister som finnes`() {
-        val organisasjon: EnhetsregisterOrganisasjonDto = enhetsregisterClient.hentUnderenhetFraEnhetsregisteret("910460048", false)
+        val organisasjon: EnhetsregisterOrganisasjonDto = enhetsregisterClient.hentUnderenhetFraEnhetsregisteret("910460048")
 
         assertThat(organisasjon).isNotNull()
         assertThat(organisasjon.organisasjonsnummer).isEqualTo("910460048")
@@ -49,7 +49,29 @@ class EnhetsregisterClientIT : AbstractIT() {
 
     @Test
     fun `hent underenhet fra enhetsregister som ikke finnes`() {
-        val organisasjon: EnhetsregisterOrganisasjonDto = enhetsregisterClient.hentUnderenhetFraEnhetsregisteret("910720121", false)
+        val organisasjon: EnhetsregisterOrganisasjonDto = enhetsregisterClient.hentUnderenhetFraEnhetsregisteret("910720121")
+
+        // dersom enhetsregisteret returner 404 (NotFound) - vil klienten lage ett tomt objekt
+        assertThat(organisasjon).isNotNull()
+        assertThat(organisasjon.navn).isNull()
+        assertThat(organisasjon.naering?.kode).isNull()
+    }
+
+    @Test
+    fun `hent enhet eller underenhet fra enhetsregister som finnes`() {
+        val organisasjon: EnhetsregisterOrganisasjonDto =
+            enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret("910521551")
+
+        assertThat(organisasjon).isNotNull()
+        assertThat(organisasjon.naering?.kode).isNotNull()
+        assertThat(organisasjon.forretningsadresse).isNotNull()
+        assertThat(organisasjon.antallAnsatte).isEqualTo(50)
+    }
+
+    @Test
+    fun `hent enhet eller underenhet fra enhetsregister som ikke finnes`() {
+        val organisasjon: EnhetsregisterOrganisasjonDto =
+            enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret("910437127")
 
         // dersom enhetsregisteret returner 404 (NotFound) - vil klienten lage ett tomt objekt
         assertThat(organisasjon).isNotNull()

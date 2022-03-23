@@ -19,19 +19,27 @@ class EnhetsregisterClient(
     private val client: Client = ClientBuilder.newClient()
 
     fun hentEnhetFraEnhetsregisteret(
-        orgnr: String,
-        inkluderHistorikk: Boolean
-    ): EnhetsregisterOrganisasjonDto = hentEnhet(orgnr, inkluderHistorikk, ENHET)
+        orgnr: String
+    ): EnhetsregisterOrganisasjonDto = hentEnhet(orgnr, ENHET)
 
     fun hentUnderenhetFraEnhetsregisteret(
-        orgnr: String,
-        inkluderHistorikk: Boolean
-    ): EnhetsregisterOrganisasjonDto = hentEnhet(orgnr, inkluderHistorikk, UNDERENHET)
+        orgnr: String
+    ): EnhetsregisterOrganisasjonDto = hentEnhet(orgnr, UNDERENHET)
+
+    fun hentEnhetEllerUnderenhetFraEnhetsregisteret(
+        orgnr: String
+    ): EnhetsregisterOrganisasjonDto {
+        val enhet = hentEnhet(orgnr, ENHET)
+        if (enhet != EnhetsregisterOrganisasjonDto()) {
+            return enhet
+        }
+        return hentEnhet(orgnr, UNDERENHET)
+    }
 
     /**
      * Henter en enhet fra enten enheter eller underenheter
      */
-    private fun hentEnhet(orgnr: String, inkluderHistorikk: Boolean, enhettype: String): EnhetsregisterOrganisasjonDto {
+    private fun hentEnhet(orgnr: String, enhettype: String): EnhetsregisterOrganisasjonDto {
         if (enhettype != ENHET && enhettype != UNDERENHET) {
             throw RuntimeException("$enhettype er ikke en gyldig enhetstype. Forventet $ENHET eller $UNDERENHET")
         }

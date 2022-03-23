@@ -22,10 +22,10 @@ class BrukerinfoService(
 
             if (it.parentOrganisasjonsnummer != null) {
                 enheterForOrganisasjonsnummer[it.parentOrganisasjonsnummer] =
-                    enhetsregisterClient.hentUnderenhetFraEnhetsregisteret(it.organisasjonsnummer, false)
+                    enhetsregisterClient.hentUnderenhetFraEnhetsregisteret(it.organisasjonsnummer)
             } else {
                 enheterForOrganisasjonsnummer[it.organisasjonsnummer] =
-                    enhetsregisterClient.hentEnhetFraEnhetsregisteret(it.organisasjonsnummer, false)
+                    enhetsregisterClient.hentEnhetFraEnhetsregisteret(it.organisasjonsnummer)
             }
         }
 
@@ -42,8 +42,8 @@ class BrukerinfoService(
         }
     }
 
-    fun hentOrganisasjonForBruker(fodselsnummer: String, organisasjonsnummer: String): OrganisasjonDto? {
-        val enhetsregisterOrganisasjon = enhetsregisterClient.hentEnhetFraEnhetsregisteret(organisasjonsnummer, false)
+    fun hentOrganisasjonForBruker(organisasjonsnummer: String): OrganisasjonDto? {
+        val enhetsregisterOrganisasjon = enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret(organisasjonsnummer)
 
         return OrganisasjonDto(
             organisasjonsnummer = enhetsregisterOrganisasjon.organisasjonsnummer,

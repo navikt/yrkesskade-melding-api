@@ -54,11 +54,11 @@ class SkademeldingApiDelegateImpl(
         )
         val skademeldingBeriketData = SkademeldingBeriketData(
             innmeldersOrganisasjonsnavn = brukerinfoService.hentOrganisasjonForBruker(
-                skademelding.innmelder!!.norskIdentitetsnummer,
                 skademelding.innmelder!!.paaVegneAv
             )?.navn.orEmpty() to Systemkilde.ENHETSREGISTERET
         )
-        val lagretSkademeldingDto = skademeldingService.lagreSkademelding(skademelding, skademeldingMetadata, skademeldingBeriketData)
+        val lagretSkademeldingDto =
+            skademeldingService.lagreSkademelding(skademelding, skademeldingMetadata, skademeldingBeriketData)
         val location = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")
