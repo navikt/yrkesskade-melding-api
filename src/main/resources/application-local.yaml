@@ -1,6 +1,7 @@
 KAFKA_BROKERS: http://localhost:9092
 KAFKA_SCHEMA_REGISTRY: http://localhost:8081
 NAIS_CLUSTER_NAME: lokal
+GCP_TEAM_PROJECT_ID: stub
 
 spring:
   datasource:
@@ -18,6 +19,10 @@ spring:
       group-id: srvc01
     producer:
       client-id: srvp01
+  cloud:
+    gcp:
+      bigquery:
+        enabled: false
 
 # bruk oneshot for å opprette topic
 kafka:

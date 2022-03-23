@@ -19,7 +19,9 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.transaction.annotation.Transactional
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration(initializers = [TestMockServerInitialization::class])
@@ -53,7 +55,7 @@ class SkademeldingApiControllerIT: AbstractIT() {
             .andExpect(status().isForbidden)
             .andExpect(
                 jsonPath("$.melding")
-                    .value("Bruker har ikke tilgang til å sende skademelding for organisasjon 123456789")
+                    .value("Bruker har ikke tilgang til å sende skademelding for organisasjon 910521551")
             )
     }
 
