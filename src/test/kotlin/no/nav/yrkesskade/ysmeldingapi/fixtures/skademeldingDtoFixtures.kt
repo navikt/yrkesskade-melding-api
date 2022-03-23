@@ -38,7 +38,7 @@ fun fullSkademelding(): Skademelding {
 fun arbeidsgiverInnmelder(): Innmelder {
     return Innmelder(
         norskIdentitetsnummer = "3093242309",
-        paaVegneAv = "123456789",
+        paaVegneAv = "910521551",
         innmelderrolle = Innmelderrolle.virksomhetsrepresentant,
         altinnrolleIDer = null
     )

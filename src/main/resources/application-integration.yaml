@@ -1,3 +1,6 @@
+GCP_TEAM_PROJECT_ID: stub
+NAIS_CLUSTER_NAME: lokal
+
 spring:
   config:
     activate:
@@ -11,10 +14,13 @@ spring:
       auto-offset-reset: earliest
       group-id: yrkesskade
     client-id: yrkesskade
+  cloud:
+    gcp:
+      bigquery:
+        enabled: false
 
 funksjonsbrytere:
   enabled: false
-NAIS_CLUSTER_NAME: lokal
 
 kafka:
   topic:
