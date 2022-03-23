@@ -19,6 +19,10 @@ spring:
       group-id: srvc01
     producer:
       client-id: srvp01
+  cloud:
+    gcp:
+      bigquery:
+        enabled: false
 
 # bruk oneshot for å opprette topic
 kafka:
