@@ -25,15 +25,13 @@ class MetricService(
             return
         }
 
-        val antallAnsatte: Int = if (enhet.antallAnsatte != null) enhet.antallAnsatte else -1
-
         val skademeldingMetrikkPayload = SkademeldingMetrikkPayload(
             kilde = record.metadata.kilde,
             tidspunktMottatt = record.metadata.tidspunktMottatt,
             spraak = record.metadata.spraak.toString(),
             callId = record.metadata.navCallId,
             naeringskode = enhet.naering?.kode.orEmpty(),
-            antallAnsatte = antallAnsatte
+            antallAnsatte = enhet.antallAnsatte ?: -1
         )
 
         metrikkClient.insert(
