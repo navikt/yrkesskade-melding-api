@@ -71,6 +71,9 @@ spec:
         databases:
           - name: yrkesskade-api-db
             envVarPrefix: YRKESSKADE_API_DB
+    bigQueryDatasets:
+      - name: yrkesskade_metrikker
+        permission: READWRITE
   kafka:
     pool: {{kafkaPool}}
   secureLogs:

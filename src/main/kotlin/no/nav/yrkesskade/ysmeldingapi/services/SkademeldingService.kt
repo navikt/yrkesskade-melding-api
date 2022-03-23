@@ -7,6 +7,7 @@ import no.nav.yrkesskade.model.SkademeldingMetadata
 import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendingClient
 import no.nav.yrkesskade.ysmeldingapi.domain.SkademeldingEntity
+import no.nav.yrkesskade.ysmeldingapi.metric.MetricService
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.repositories.SkademeldingRepository
 import no.nav.yrkesskade.ysmeldingapi.utils.getLogger
@@ -18,7 +19,8 @@ import java.util.*
 
 @Service
 class SkademeldingService(private val skademeldingInnsendingClient: SkademeldingInnsendingClient,
-                          private val skademeldingRepository: SkademeldingRepository
+                          private val skademeldingRepository: SkademeldingRepository,
+                          private val metricService: MetricService
 ) {
 
     private val log = getLogger(MethodHandles.lookup().lookupClass())
@@ -28,6 +30,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
     fun sendTilMottak(skademeldingInnsendtHendelse: SkademeldingInnsendtHendelse): SkademeldingInnsendtHendelse {
         return skademeldingInnsendingClient.sendTilMottak(skademeldingInnsendtHendelse).also {
             secureLog.info("Sendt skademelding $it til mottak")
+            metricService.insertMetrikk(skademeldingInnsendtHendelse)
         }!!
     }
 
