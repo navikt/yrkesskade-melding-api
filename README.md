@@ -29,3 +29,17 @@ Tjenesten krever at brukeren er pålogget før en kan bruke APIet.
 #### Lokal
 1. Gjør et kall mot http://localhost:{serverport}/local/cookie
 2. Send cookie fra steg nummer 1 med kall mot API.
+
+---
+
+# Henvendelser
+
+Enten:
+Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub
+
+Eller:
+Spørsmål knyttet til koden eller prosjektet kan stilles til yrkesskade@nav.no
+
+## For NAV-ansatte
+
+Interne henvendelser kan sendes via Slack i kanalen #team-yrkesskade.
