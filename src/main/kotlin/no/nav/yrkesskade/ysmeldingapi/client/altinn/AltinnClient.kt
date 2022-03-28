@@ -45,7 +45,10 @@ class AltinnClient(
 
         if (response.status == Response.Status.OK.statusCode) {
             val altinnReporteeResponse = response.readEntity(AltinnReporteeResponse::class.java)
-            return altinnReporteeResponse.embedded.reportees.filterNot { it.type == "Person" }.map { AltinnOrganisasjonDto.fraAltinnReportee(it) }
+            return altinnReporteeResponse.embedded.reportees
+                .filter { it.status == "Active" }
+                .filterNot { (it.type == "Person")}
+                .map { AltinnOrganisasjonDto.fraAltinnReportee(it) }
         } else {
             throw AltinnException("Klarte ikke hente virksomheter fra Altinn", response.status)
         }
