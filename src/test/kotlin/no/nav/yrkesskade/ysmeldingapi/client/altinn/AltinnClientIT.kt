@@ -6,8 +6,10 @@ import no.nav.yrkesskade.ysmeldingapi.test.TestMockServerInitialization
 import no.nav.yrkesskade.ysmeldingapi.utils.AutentisertBruker
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.reset
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -24,6 +26,17 @@ internal class AltinnClientIT : AbstractIT() {
     @MockBean
     lateinit var autentisertBruker: AutentisertBruker
 
+    @BeforeEach
+    fun setup() {
+        reset(autentisertBruker);
+    }
+
+    @Test
+    fun `hent aktive organisasjoner for en person`() {
+        `when`(autentisertBruker.fodselsnummer).thenReturn("12345678910")
+        val organisasjoner = altinnClient.hentOrganisasjoner("12345678910")
+        assertThat(organisasjoner.size).isEqualTo(4)
+    }
     @Test
     fun `hent roller for en person og organisasjon`() {
         val roller = altinnClient.hentRoller("12345678910", "test", "nb")

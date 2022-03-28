@@ -21,6 +21,13 @@
         "Status": "Active"
       },
       {
+        "Name": "EIDSNES OG AUSTRE ÅMØY INACTIVE",
+        "Type": "Business",
+        "OrganizationNumber": "910521559",
+        "OrganizationForm": "ORGL",
+        "Status": "Inactive"
+      },
+      {
         "Name": "FJELL LISA FOS",
         "Type": "Person",
         "SocialSecurityNumber": "13054900281"
