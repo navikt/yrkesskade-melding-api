@@ -83,6 +83,6 @@ class SkademeldingApiControllerIT: AbstractIT() {
         objectMapper.writeValueAsString(skademeldingDto.skademelding)
 
     companion object {
-        private const val SKADEMELDING_PATH = "/api/v1/skademeldinger"
+        private const val SKADEMELDING_PATH = "/v1/skademeldinger"
     }
 }
