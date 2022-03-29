@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @ProtectedWithClaims(issuer = ISSUER, claimMap = [LEVEL])
 @RestController
-@RequestMapping(path = ["/api/v1/brukerinfo"], produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(path = ["/v1/brukerinfo"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class BrukerinfoController(private val autentisertBruker: AutentisertBruker, private val brukerinfoService: BrukerinfoService) {
 
     @GetMapping()

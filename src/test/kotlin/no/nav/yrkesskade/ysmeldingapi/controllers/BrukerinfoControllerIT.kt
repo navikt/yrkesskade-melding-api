@@ -172,6 +172,6 @@ class BrukerinfoControllerIT: AbstractIT() {
     }
 
     companion object {
-        private const val USER_INFO_PATH = "/api/v1/brukerinfo"
+        private const val USER_INFO_PATH = "/v1/brukerinfo"
     }
 }
