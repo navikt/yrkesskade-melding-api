@@ -8,12 +8,12 @@ metadata:
 spec:
   image: {{image}}
   liveness:
-    path: "/internal/health"
+    path: "/api/internal/health"
     port: 8080
     initialDelay: 20
     timeout: 60
   readiness:
-    path: "/internal/health"
+    path: "/api/internal/health"
     port: 8080
     initialDelay: 20
     timeout: 60
@@ -23,7 +23,7 @@ spec:
     cpuThresholdPercentage: 50
   prometheus:
     enabled: true
-    path: "/internal/prometheus"
+    path: "/api/internal/prometheus"
   accessPolicy:
     inbound:
       rules:
