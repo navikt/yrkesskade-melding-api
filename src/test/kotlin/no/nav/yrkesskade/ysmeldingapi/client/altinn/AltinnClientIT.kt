@@ -35,7 +35,7 @@ internal class AltinnClientIT : AbstractIT() {
     fun `hent aktive organisasjoner for en person`() {
         `when`(autentisertBruker.fodselsnummer).thenReturn("12345678910")
         val organisasjoner = altinnClient.hentOrganisasjoner("12345678910")
-        assertThat(organisasjoner.size).isEqualTo(4)
+        assertThat(organisasjoner.size).isEqualTo(1) // har 4 organisasjoner, men kun en som er underenhet.
     }
     @Test
     fun `hent roller for en person og organisasjon`() {

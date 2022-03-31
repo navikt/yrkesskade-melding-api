@@ -46,7 +46,7 @@ class AltinnClient(
         if (response.status == Response.Status.OK.statusCode) {
             val altinnReporteeResponse = response.readEntity(AltinnReporteeResponse::class.java)
             return altinnReporteeResponse.embedded.reportees
-                .filter { it.status == "Active" }
+                .filter { it.status == "Active" && it.hovedOrganisasjonsnummer != null }
                 .filterNot { it.type == "Person" }
                 .map { AltinnOrganisasjonDto.fraAltinnReportee(it) }
         } else {
