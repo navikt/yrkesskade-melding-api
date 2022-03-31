@@ -15,6 +15,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.transaction.annotation.Transactional
@@ -43,11 +44,7 @@ class BrukerinfoControllerIT: AbstractIT() {
             .andExpect(jsonPath("$.fnr").value(FNR_MED_ORGANISASJONER))
             .andExpect(jsonPath("$.navn").value("ROLF BJØRN"))
             .andExpect(jsonPath("$.organisasjoner").isArray)
-            .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910521551\" && @.naeringskode == \"52.292\")]").exists())
-            .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910460048\" && @.naeringskode == \"52.292\" && @.antallAnsatte == 50)]").exists())
             .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910441205\" && @.naeringskode == null && @.navn == \"BARDU OG SØRUM REGNSKAP\")]").exists())
-            .andExpect(jsonPath("\$.organisasjoner[?(@.organisasjonsnummer != null && @.navn != null && @.type != null && @.status != null && @.organisasjonsform != null)]").exists())
-
     }
 
     @Test
@@ -94,8 +91,8 @@ class BrukerinfoControllerIT: AbstractIT() {
                 .header(AUTHORIZATION, "Bearer $jwt")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
-        )   .andExpect(status().isBadRequest)
-            .andExpect(jsonPath("$.melding").value("Organisasjonsnummer kan ikke være tom"))
+        ).andDo(MockMvcResultHandlers.print())   .andExpect(status().isOk)
+            .andExpect(jsonPath("$.organisasjoner").isEmpty)
     }
 
     @Test

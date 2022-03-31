@@ -12,6 +12,7 @@ import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import javax.ws.rs.BadRequestException
 import javax.ws.rs.ForbiddenException
+import javax.ws.rs.NotFoundException
 
 
 @ControllerAdvice
@@ -19,6 +20,11 @@ class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
     @ExceptionHandler(value = [BadRequestException::class])
     protected fun handleConflict(ex: RuntimeException?, request: WebRequest?): ResponseEntity<Any> =
         handleExceptionInternal(ex!!, Feilmelding.fraException(ex), HttpHeaders(), HttpStatus.BAD_REQUEST, request!!)
+
+    @ExceptionHandler(value = [NotFoundException::class])
+    protected fun handleNotFound(ex: RuntimeException?, request: WebRequest?): ResponseEntity<Any> =
+        handleExceptionInternal(ex!!, Feilmelding.fraException(ex), HttpHeaders(), HttpStatus.NOT_FOUND, request!!)
+
 
     @ExceptionHandler(value = [ForbiddenException::class])
     protected fun handleForbidden(ex: RuntimeException?, request: WebRequest?): ResponseEntity<Any> =
