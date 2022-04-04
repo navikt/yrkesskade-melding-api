@@ -20,13 +20,9 @@ class BrukerinfoService(
                 return@forEach;
             }
 
-            if (it.parentOrganisasjonsnummer != null) {
-                enheterForOrganisasjonsnummer[it.parentOrganisasjonsnummer] =
-                    enhetsregisterClient.hentUnderenhetFraEnhetsregisteret(it.organisasjonsnummer)
-            } else {
-                enheterForOrganisasjonsnummer[it.organisasjonsnummer] =
-                    enhetsregisterClient.hentEnhetFraEnhetsregisteret(it.organisasjonsnummer)
-            }
+            enheterForOrganisasjonsnummer[it.organisasjonsnummer] =
+                enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret(it.organisasjonsnummer)
+
         }
 
         return altinnOrganisasjoner.map{
