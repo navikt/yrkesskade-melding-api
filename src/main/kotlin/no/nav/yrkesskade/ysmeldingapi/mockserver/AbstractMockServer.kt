@@ -142,17 +142,14 @@ open class AbstractMockSever (private val port: Int?){
             willReturnJson(hentStringFraFil("underenhetregisteret.json"))
         }
 
+        stubForAny(urlPathMatching("$UNDERENHETSREGISTER_PATH/910441205.*")) {
+            willReturnJson(hentStringFraFil("underenhetregisteret.json"))
+        }
+
         stubForAny(urlPathMatching("$ENHETSREGISTER_PATH/910521551.*")) {
             willReturnJson(hentStringFraFil("enhetsregisteret.json"))
         }
 
-        stubForAny(urlPathMatching("$ENHETSREGISTER_PATH/910460048.*")) {
-            willReturnJson(hentStringFraFil("enhetsregisteret.json"))
-        }
-
-        stubForAny(urlPathMatching("$ENHETSREGISTER_PATH/910460048.*")) {
-            willReturnJson(hentStringFraFil("enhetsregisteret.json"))
-        }
     }
 
     private fun hentStringFraFil(filnavn: String): String {

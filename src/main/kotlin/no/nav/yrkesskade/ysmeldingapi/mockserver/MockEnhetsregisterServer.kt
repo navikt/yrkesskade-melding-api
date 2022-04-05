@@ -61,7 +61,7 @@ class MockEnhetsregisterServer(@Value("\${mock.enhetsregister.port}") private va
     private fun WireMockServer.setup() {
 
         val resolver = PathMatchingResourcePatternResolver(MockEnhetsregisterServer::class.java.classLoader)
-        val resources = resolver.getResources("classpath:*mock/enhetsregister/*.json")
+        val resources = resolver.getResources("classpath:*mock/enhetsregister/enhet/*.json")
         resources.forEach {
             val filnavn = it.filename!!
             if (filnavn.indexOf('.') < 0) {
@@ -69,8 +69,22 @@ class MockEnhetsregisterServer(@Value("\${mock.enhetsregister.port}") private va
                 return@forEach
             }
             val orgnummer = filnavn.substring(0, filnavn.indexOf('.'))
-            log.info("Wiremock stub ${ENHETSREGISTER_PATH}([enheter/underenheter]*)/${orgnummer} til -> mock/enhetsregister/${filnavn}")
-            stubForAny(WireMock.urlPathMatching("$ENHETSREGISTER_PATH([enheter|underenheter]*)/${orgnummer}.*")) {
+            log.info("Wiremock stub ${ENHETSREGISTER_PATH}enheter/${orgnummer} til -> mock/enhetsregister/enhet/${filnavn}")
+            stubForAny(WireMock.urlPathMatching("${ENHETSREGISTER_PATH}enheter/${orgnummer}.*")) {
+                willReturnJson(hentStringFraFil(filnavn))
+            }
+        }
+
+        val underenhetResources = resolver.getResources("classpath:*mock/enhetsregister/underenhet/*.json")
+        underenhetResources.forEach {
+            val filnavn = it.filename!!
+            if (filnavn.indexOf('.') < 0) {
+                // har ikke . i filnavn
+                return@forEach
+            }
+            val orgnummer = filnavn.substring(0, filnavn.indexOf('.'))
+            log.info("Wiremock stub ${ENHETSREGISTER_PATH}underenheter/${orgnummer} til -> mock/enhetsregister/underenhet/${filnavn}")
+            stubForAny(WireMock.urlPathMatching("${ENHETSREGISTER_PATH}underenheter/${orgnummer}.*")) {
                 willReturnJson(hentStringFraFil(filnavn))
             }
         }

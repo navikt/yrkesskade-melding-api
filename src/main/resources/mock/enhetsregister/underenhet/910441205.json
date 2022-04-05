@@ -1,5 +1,5 @@
 {
-  "organisasjonsnummer" : "910460048",
+  "organisasjonsnummer" : "910441205",
   "navn" : "HOLUM OG SVARSTAD REGNSKAP",
   "organisasjonsform" : {
     "kode" : "DA",
@@ -26,7 +26,8 @@
     "kode" : "52.292"
   },
   "antallAnsatte" : 20,
-  "forretningsadresse" : {
+  "overordnetEnhet" : "112233445",
+  "beliggenhetsadresse" : {
     "land" : "Norge",
     "landkode" : "NO",
     "postnummer" : "0101",
