@@ -71,7 +71,7 @@ class MockEnhetsregisterServer(@Value("\${mock.enhetsregister.port}") private va
             val orgnummer = filnavn.substring(0, filnavn.indexOf('.'))
             log.info("Wiremock stub ${ENHETSREGISTER_PATH}enheter/${orgnummer} til -> mock/enhetsregister/enhet/${filnavn}")
             stubForAny(WireMock.urlPathMatching("${ENHETSREGISTER_PATH}enheter/${orgnummer}.*")) {
-                willReturnJson(hentStringFraFil(filnavn))
+                willReturnJson(hentStringFraFil(filnavn, "enhet"))
             }
         }
 
@@ -85,15 +85,15 @@ class MockEnhetsregisterServer(@Value("\${mock.enhetsregister.port}") private va
             val orgnummer = filnavn.substring(0, filnavn.indexOf('.'))
             log.info("Wiremock stub ${ENHETSREGISTER_PATH}underenheter/${orgnummer} til -> mock/enhetsregister/underenhet/${filnavn}")
             stubForAny(WireMock.urlPathMatching("${ENHETSREGISTER_PATH}underenheter/${orgnummer}.*")) {
-                willReturnJson(hentStringFraFil(filnavn))
+                willReturnJson(hentStringFraFil(filnavn, "underenhet"))
             }
         }
 
     }
 
-    private fun hentStringFraFil(filnavn: String): String {
+    private fun hentStringFraFil(filnavn: String, enhet: String): String {
         return IOUtils.toString(
-            MockEnhetsregisterServer::class.java.classLoader.getResourceAsStream("mock/enhetsregister/$filnavn"),
+            MockEnhetsregisterServer::class.java.classLoader.getResourceAsStream("mock/enhetsregister/$enhet/$filnavn"),
             StandardCharsets.UTF_8
         )
     }
