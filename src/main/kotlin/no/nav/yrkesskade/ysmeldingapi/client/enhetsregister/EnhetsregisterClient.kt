@@ -2,6 +2,7 @@ package no.nav.yrkesskade.ysmeldingapi.client.enhetsregister
 
 import no.nav.yrkesskade.ysmeldingapi.models.EnhetsregisterOrganisasjonDto
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import javax.ws.rs.client.Client
@@ -26,6 +27,7 @@ class EnhetsregisterClient(
         orgnr: String
     ): EnhetsregisterOrganisasjonDto = hentEnhet(orgnr, UNDERENHET)
 
+    @Cacheable(value = ["enhetsregister"], key = "{#orgnr}")
     fun hentEnhetEllerUnderenhetFraEnhetsregisteret(
         orgnr: String
     ): EnhetsregisterOrganisasjonDto {

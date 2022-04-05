@@ -63,9 +63,21 @@ class EnhetsregisterClientIT : AbstractIT() {
             enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret("910521551")
 
         assertThat(organisasjon).isNotNull()
+        assertThat(organisasjon.organisasjonsnummer).isEqualTo("910521551")
         assertThat(organisasjon.naering?.kode).isNotNull()
         assertThat(organisasjon.forretningsadresse).isNotNull()
+        assertThat(organisasjon.beliggenhetsadresse).isNull()
         assertThat(organisasjon.antallAnsatte).isEqualTo(50)
+
+        val underenhet: EnhetsregisterOrganisasjonDto =
+            enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret("910460048")
+
+        assertThat(underenhet).isNotNull()
+        assertThat(underenhet.organisasjonsnummer).isEqualTo("910460048")
+        assertThat(underenhet.naering?.kode).isEqualTo("52.292")
+        assertThat(underenhet.forretningsadresse).isNull()
+        assertThat(underenhet.beliggenhetsadresse).isNotNull()
+        assertThat(underenhet.antallAnsatte).isEqualTo(50)
     }
 
     @Test

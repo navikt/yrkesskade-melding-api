@@ -40,11 +40,11 @@ class BrukerinfoControllerIT: AbstractIT() {
                 .header(AUTHORIZATION, "Bearer $jwt")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
-        )   .andExpect(status().isOk)
+        ).andDo(MockMvcResultHandlers.print())   .andExpect(status().isOk)
             .andExpect(jsonPath("$.fnr").value(FNR_MED_ORGANISASJONER))
             .andExpect(jsonPath("$.navn").value("ROLF BJØRN"))
             .andExpect(jsonPath("$.organisasjoner").isArray)
-            .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910441205\" && @.naeringskode == null && @.navn == \"BARDU OG SØRUM REGNSKAP\")]").exists())
+            .andExpect(jsonPath("$.organisasjoner[?(@.organisasjonsnummer == \"910441205\" && @.naeringskode == \"52.292\" && @.navn == \"BARDU OG SØRUM REGNSKAP\")]").exists())
     }
 
     @Test
