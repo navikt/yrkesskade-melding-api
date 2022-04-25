@@ -2,6 +2,7 @@ package no.nav.yrkesskade.ysmeldingapi.controllers.handlers
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import no.nav.yrkesskade.ysmeldingapi.exceptions.AltinnException
+import no.nav.yrkesskade.ysmeldingapi.utils.getLogger
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,33 +18,44 @@ import javax.ws.rs.NotFoundException
 
 @ControllerAdvice
 class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
+    private val log = getLogger(RestResponseEntityExceptionHandler::class.java)
+
     @ExceptionHandler(value = [BadRequestException::class])
     protected fun handleConflict(ex: RuntimeException?, request: WebRequest?): ResponseEntity<Any> =
-        handleExceptionInternal(ex!!, Feilmelding.fraException(ex), HttpHeaders(), HttpStatus.BAD_REQUEST, request!!)
+        handleExceptionAndLogError(ex, request, HttpHeaders(), HttpStatus.BAD_REQUEST)
 
     @ExceptionHandler(value = [NotFoundException::class])
     protected fun handleNotFound(ex: RuntimeException?, request: WebRequest?): ResponseEntity<Any> =
-        handleExceptionInternal(ex!!, Feilmelding.fraException(ex), HttpHeaders(), HttpStatus.NOT_FOUND, request!!)
+        handleExceptionAndLogError(ex, request, HttpHeaders(), HttpStatus.NOT_FOUND)
 
 
     @ExceptionHandler(value = [ForbiddenException::class])
     protected fun handleForbidden(ex: RuntimeException?, request: WebRequest?): ResponseEntity<Any> =
-        handleExceptionInternal(ex!!, Feilmelding.fraException(ex), HttpHeaders(), HttpStatus.FORBIDDEN, request!!)
+        handleExceptionAndLogError(ex, request, HttpHeaders(), HttpStatus.FORBIDDEN)
 
     @ExceptionHandler(value = [AltinnException::class])
     protected fun handleAltinnException(ex: AltinnException?, request: WebRequest?): ResponseEntity<Any> =
-        handleExceptionInternal(ex!!, Feilmelding.fraException(ex), HttpHeaders(), HttpStatus.valueOf(ex.httpStatus), request!!)
+        handleExceptionAndLogError(ex, request, HttpHeaders(), HttpStatus.valueOf(ex!!.httpStatus))
 
     @ExceptionHandler(value = [InvalidFormatException::class])
     protected fun handleJacksonSerializationExceptions(ex: Exception?, request: WebRequest?): ResponseEntity<Any> =
-        handleExceptionInternal(ex!!, Feilmelding.fraException(ex), HttpHeaders(), HttpStatus.BAD_REQUEST, request!!)
+        handleExceptionAndLogError(ex, request, HttpHeaders(), HttpStatus.BAD_REQUEST)
+
+    @ExceptionHandler(value = [Exception::class])
+    protected fun handleAnyException(ex: Exception?, request: WebRequest?): ResponseEntity<Any> =
+        handleExceptionAndLogError(ex, request, HttpHeaders(), HttpStatus.BAD_REQUEST)
+
+    private fun handleExceptionAndLogError(ex: Exception?, request: WebRequest?, headers: HttpHeaders, httpStatus: HttpStatus): ResponseEntity<Any> {
+        log.error("${ex!!.javaClass.simpleName}: ${ex!!.message} \n${ex!!.stackTraceToString()}")
+        return handleExceptionInternal(ex!!, Feilmelding.fraException(ex), headers, httpStatus, request!!)
+    }
 
     override fun handleHttpMessageNotReadable(
         ex: HttpMessageNotReadableException,
         headers: HttpHeaders,
         status: HttpStatus,
         request: WebRequest
-    ): ResponseEntity<Any> = handleExceptionInternal(ex!!, Feilmelding.fraExceptionMedLocalizedMessage(ex), HttpHeaders(), HttpStatus.BAD_REQUEST, request!!)
+    ): ResponseEntity<Any> = handleExceptionAndLogError(ex!!, request, headers, HttpStatus.BAD_REQUEST)
 }
 
 data class Feilmelding(val melding: String) {
