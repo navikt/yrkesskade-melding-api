@@ -36,7 +36,7 @@ jobs:
         "password": "${{ secrets.GITHUB_TOKEN }}"
     - name: "Build and push the Docker image"
       run: "docker build --pull --tag ${IMAGE} --tag ${LATEST} . && docker push ${IMAGE} && docker push ${LATEST}"
- 
+
   "deployAppToProd":
     name: "Deploy app to PROD"
     needs: "build"
