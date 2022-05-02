@@ -49,6 +49,11 @@
 			<artifactId>featureflag</artifactId>
 			<version>${yrkesskade-felles-backend.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>no.nav.yrkesskade</groupId>
+			<artifactId>kodeverk</artifactId>
+			<version>9ee5374e_202204270638</version>
+		</dependency>
 
 		<!-- spring -->
 		<dependency>

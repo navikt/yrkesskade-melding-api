@@ -43,7 +43,7 @@ class CorrelationInterceptor : HandlerInterceptor {
     }
 
     companion object {
-        private const val CORRELATION_ID_HEADER_NAME = "Nav-CallId"
+        const val CORRELATION_ID_HEADER_NAME = "Nav-CallId"
         const val CORRELATION_ID_LOG_VAR_NAME = "correlationId"
     }
 }
