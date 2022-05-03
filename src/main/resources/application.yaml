@@ -57,7 +57,7 @@ api:
       url: https://tt02.altinn.no
       apiKey: ${ALTINN_HEADER}
     kodeverk:
-      url: https://yrkesskade-kodeverk.intern.nav.no
+      url: https://yrkesskade-kodeverk.intern.nav.no/api/v1/kodeverk
 management:
   endpoint:
     health:

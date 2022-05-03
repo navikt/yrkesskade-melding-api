@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.support.TestPropertySourceUtils
 import org.springframework.transaction.annotation.Transactional
 
+
 @Transactional
 @ActiveProfiles("integration")
 @ContextConfiguration(initializers = [AbstractIT.DockerConfigInitializer::class])

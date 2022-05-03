@@ -84,7 +84,6 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 
         // felter som skal valideres
         val kodelisteOgVerdi = mutableListOf<Pair<String, String>>(
-            Pair("alvorlighetsgrad", skademelding.skade!!.alvorlighetsgrad!!),
             Pair("harSkadelidtHattFravaer", skademelding.skade!!.antattSykefravaerTabellH),
             Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta!!.hvorSkjeddeUlykken),
             Pair("tidsrom", skademelding.hendelsesfakta!!.naarSkjeddeUlykken),
@@ -102,6 +101,10 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 
         skademelding.hendelsesfakta!!.bakgrunnsaarsakTabellBogG.forEach {
             kodelisteOgVerdi.add(Pair("bakgrunnForHendelsen", it))
+        }
+
+        if (skademelding.skade!!.alvorlighetsgrad != null) {
+            Pair("alvorlighetsgrad", skademelding.skade!!.alvorlighetsgrad!!)
         }
 
         if (skademelding.hendelsesfakta!!.ulykkessted.adresse != null) {
