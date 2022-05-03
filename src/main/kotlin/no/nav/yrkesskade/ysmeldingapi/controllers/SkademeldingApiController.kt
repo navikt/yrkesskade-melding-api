@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @ProtectedWithClaims(issuer = ISSUER, claimMap = [LEVEL])
+@RestController("/")
 @RequestMapping("/")
-@RestController
 class SkademeldingApiController(
     @org.springframework.beans.factory.annotation.Autowired(required = false) delegate: SkademeldingApiDelegate?
 ) : SkademeldingApi {

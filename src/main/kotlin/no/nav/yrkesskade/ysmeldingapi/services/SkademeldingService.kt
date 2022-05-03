@@ -114,8 +114,6 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             }
         }
 
-        try {
-
             // rolletype benyttes som kategori navn (elev, arbeidstaker, laerling osv)
             kodelisteOgVerdi.forEach {
                 kodeverkValidator.sjekkGyldigKodeverkverdiForTypeOgKategori(
@@ -125,9 +123,6 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
                     "${it.second} er ikke en gyldig ${it.first} verdi. Sjekk kodeliste for gyldige verdier"
                 )
             }
-        } catch (e: Exception) {
-            log.error(e.message, e)
-            throw e
-        }
+
     }
 }

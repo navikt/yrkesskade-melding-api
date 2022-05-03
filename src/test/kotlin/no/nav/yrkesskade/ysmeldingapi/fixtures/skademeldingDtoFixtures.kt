@@ -46,9 +46,9 @@ fun hendelsesfakta(): Hendelsesfakta {
     return Hendelsesfakta(
         tid = Tid(Tidstype.tidspunkt, tidspunkt = Instant.now().atOffset(ZoneOffset.UTC)),
         naarSkjeddeUlykken = "alternativenePasserIkke",
-        hvorSkjeddeUlykken = "avtaltHjemmekontor",
-        aarsakUlykkeTabellAogE = listOf("fallAvPerson"),
-        bakgrunnsaarsakTabellBogG = listOf("bedriftsidrettEllerLignende"),
+        hvorSkjeddeUlykken = "arbeidsstedInne",
+        aarsakUlykkeTabellAogE = listOf("sammenstoetEllerBittEllerSpark"),
+        bakgrunnsaarsakTabellBogG = listOf("mangelfulleSikkerhetsrutiner"),
         stedsbeskrivelseTabellF = "alternativenePasserIkke",
         ulykkessted = Ulykkessted(sammeSomVirksomhetensAdresse = true, adresse = Adresse(adresselinje1 = "test 1", adresselinje2 = "test 2", adresselinje3 = "test 3", land = "NO")),
         utfyllendeBeskrivelse = "Dette var dumt"
@@ -57,8 +57,8 @@ fun hendelsesfakta(): Hendelsesfakta {
 
 fun skade(): Skade {
     return Skade(
-        skadedeDeler = listOf(SkadetDel("annet", kroppsdelTabellD = "ankelCommaHYre")),
-        alvorlighetsgrad = "alvorligKreftsykdom",
+        skadedeDeler = listOf(SkadetDel("kuldeskade", kroppsdelTabellD = "ribbenOgSkulderblad")),
+        alvorlighetsgrad = "antattOppsoektLege",
         antattSykefravaerTabellH = "alternativenePasserIkke"
     )
 }
