@@ -185,6 +185,12 @@
 			<version>${springdoc-openapi-ui.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-kotlin</artifactId>
+			<version>${springdoc-openapi-ui.version}</version>
+		</dependency>
+
 		<!-- kafka -->
 		<dependency>
 			<groupId>io.confluent</groupId>

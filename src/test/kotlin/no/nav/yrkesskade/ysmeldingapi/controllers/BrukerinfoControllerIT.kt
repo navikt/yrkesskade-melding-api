@@ -101,7 +101,7 @@ class BrukerinfoControllerIT: AbstractIT() {
             get(USER_INFO_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
-        ).andExpect(status().is4xxClientError)
+        ).andExpect(status().isForbidden)
     }
 
     @Test
