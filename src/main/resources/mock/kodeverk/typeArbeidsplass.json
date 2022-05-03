@@ -1,0 +1,84 @@
+{
+  "kodeverdierMap": {
+    "industriellVirksomhet": {
+      "kode": "industriellVirksomhet",
+      "verdi": "Plass for industriell virksomhet"
+    },
+    "anleggsomraadeEllerByggeplassEllerStenbruddEllerGruve": {
+      "kode": "anleggsomraadeEllerByggeplassEllerStenbruddEllerGruve",
+      "verdi": "Anleggsområde, byggeplass, stenbrudd eller gruve"
+    },
+    "iLuftenOverBakkenivaaPaaTakEllerTerrasserEllerHeis": {
+      "kode": "iLuftenOverBakkenivaaPaaTakEllerTerrasserEllerHeis",
+      "verdi": "I luften over bakkenivå på tak, terrasser eller heiser"
+    },
+    "alternativenePasserIkke": {
+      "kode": "alternativenePasserIkke",
+      "verdi": "Alternativene passer ikke"
+    },
+    "underJordoverflatenIGroeftEllerTunellEllerGruve": {
+      "kode": "underJordoverflatenIGroeftEllerTunellEllerGruve",
+      "verdi": "Under jordoverflaten, grøfter, tuneller eller gruve."
+    },
+    "paaEllerOverVann": {
+      "kode": "paaEllerOverVann",
+      "verdi": "På eller over vann"
+    },
+    "helseinstitusjoner": {
+      "kode": "helseinstitusjoner",
+      "verdi": "Helseinstitusjoner"
+    },
+    "kontorEllerKonferanseEllerBibliotek": {
+      "kode": "kontorEllerKonferanseEllerBibliotek",
+      "verdi": "Lokale for kontor, konferanse eller bibliotek"
+    },
+    "undervisningEllerBarnehage": {
+      "kode": "undervisningEllerBarnehage",
+      "verdi": "Undervisningssted eller barnehage"
+    },
+    "offentligSted": {
+      "kode": "offentligSted",
+      "verdi": "Offentlig sted"
+    },
+    "handel": {
+      "kode": "handel",
+      "verdi": "Plass for handel"
+    },
+    "restauranterEllerOvernattingssted": {
+      "kode": "restauranterEllerOvernattingssted",
+      "verdi": "Restaurant eller overnattingssted"
+    },
+    "museumEllerFornoeyelsespark": {
+      "kode": "museumEllerFornoeyelsespark",
+      "verdi": "Museum, fornøyelsespark og lignende"
+    },
+    "idrettsomraade": {
+      "kode": "idrettsomraade",
+      "verdi": "Idrettsområde"
+    },
+    "offentligeTransportmidler": {
+      "kode": "offentligeTransportmidler",
+      "verdi": "Offentlige transportmidler"
+    },
+    "iLuftenIFlyEllerHelikopter": {
+      "kode": "iLuftenIFlyEllerHelikopter",
+      "verdi": "I luften, fly eller helikopter"
+    },
+    "iHoeytrykksomgivelserEllerDykkingEllerDykkerkammer": {
+      "kode": "iHoeytrykksomgivelserEllerDykkingEllerDykkerkammer",
+      "verdi": "I høytrykksomgivelser, dykking og dykkerkammer"
+    },
+    "fiskeoppdrett": {
+      "kode": "fiskeoppdrett",
+      "verdi": "Plass for fiskeoppdrett"
+    },
+    "jordbrukEllerAvlAvDyrEllerSkogbruk": {
+      "kode": "jordbrukEllerAvlAvDyrEllerSkogbruk",
+      "verdi": "Plass for jordbruk, avl av dyr eller skogbruk"
+    },
+    "privateHjem": {
+      "kode": "privateHjem",
+      "verdi": "Private hjem"
+    }
+  }
+}

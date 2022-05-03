@@ -5,11 +5,9 @@ import no.nav.yrkesskade.skademelding.api.SkademeldingApi
 import no.nav.yrkesskade.skademelding.api.SkademeldingApiDelegate
 import no.nav.yrkesskade.ysmeldingapi.utils.ISSUER
 import no.nav.yrkesskade.ysmeldingapi.utils.LEVEL
-import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @ProtectedWithClaims(issuer = ISSUER, claimMap = [LEVEL])
-@RestController("/api")
 class SkademeldingApiController(
     @org.springframework.beans.factory.annotation.Autowired(required = false) delegate: SkademeldingApiDelegate?
 ) : SkademeldingApi {

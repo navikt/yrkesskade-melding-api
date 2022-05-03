@@ -1,0 +1,20 @@
+{
+  "kodeverdierMap": {
+    "sykemelding": {
+      "kode": "sykemelding",
+      "verdi": "Sykemelding"
+    },
+    "egenmelding": {
+      "kode": "egenmelding",
+      "verdi": "Egenmelding"
+    },
+    "alternativenePasserIkke": {
+      "kode": "alternativenePasserIkke",
+      "verdi": "Alternativene passer ikke"
+    },
+    "kombinasjonSykemeldingEgenmelding": {
+      "kode": "kombinasjonSykemeldingEgenmelding",
+      "verdi": "En kombinasjon av egenmelding og sykemelding"
+    }
+  }
+}

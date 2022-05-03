@@ -57,7 +57,7 @@ class MockServer(@Value("\${mock.port}") private val port: Int) : AbstractMockSe
 
 }
 
-open class AbstractMockSever (private val port: Int?){
+open class AbstractMockSever(private val port: Int?) {
 
     private val log = getLogger(MethodHandles.lookup().lookupClass())
 
@@ -148,6 +148,33 @@ open class AbstractMockSever (private val port: Int?){
 
         stubForAny(urlPathMatching("$ENHETSREGISTER_PATH/910521551.*")) {
             willReturnJson(hentStringFraFil("enhetsregisteret.json"))
+        }
+
+        val kodeverkMedKategorier = listOf(
+            "tidsrom",
+            "alvorlighetsgrad",
+            "hvorSkjeddeUlykken",
+            "aarsakOgBakgrunn",
+            "skadetKroppsdel",
+            "skadetype",
+            "harSkadelidtHattFravaer",
+            "bakgrunnForHendelsen",
+            "stillingstittel",
+            "typeArbeidsplass"
+        )
+        kodeverkMedKategorier.forEach {
+            log.info("Wiremock stub $it til -> mock/kodeverk/$it.json")
+            stubForGet(urlPathMatching("/api/v1/kodeverk/typer/$it/kategorier/arbeidstaker/kodeverdier")) {
+                willReturnJson(hentStringFraFil("kodeverk/$it.json"))
+            }
+        }
+
+        val kodeverkUtenKategorier = listOf<String>("fravaertype", "landkoderISO2", "rolletype")
+        kodeverkUtenKategorier.forEach {
+            log.info("Wiremock stub $it til -> mock/kodeverk/$it.json")
+            stubForGet(urlPathMatching("/api/v1/kodeverk/typer/$it/kodeverdier")) {
+                willReturnJson(hentStringFraFil("kodeverk/$it.json"))
+            }
         }
 
     }

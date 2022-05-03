@@ -1,0 +1,12 @@
+{
+  "kodeverdierMap": {
+    "arbeidstaker": {
+      "kode": "arbeidstaker",
+      "verdi": "Arbeidstaker"
+    },
+    "laerling": {
+      "kode": "laerling",
+      "verdi": "Lærling"
+    }
+  }
+}

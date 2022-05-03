@@ -69,42 +69,65 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
     }
 
     private fun validerSkademelding(skademelding: Skademelding) {
-        // Hent kodelister basert på rolletype som skal benyttes for å finne gyldige verdier
-        check(skademelding.skadelidt!!.dekningsforhold.rolletype == null, { "rolletype er påkrevd" })
+        // null sjekk
+        check(skademelding.skadelidt != null, {"skadelidt er påkrevd"})
+        check(skademelding.hendelsesfakta != null, {"hendelsesfakta er påkrevd"})
+        check(skademelding.skade != null, {"skade er påkrevd"})
+        check(skademelding.innmelder!!.innmelderrolle == "virksomhetsrepresentant", { "${skademelding.innmelder!!.innmelderrolle} er ikke en gyldig verdi. Må være virksomhetsrepresentant"})
 
-        val rolletype = skademelding.skadelidt!!.dekningsforhold.rolletype.value
+        // Hent kodelister basert på rolletype som skal benyttes for å finne gyldige verdier
+        check(skademelding.skadelidt!!.dekningsforhold.rolletype != null, { "rolletype er påkrevd" })
+
+        val rolletype = skademelding.skadelidt!!.dekningsforhold.rolletype
 
         kodeverkValidator.sjekkGyldigKodeverkverdiForType(rolletype, "rolletype", "${rolletype} er ikke en gyldig rolletype kode i kodelisten")
 
         // felter som skal valideres
         val kodelisteOgVerdi = mutableListOf<Pair<String, String>>(
-            Pair("alvorlighetsgrad", skademelding.skade.alvorlighetsgrad.value),
-            Pair("harSkadelidtHattFravaer", skademelding.skade.antattSykefravaerTabellH.value),
-            Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta.hvorSkjeddeUlykken.value),
-            Pair("tidsrom", skademelding.hendelsesfakta.naarSkjeddeUlykken.value),
-            Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelseTabellF.value),
+            Pair("alvorlighetsgrad", skademelding.skade!!.alvorlighetsgrad!!),
+            Pair("harSkadelidtHattFravaer", skademelding.skade!!.antattSykefravaerTabellH),
+            Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta!!.hvorSkjeddeUlykken),
+            Pair("tidsrom", skademelding.hendelsesfakta!!.naarSkjeddeUlykken),
+            Pair("typeArbeidsplass", skademelding.hendelsesfakta!!.stedsbeskrivelseTabellF),
         )
 
-        skademelding.skade.skadedeDeler.forEach {
-            kodelisteOgVerdi.add(Pair("skadetype", it.skadeartTabellC.value))
-            kodelisteOgVerdi.add(Pair("skadetKroppsdel", it.kroppsdelTabellD.value))
+        skademelding.skade!!.skadedeDeler.forEach {
+            kodelisteOgVerdi.add(Pair("skadetype", it.skadeartTabellC))
+            kodelisteOgVerdi.add(Pair("skadetKroppsdel", it.kroppsdelTabellD))
         }
 
-        skademelding.hendelsesfakta.aarsakUlykkeTabellAogE.forEach {
-            kodelisteOgVerdi.add(Pair("aarsakOgBakgrunn", it.value))
+        skademelding.hendelsesfakta!!.aarsakUlykkeTabellAogE.forEach {
+            kodelisteOgVerdi.add(Pair("aarsakOgBakgrunn", it))
         }
 
-        skademelding.hendelsesfakta.bakgrunnsaarsakTabellBogG.forEach {
-            kodelisteOgVerdi.add(Pair("bakgrunnForHendelsen", it.value))
+        skademelding.hendelsesfakta!!.bakgrunnsaarsakTabellBogG.forEach {
+            kodelisteOgVerdi.add(Pair("bakgrunnForHendelsen", it))
         }
 
-        if (skademelding.hendelsesfakta.ulykkessted.adresse != null) {
-            Pair("landkoderISO2", skademelding.hendelsesfakta.ulykkessted.adresse!!.land)
+        if (skademelding.hendelsesfakta!!.ulykkessted.adresse != null) {
+            Pair("landkoderISO2", skademelding.hendelsesfakta!!.ulykkessted.adresse!!.land)
         }
 
-        // rolletype benyttes som kategori navn (elev, arbeidstaker, laerling osv)
-        kodelisteOgVerdi.forEach {
-            kodeverkValidator.sjekkGyldigKodeverkverdiForTypeOgKategori(it.second, it.first, rolletype, "${it.second} er ikke en gyldig ${it.first} verdi. Sjekk kodeliste for gyldige verdier")
+        if (skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte != null && (rolletype == "laerling" || rolletype == "arbeidstaker")) {
+            skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte.forEach {
+                kodelisteOgVerdi.add(Pair("stillingstittel", it))
+            }
+        }
+
+        try {
+
+            // rolletype benyttes som kategori navn (elev, arbeidstaker, laerling osv)
+            kodelisteOgVerdi.forEach {
+                kodeverkValidator.sjekkGyldigKodeverkverdiForTypeOgKategori(
+                    it.second,
+                    it.first,
+                    rolletype,
+                    "${it.second} er ikke en gyldig ${it.first} verdi. Sjekk kodeliste for gyldige verdier"
+                )
+            }
+        } catch (e: Exception) {
+            log.error(e.message, e)
+            throw e
         }
     }
 }

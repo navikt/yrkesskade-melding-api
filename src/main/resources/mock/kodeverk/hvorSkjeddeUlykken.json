@@ -1,0 +1,44 @@
+{
+  "kodeverdierMap": {
+    "arbeidsstedInne": {
+      "kode": "arbeidsstedInne",
+      "verdi": "På arbeidsstedet inne"
+    },
+    "arbeidsstedUte": {
+      "kode": "arbeidsstedUte",
+      "verdi": "På arbeidsstedet ute"
+    },
+    "arbeidsstedLukketOmraade": {
+      "kode": "arbeidsstedLukketOmraade",
+      "verdi": "På arbeidsstedet lukket område"
+    },
+    "alternativenePasserIkke": {
+      "kode": "alternativenePasserIkke",
+      "verdi": "Alternativene passer ikke"
+    },
+    "kommetFremTilMidlertidigArbeidssted": {
+      "kode": "kommetFremTilMidlertidigArbeidssted",
+      "verdi": "Kommet frem til/ på midlertidig arbeidsstedet"
+    },
+    "paaVeiMellomArbeidssteder": {
+      "kode": "paaVeiMellomArbeidssteder",
+      "verdi": "På vei mellom arbeidssteder"
+    },
+    "paaVeiTilEllerFraArbeidssted": {
+      "kode": "paaVeiTilEllerFraArbeidssted",
+      "verdi": "På vei til/fra arbeidsstedet"
+    },
+    "avtaltHjemmekontor": {
+      "kode": "avtaltHjemmekontor",
+      "verdi": "Avtalt hjemmekontor"
+    },
+    "transportIArbeidsgiversRegi": {
+      "kode": "transportIArbeidsgiversRegi",
+      "verdi": "Transport i arbeidsgivers regi"
+    },
+    "offentligSted": {
+      "kode": "offentligSted",
+      "verdi": "Offentlig sted"
+    }
+  }
+}
