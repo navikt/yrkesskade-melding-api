@@ -90,6 +90,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             Pair("typeArbeidsplass", skademelding.hendelsesfakta!!.stedsbeskrivelseTabellF),
         )
 
+        check(skademelding.skade!!.skadedeDeler.isNotEmpty(), {"skadedeDeler kan ikke være tom"})
         skademelding.skade!!.skadedeDeler.forEach {
             kodelisteOgVerdi.add(Pair("skadetype", it.skadeartTabellC))
             kodelisteOgVerdi.add(Pair("skadetKroppsdel", it.kroppsdelTabellD))
@@ -117,15 +118,15 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             }
         }
 
-            // rolletype benyttes som kategori navn (elev, arbeidstaker, laerling osv)
-            kodelisteOgVerdi.forEach {
-                kodeverkValidator.sjekkGyldigKodeverkverdiForTypeOgKategori(
-                    it.second,
-                    it.first,
-                    rolletype,
-                    "${it.second} er ikke en gyldig ${it.first} verdi. Sjekk kodeliste for gyldige verdier"
-                )
-            }
+        // rolletype benyttes som kategori navn (elev, arbeidstaker, laerling osv)
+        kodelisteOgVerdi.forEach {
+            kodeverkValidator.sjekkGyldigKodeverkverdiForTypeOgKategori(
+                it.second,
+                it.first,
+                rolletype,
+                "${it.second} er ikke en gyldig ${it.first} verdi. Sjekk kodeliste for gyldige verdier"
+            )
+        }
 
     }
 }
