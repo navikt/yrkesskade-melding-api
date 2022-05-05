@@ -70,10 +70,15 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 
     private fun validerSkademelding(skademelding: Skademelding) {
         // null sjekk
-        check(skademelding.skadelidt != null, {"skadelidt er påkrevd"})
-        check(skademelding.hendelsesfakta != null, {"hendelsesfakta er påkrevd"})
-        check(skademelding.skade != null, {"skade er påkrevd"})
+        checkNotNull(skademelding.skadelidt, {"skadelidt er påkrevd"})
+        checkNotNull(skademelding.hendelsesfakta, {"hendelsesfakta er påkrevd"})
+        checkNotNull(skademelding.skade, {"skade er påkrevd"})
         check(skademelding.innmelder!!.innmelderrolle == "virksomhetsrepresentant", { "${skademelding.innmelder!!.innmelderrolle} er ikke en gyldig verdi. Må være virksomhetsrepresentant"})
+
+        // sjekk organisasjon
+        check(!skademelding.innmelder!!.paaVegneAv.isNullOrBlank(), {"paaVegneAv er påkrevd"})
+        check(!skademelding.skadelidt!!.dekningsforhold.organisasjonsnummer.isNullOrBlank(), {"organisasjonsnummer er påkrevd"})
+        check(!skademelding.skadelidt!!.dekningsforhold.navnPaaVirksomheten.isNullOrBlank(), {"navnPaaVirksomheten er påkrevd"})
 
         // Hent kodelister basert på rolletype som skal benyttes for å finne gyldige verdier
         check(skademelding.skadelidt!!.dekningsforhold.rolletype != null, { "rolletype er påkrevd" })
