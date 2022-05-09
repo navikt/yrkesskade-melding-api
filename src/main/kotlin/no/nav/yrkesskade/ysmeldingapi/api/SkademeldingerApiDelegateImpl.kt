@@ -51,12 +51,12 @@ class SkademeldingApiDelegateImpl(
             navCallId = MDC.get(CorrelationInterceptor.CORRELATION_ID_LOG_VAR_NAME)
         )
 
-        val skademeldingInnsendtHendelse =
+        val lagretSkademelding =
             skademeldingService.lagreSkademelding(skademelding, skademeldingMetadata)
         val location = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")
-            .buildAndExpand(skademeldingInnsendtHendelse.skademelding)
+            .buildAndExpand(lagretSkademelding.id)
             .toUri()
 
         return ResponseEntity.created(location).build()
