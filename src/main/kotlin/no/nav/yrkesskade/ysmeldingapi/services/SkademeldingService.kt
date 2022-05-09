@@ -6,6 +6,7 @@ import no.nav.yrkesskade.model.SkademeldingBeriketData
 import no.nav.yrkesskade.model.SkademeldingInnsendtHendelse
 import no.nav.yrkesskade.model.SkademeldingMetadata
 import no.nav.yrkesskade.skademelding.model.Skademelding
+import no.nav.yrkesskade.ysmeldingapi.client.enhetsregister.EnhetsregisterClient
 import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendingClient
 import no.nav.yrkesskade.ysmeldingapi.metric.MetricService
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
@@ -21,7 +22,8 @@ import java.lang.invoke.MethodHandles
 class SkademeldingService(private val skademeldingInnsendingClient: SkademeldingInnsendingClient,
                           private val skademeldingRepository: SkademeldingRepository,
                           private val metricService: MetricService,
-                          private val kodeverkValidator: KodeverkValidator
+                          private val kodeverkValidator: KodeverkValidator,
+                          private val enhetsregisterClient: EnhetsregisterClient
 ) {
 
     private val log = getLogger(MethodHandles.lookup().lookupClass())
@@ -80,6 +82,12 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         check(!skademelding.skadelidt!!.dekningsforhold.organisasjonsnummer.isNullOrBlank(), {"organisasjonsnummer er påkrevd"})
         check(!skademelding.skadelidt!!.dekningsforhold.navnPaaVirksomheten.isNullOrBlank(), {"navnPaaVirksomheten er påkrevd"})
 
+        val paaVegneAvOrganisasjon = enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret(skademelding.innmelder.paaVegneAv)
+        check(!paaVegneAvOrganisasjon.organisasjonsnummer.isNullOrBlank(), {"Ugyldig innmelder.paaVegneAv enhet. ${skademelding.innmelder.paaVegneAv} er finnes ikke i enhetsregisteret"})
+
+        val dekningsforholdOrganisasjon = enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret(skademelding.skadelidt.dekningsforhold.organisasjonsnummer)
+        check(!dekningsforholdOrganisasjon.organisasjonsnummer.isNullOrBlank(), {"Ugyldig dekningsforhold.organisasjonsnummer enhet. ${skademelding.skadelidt.dekningsforhold.organisasjonsnummer} finnes ikke i enhetsregisteret"})
+
         // Hent kodelister basert på rolletype som skal benyttes for å finne gyldige verdier
         check(skademelding.skadelidt!!.dekningsforhold.rolletype != null, { "rolletype er påkrevd" })
 
@@ -88,11 +96,10 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         kodeverkValidator.sjekkGyldigKodeverkverdiForType(rolletype, "rolletype", "${rolletype} er ikke en gyldig rolletype kode i kodelisten")
 
         // felter som skal valideres
-        val kodelisteOgVerdi = mutableListOf<Pair<String, String>>(
-            Pair("harSkadelidtHattFravaer", skademelding.skade!!.antattSykefravaerTabellH),
-            Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta!!.hvorSkjeddeUlykken),
-            Pair("tidsrom", skademelding.hendelsesfakta!!.naarSkjeddeUlykken),
-            Pair("typeArbeidsplass", skademelding.hendelsesfakta!!.stedsbeskrivelseTabellF),
+        val kodelisteOgVerdi = mutableListOf(
+            Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta.hvorSkjeddeUlykken),
+            Pair("tidsrom", skademelding.hendelsesfakta.naarSkjeddeUlykken),
+            Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelseTabellF),
         )
 
         check(skademelding.skade!!.skadedeDeler.isNotEmpty(), {"skadedeDeler kan ikke være tom"})
@@ -118,9 +125,10 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         }
 
         if (skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte != null && (rolletype == "laerling" || rolletype == "arbeidstaker")) {
-            skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte.forEach {
+            skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte!!.forEach {
                 kodelisteOgVerdi.add(Pair("stillingstittel", it))
             }
+            kodelisteOgVerdi.add(Pair("harSkadelidtHattFravaer", skademelding.skade.antattSykefravaerTabellH!!))
         }
 
         // rolletype benyttes som kategori navn (elev, arbeidstaker, laerling osv)

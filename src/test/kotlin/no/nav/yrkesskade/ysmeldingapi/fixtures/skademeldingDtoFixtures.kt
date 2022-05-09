@@ -38,7 +38,7 @@ fun arbeidsgiverInnmelder(): Innmelder {
         norskIdentitetsnummer = "3093242309",
         paaVegneAv = "910521551",
         innmelderrolle = "virksomhetsrepresentant",
-        altinnrolleIDer = null
+        altinnrolleIDer = emptyList()
     )
 }
 
@@ -67,7 +67,7 @@ fun skadelidt(): Skadelidt {
     return Skadelidt(
         norskIdentitetsnummer = "12345678910",
         dekningsforhold = Dekningsforhold(
-            organisasjonsnummer = "123456789",
+            organisasjonsnummer = "910441205",
             stillingstittelTilDenSkadelidte = listOf("sivilingeniorerByggOgAnlegg"),
             rolletype = "arbeidstaker",
             navnPaaVirksomheten = "Test"
