@@ -2,11 +2,7 @@ package no.nav.yrkesskade.ysmeldingapi.client.mottak
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import no.nav.yrkesskade.model.SkademeldingBeriketData
-import no.nav.yrkesskade.model.SkademeldingInnsendtHendelse
-import no.nav.yrkesskade.model.SkademeldingMetadata
-import no.nav.yrkesskade.model.Spraak
-import no.nav.yrkesskade.model.Systemkilde
+import no.nav.yrkesskade.model.*
 import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.fixtures.enkelSkademelding
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
@@ -48,7 +44,7 @@ class SkademeldingInnsendtClientIT : AbstractIT() {
         assertThat(skademeldingInnsendtHendelse.beriketData.innmeldersOrganisasjonsnavn.second).isEqualTo(Systemkilde.ENHETSREGISTERET)
         skademeldingInnsendingClient.sendTilMottak(skademeldingInnsendtHendelse)
         mottakConsumer.getLatch().await(10000, TimeUnit.MILLISECONDS)
-        assertThat(mottakConsumer.getPayload()).contains("\"norskIdentitetsnummer\":\"3093242309\"")
+        assertThat(mottakConsumer.getPayload()).contains("\"norskIdentitetsnummer\":\"10117424370\"")
         assertThat(mottakConsumer.getPayload()).contains("\"kilde\":\"${skademeldingInnsendtHendelse.metadata.kilde}\"")
         assertThat(mottakConsumer.getPayload()).contains(
                 "\"beriketData\":{" +

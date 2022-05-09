@@ -81,7 +81,6 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         // sjekk organisasjon
         check(!skademelding.innmelder!!.paaVegneAv.isNullOrBlank(), {"paaVegneAv er påkrevd"})
         check(!skademelding.skadelidt!!.dekningsforhold.organisasjonsnummer.isNullOrBlank(), {"organisasjonsnummer er påkrevd"})
-        check(!skademelding.skadelidt!!.dekningsforhold.navnPaaVirksomheten.isNullOrBlank(), {"navnPaaVirksomheten er påkrevd"})
 
         val paaVegneAvOrganisasjon = enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret(skademelding.innmelder.paaVegneAv)
         check(!paaVegneAvOrganisasjon.organisasjonsnummer.isNullOrBlank(), {"Ugyldig innmelder.paaVegneAv enhet. ${skademelding.innmelder.paaVegneAv} er finnes ikke i enhetsregisteret"})
