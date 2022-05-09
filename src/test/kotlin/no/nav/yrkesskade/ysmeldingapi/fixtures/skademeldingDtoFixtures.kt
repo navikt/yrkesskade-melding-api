@@ -35,7 +35,7 @@ fun fullSkademelding(): Skademelding {
 
 fun arbeidsgiverInnmelder(): Innmelder {
     return Innmelder(
-        norskIdentitetsnummer = "3093242309",
+        norskIdentitetsnummer = "10117424370",
         paaVegneAv = "910521551",
         innmelderrolle = "virksomhetsrepresentant",
         altinnrolleIDer = emptyList()
@@ -65,7 +65,7 @@ fun skade(): Skade {
 
 fun skadelidt(): Skadelidt {
     return Skadelidt(
-        norskIdentitetsnummer = "12345678910",
+        norskIdentitetsnummer = "16120101181",
         dekningsforhold = Dekningsforhold(
             organisasjonsnummer = "910441205",
             stillingstittelTilDenSkadelidte = listOf("sivilingeniorerByggOgAnlegg"),
