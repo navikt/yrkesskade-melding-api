@@ -19,6 +19,7 @@ class CorrelationInterceptor : HandlerInterceptor {
     override fun preHandle(request: HttpServletRequest,
                            response: HttpServletResponse,
                            handler: Any): Boolean {
+        MDC.clear()
         val correlationId = getCorrelationIdFromHeaderOrCreateNew(request)
         MDC.put(CORRELATION_ID_LOG_VAR_NAME, correlationId)
         return true
@@ -29,17 +30,10 @@ class CorrelationInterceptor : HandlerInterceptor {
                                  handler: Any,
                                  ex: Exception?) {
         response.addHeader(CORRELATION_ID_HEADER_NAME, MDC.get(CORRELATION_ID_LOG_VAR_NAME))
-        MDC.clear()
     }
 
     private fun getCorrelationIdFromHeaderOrCreateNew(request: HttpServletRequest): String {
-        return try {
-            UUID.fromString(
-                    request.getHeader(CORRELATION_ID_HEADER_NAME).orEmpty()
-            ).toString()
-        } catch (e: IllegalArgumentException) {
-            UUID.randomUUID().toString()
-        }
+        return request.getHeader(CORRELATION_ID_HEADER_NAME) ?: UUID.randomUUID().toString()
     }
 
     companion object {
