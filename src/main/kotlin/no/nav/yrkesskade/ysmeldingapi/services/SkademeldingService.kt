@@ -104,7 +104,6 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         val kodelisteOgVerdi = mutableListOf(
             Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta.hvorSkjeddeUlykken),
             Pair("tidsrom", skademelding.hendelsesfakta.naarSkjeddeUlykken),
-            Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelseTabellF),
         )
 
         check(skademelding.skade!!.skadedeDeler.isNotEmpty(), {"skadedeDeler kan ikke være tom"})
@@ -133,6 +132,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte!!.forEach {
                 kodelisteOgVerdi.add(Pair("stillingstittel", it))
             }
+            kodelisteOgVerdi.add(Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelseTabellF))
             kodelisteOgVerdi.add(Pair("harSkadelidtHattFravaer", skademelding.skade.antattSykefravaerTabellH!!))
         }
 
