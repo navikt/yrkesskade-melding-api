@@ -5,7 +5,9 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.model.SkademeldingBeriketData
 import no.nav.yrkesskade.model.SkademeldingInnsendtHendelse
 import no.nav.yrkesskade.model.SkademeldingMetadata
+import no.nav.yrkesskade.model.Systemkilde
 import no.nav.yrkesskade.skademelding.model.Skademelding
+import no.nav.yrkesskade.ysmeldingapi.client.enhetsregister.EnhetsregisterClient
 import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendingClient
 import no.nav.yrkesskade.ysmeldingapi.metric.MetricService
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
@@ -19,7 +21,8 @@ import java.lang.invoke.MethodHandles
 @Service
 class SkademeldingService(private val skademeldingInnsendingClient: SkademeldingInnsendingClient,
                           private val skademeldingRepository: SkademeldingRepository,
-                          private val metricService: MetricService
+                          private val metricService: MetricService,
+                          private val enhetsregisterClient: EnhetsregisterClient
 ) {
 
     private val log = getLogger(MethodHandles.lookup().lookupClass())
@@ -36,8 +39,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
     @Transactional
     fun lagreSkademelding(
         skademelding: Skademelding,
-        skademeldingMetadata: SkademeldingMetadata,
-        skademeldingBeriketData: SkademeldingBeriketData
+        skademeldingMetadata: SkademeldingMetadata
     ): SkademeldingDto {
         val skademeldingTilLagring = SkademeldingDto(
             id = null,
@@ -45,6 +47,8 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             kilde = skademeldingMetadata.kilde,
             mottattTidspunkt = skademeldingMetadata.tidspunktMottatt
         )
+
+        val skademeldingBeriketData = lagBeriketSkademelding(skademelding)
 
         // lagre i database - returnerer entity
         val lagretSkademeldingDto = skademeldingRepository.save(skademeldingTilLagring.toSkademelding()).toSkademeldingDto()
@@ -60,5 +64,13 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 
         // returner lagrede skademelding
         return lagretSkademeldingDto
+    }
+
+    private fun lagBeriketSkademelding(skademelding: Skademelding): SkademeldingBeriketData {
+        val innmeldersOrganisasjon = enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret(skademelding.innmelder!!.paaVegneAv)
+
+        return SkademeldingBeriketData(
+            innmeldersOrganisasjonsnavn = innmeldersOrganisasjon.navn.orEmpty() to Systemkilde.ENHETSREGISTERET
+        )
     }
 }
