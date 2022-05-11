@@ -132,8 +132,10 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte!!.forEach {
                 kodelisteOgVerdi.add(Pair("stillingstittel", it))
             }
-            kodelisteOgVerdi.add(Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelseTabellF))
             kodelisteOgVerdi.add(Pair("harSkadelidtHattFravaer", skademelding.skade.antattSykefravaerTabellH!!))
+        }
+        if (skademelding.hendelsesfakta.stedsbeskrivelseTabellF != null && (rolletype == "laerling" || rolletype == "arbeidstaker")) {
+            kodelisteOgVerdi.add(Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelseTabellF!!))
         }
 
         // rolletype benyttes som kategori navn (elev, arbeidstaker, laerling osv)
