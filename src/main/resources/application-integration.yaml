@@ -43,6 +43,8 @@ api:
     altinn:
       url: http://localhost:${mock.port}/altinn/
       apiKey: test
+    kodeverk:
+      url: http://localhost:${mock.port}/api/v1/kodeverk
 
 maskinporten:
   client:

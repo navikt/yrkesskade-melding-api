@@ -1,0 +1,196 @@
+{
+  "kodeverdierMap": {
+    "politikere": {
+      "kode": "politikere",
+      "verdi": "Politikere"
+    },
+    "toppledereIOffentligAdministrasjon": {
+      "kode": "toppledereIOffentligAdministrasjon",
+      "verdi": "Toppledere i offentlig administrasjon"
+    },
+    "toppledereIInteresseorganisasjoner": {
+      "kode": "toppledereIInteresseorganisasjoner",
+      "verdi": "Toppledere i interesseorganisasjoner"
+    },
+    "administrerendeDirektorer": {
+      "kode": "administrerendeDirektorer",
+      "verdi": "Administrerende direktører"
+    },
+    "finansOgOkonomisjefer": {
+      "kode": "finansOgOkonomisjefer",
+      "verdi": "Finans- og økonomisjefer"
+    },
+    "personalsjefer": {
+      "kode": "personalsjefer",
+      "verdi": "Personalsjefer"
+    },
+    "strategiOgPlanleggingssjefer": {
+      "kode": "strategiOgPlanleggingssjefer",
+      "verdi": "Strategi- og planleggingssjefer"
+    },
+    "andreAdministrativeLedere": {
+      "kode": "andreAdministrativeLedere",
+      "verdi": "Andre administrative ledere"
+    },
+    "salgsOgMarkedssjefer": {
+      "kode": "salgsOgMarkedssjefer",
+      "verdi": "Salgs- og markedssjefer"
+    },
+    "prOgInformasjonssjefer": {
+      "kode": "prOgInformasjonssjefer",
+      "verdi": "PR- og informasjonssjefer"
+    },
+    "forskningsOgUtviklingsledere": {
+      "kode": "forskningsOgUtviklingsledere",
+      "verdi": "Forsknings- og utviklingsledere"
+    },
+    "ledereISkogbrukGartnerierMv": {
+      "kode": "ledereISkogbrukGartnerierMv",
+      "verdi": "Ledere i skogbruk, gartnerier mv."
+    },
+    "ledereInnenAkvakulturMv": {
+      "kode": "ledereInnenAkvakulturMv",
+      "verdi": "Ledere innen akvakultur mv."
+    },
+    "ledereAvIndustriproduksjonMv": {
+      "kode": "ledereAvIndustriproduksjonMv",
+      "verdi": "Ledere av industriproduksjon mv."
+    },
+    "ledereAvOljeOgGassutvinningMv": {
+      "kode": "ledereAvOljeOgGassutvinningMv",
+      "verdi": "Ledere av olje- og gassutvinning mv."
+    },
+    "ledereAvByggeOgAnleggsvirksomhet": {
+      "kode": "ledereAvByggeOgAnleggsvirksomhet",
+      "verdi": "Ledere av bygge- og anleggsvirksomhet"
+    },
+    "ledereAvLogistikkOgTransportMv": {
+      "kode": "ledereAvLogistikkOgTransportMv",
+      "verdi": "Ledere av logistikk og transport mv."
+    },
+    "ledereAvIktEnheter": {
+      "kode": "ledereAvIktEnheter",
+      "verdi": "Ledere av IKT-enheter"
+    },
+    "ledereAvOmsorgstjenesterForBarn": {
+      "kode": "ledereAvOmsorgstjenesterForBarn",
+      "verdi": "Ledere av omsorgstjenester for barn"
+    },
+    "ledereAvHelsetjenester": {
+      "kode": "ledereAvHelsetjenester",
+      "verdi": "Ledere av helsetjenester"
+    },
+    "ledereAvEldreomsorg": {
+      "kode": "ledereAvEldreomsorg",
+      "verdi": "Ledere av eldreomsorg"
+    },
+    "ledereAvSosialomsorg": {
+      "kode": "ledereAvSosialomsorg",
+      "verdi": "Ledere av sosialomsorg"
+    },
+    "ledereAvUtdanningOgUndervisning": {
+      "kode": "ledereAvUtdanningOgUndervisning",
+      "verdi": "Ledere av utdanning og undervisning"
+    },
+    "ledereAvForsikringOgFinansvirksomhet": {
+      "kode": "ledereAvForsikringOgFinansvirksomhet",
+      "verdi": "Ledere av forsikring og finansvirksomhet"
+    },
+    "andreLedereAvProduksjonOgTjenesteyting": {
+      "kode": "andreLedereAvProduksjonOgTjenesteyting",
+      "verdi": "Andre ledere av produksjon og tjenesteyting"
+    },
+    "hotellsjefer": {
+      "kode": "hotellsjefer",
+      "verdi": "Hotellsjefer"
+    },
+    "restaurantsjefer": {
+      "kode": "restaurantsjefer",
+      "verdi": "Restaurantsjefer"
+    },
+    "varehandelssjefer": {
+      "kode": "varehandelssjefer",
+      "verdi": "Varehandelssjefer"
+    },
+    "sportsRekreasjonsOgKultursenterledere": {
+      "kode": "sportsRekreasjonsOgKultursenterledere",
+      "verdi": "Sports-, rekreasjons- og kultursenterledere"
+    },
+    "andreDagligeLedereITjenesteytendeVirksomheter": {
+      "kode": "andreDagligeLedereITjenesteytendeVirksomheter",
+      "verdi": "Andre daglige ledere i tjenesteytende virksomheter"
+    },
+    "fysikereOgAstronomer": {
+      "kode": "fysikereOgAstronomer",
+      "verdi": "Fysikere og astronomer"
+    },
+    "meteorologer": {
+      "kode": "meteorologer",
+      "verdi": "Meteorologer"
+    },
+    "kjemikere": {
+      "kode": "kjemikere",
+      "verdi": "Kjemikere"
+    },
+    "geologerOgGeofysikere": {
+      "kode": "geologerOgGeofysikere",
+      "verdi": "Geologer og geofysikere"
+    },
+    "matematikereStatistikereMv": {
+      "kode": "matematikereStatistikereMv",
+      "verdi": "Matematikere, statistikere mv."
+    },
+    "biologerBotanikereZoologerMv": {
+      "kode": "biologerBotanikereZoologerMv",
+      "verdi": "Biologer, botanikere, zoologer mv."
+    },
+    "sivilagronomerMv": {
+      "kode": "sivilagronomerMv",
+      "verdi": "Sivilagronomer mv."
+    },
+    "miljovernradgivere": {
+      "kode": "miljovernradgivere",
+      "verdi": "Miljøvernrådgivere"
+    },
+    "sivilingeniorerIndustriOgProduksjon": {
+      "kode": "sivilingeniorerIndustriOgProduksjon",
+      "verdi": "Sivilingeniører (industri og produksjon)"
+    },
+    "sivilingeniorerByggOgAnlegg": {
+      "kode": "sivilingeniorerByggOgAnlegg",
+      "verdi": "Sivilingeniører (bygg og anlegg)"
+    },
+    "sivilingeniorerMiljoteknikk": {
+      "kode": "sivilingeniorerMiljoteknikk",
+      "verdi": "Sivilingeniører (miljøteknikk)"
+    },
+    "sivilingeniorerMaskinOgMarinTeknikk": {
+      "kode": "sivilingeniorerMaskinOgMarinTeknikk",
+      "verdi": "Sivilingeniører (maskin- og marin-teknikk)"
+    },
+    "sivilingeniorerKjemi": {
+      "kode": "sivilingeniorerKjemi",
+      "verdi": "Sivilingeniører (kjemi)"
+    },
+    "sivilingeniorerGeofagPetroLeumsteknologiMetallurgiMv": {
+      "kode": "sivilingeniorerGeofagPetroLeumsteknologiMetallurgiMv",
+      "verdi": "Sivilingeniører (geofag, petro-leumsteknologi, metallurgi mv.)"
+    },
+    "andreSivilingeniorerUnntattElektroteknologi": {
+      "kode": "andreSivilingeniorerUnntattElektroteknologi",
+      "verdi": "Andre sivilingeniører (unntatt elektroteknologi)"
+    },
+    "sivilingeniorerElkraftteknikk": {
+      "kode": "sivilingeniorerElkraftteknikk",
+      "verdi": "Sivilingeniører (elkraftteknikk)"
+    },
+    "sivilingeniorerElektronikk": {
+      "kode": "sivilingeniorerElektronikk",
+      "verdi": "Sivilingeniører (elektronikk)"
+    },
+    "sivilingeniorerTelekommunikasjon": {
+      "kode": "sivilingeniorerTelekommunikasjon",
+      "verdi": "Sivilingeniører (telekommunikasjon)"
+    }
+  }
+}

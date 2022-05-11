@@ -1,0 +1,24 @@
+{
+  "kodeverdierMap": {
+    "antattIkkeOppsoektLege": {
+      "kode": "antattIkkeOppsoektLege",
+      "verdi": "Det antas at helsehjelp ikke er oppsøkt"
+    },
+    "antattOppsoektLege": {
+      "kode": "antattOppsoektLege",
+      "verdi": "Det antas at helsehjelp er oppsøkt"
+    },
+    "alvorligKreftsykdom": {
+      "kode": "alvorligKreftsykdom",
+      "verdi": "Alvorlig kreftsykdom"
+    },
+    "livstruendeSykdomEllerSkade": {
+      "kode": "livstruendeSykdomEllerSkade",
+      "verdi": "Livstruende sykdom/skade"
+    },
+    "innmeldtDoedsfall": {
+      "kode": "innmeldtDoedsfall",
+      "verdi": "Dødsfall"
+    }
+  }
+}

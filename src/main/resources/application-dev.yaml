@@ -27,3 +27,5 @@ api:
   client:
     enhetsregister:
       url: http://localhost:${mock.enhetsregister.port}/enhetsregisteret/api
+  kodeverk:
+    url: https://yrkesskade-kodeverk.dev.intern.nav.no/api/v1/kodeverk

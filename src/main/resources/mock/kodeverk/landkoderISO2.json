@@ -1,0 +1,20 @@
+{
+  "kodeverdierMap": {
+    "PR": {
+      "kode": "PR",
+      "verdi": "PUERTO RICO"
+    },
+    "PS": {
+      "kode": "PS",
+      "verdi": "PALESTINA"
+    },
+    "PT": {
+      "kode": "PT",
+      "verdi": "PORTUGAL"
+    },
+    "NO": {
+      "kode": "NO",
+      "verdi": "NORGE"
+    }
+  }
+}

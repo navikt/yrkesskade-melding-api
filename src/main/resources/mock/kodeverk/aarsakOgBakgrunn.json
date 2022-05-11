@@ -1,0 +1,60 @@
+{
+  "kodeverdierMap": {
+    "stukketEllerKuttet": {
+      "kode": "stukketEllerKuttet",
+      "verdi": "Stukket/kuttet av skarp/spiss gjenstand"
+    },
+    "stoetEllerTreffAvGjenstand": {
+      "kode": "stoetEllerTreffAvGjenstand",
+      "verdi": "Støt/treff av gjenstand"
+    },
+    "sammenstoetMedGjenstandEllerPaakjoersel": {
+      "kode": "sammenstoetMedGjenstandEllerPaakjoersel",
+      "verdi": "Sammenstøt med gjenstand eller påkjørsel"
+    },
+    "alternativenePasserIkke": {
+      "kode": "alternativenePasserIkke",
+      "verdi": "Alternativene passer ikke"
+    },
+    "sammenstoetEllerBittEllerSpark": {
+      "kode": "sammenstoetEllerBittEllerSpark",
+      "verdi": "Sammenstøt, bitt, spark (dyr eller menneske)"
+    },
+    "trafikkulykke": {
+      "kode": "trafikkulykke",
+      "verdi": "Trafikkulykke"
+    },
+    "fallAvPerson": {
+      "kode": "fallAvPerson",
+      "verdi": "Fall av person"
+    },
+    "velt": {
+      "kode": "velt",
+      "verdi": "Velt"
+    },
+    "klemtEllerFanget": {
+      "kode": "klemtEllerFanget",
+      "verdi": "Klemt eller fanget"
+    },
+    "druknetEllerBegravdEllerOmsvoept": {
+      "kode": "druknetEllerBegravdEllerOmsvoept",
+      "verdi": "Druknet, begravd, omsvøpt"
+    },
+    "brann": {
+      "kode": "brann",
+      "verdi": "Brann"
+    },
+    "eksplosjonEllerSprenging": {
+      "kode": "eksplosjonEllerSprenging",
+      "verdi": "Eksplosjon eller sprenging"
+    },
+    "kontaktMedKjemikalierEllerFarligeStoffer": {
+      "kode": "kontaktMedKjemikalierEllerFarligeStoffer",
+      "verdi": "Kontakt med kjemikalier eller andre farlige stoffer"
+    },
+    "kontaktMedElektriskSpenning": {
+      "kode": "kontaktMedElektriskSpenning",
+      "verdi": "Kontakt med elektrisk spenning"
+    }
+  }
+}

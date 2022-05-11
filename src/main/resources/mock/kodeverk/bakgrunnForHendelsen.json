@@ -1,0 +1,52 @@
+{
+  "kodeverdierMap": {
+    "manglendeMerkingEllerVarsling": {
+      "kode": "manglendeMerkingEllerVarsling",
+      "verdi": "Manglende merking, varsling, skilting"
+    },
+    "verneutstyrUtAvFunksjon": {
+      "kode": "verneutstyrUtAvFunksjon",
+      "verdi": "Verneutstyr satt ut av funksjon"
+    },
+    "verneutstyrFjernet": {
+      "kode": "verneutstyrFjernet",
+      "verdi": "Verneutstyr fjernet"
+    },
+    "alternativenePasserIkke": {
+      "kode": "alternativenePasserIkke",
+      "verdi": "Alternativene passer ikke"
+    },
+    "uautorisertBrukAvUtstyr": {
+      "kode": "uautorisertBrukAvUtstyr",
+      "verdi": "Uautorisert bruk av utstyr"
+    },
+    "defektUtstyr": {
+      "kode": "defektUtstyr",
+      "verdi": "Defekt utstyr"
+    },
+    "mangelfulleSikkerhetsrutiner": {
+      "kode": "mangelfulleSikkerhetsrutiner",
+      "verdi": "Mangelfulle sikkerhetsrutiner"
+    },
+    "mangelfullOpplaering": {
+      "kode": "mangelfullOpplaering",
+      "verdi": "Mangelfull opplæring"
+    },
+    "utilstrekkeligSikring": {
+      "kode": "utilstrekkeligSikring",
+      "verdi": "Utilstrekkelig sikring"
+    },
+    "vernetiltakIkkeGjennomfoert": {
+      "kode": "vernetiltakIkkeGjennomfoert",
+      "verdi": "Vernetiltak kun delvis eller ikke gjennomført"
+    },
+    "feilBrukEllerTapAvKontrollOverMaskinEllerTransportmiddel": {
+      "kode": "feilBrukEllerTapAvKontrollOverMaskinEllerTransportmiddel",
+      "verdi": "Feil bruk eller tap av kontroll over maskin eller transportmiddel."
+    },
+    "feilBrukEllerTapAvKontrollAvHaandholdtVerktoeyEllerAnnenGjenstand": {
+      "kode": "feilBrukEllerTapAvKontrollAvHaandholdtVerktoeyEllerAnnenGjenstand",
+      "verdi": "Feil bruk eller tap av kontroll av håndholdt verktøy eller annen gjenstand."
+    }
+  }
+}

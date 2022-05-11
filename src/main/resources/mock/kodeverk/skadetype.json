@@ -1,0 +1,80 @@
+{
+  "kodeverdierMap": {
+    "saarskade": {
+      "kode": "saarskade",
+      "verdi": "Sårskade"
+    },
+    "bloetdelsskadeUtenSaar": {
+      "kode": "bloetdelsskadeUtenSaar",
+      "verdi": "Bløtdelsskade uten sår (klemskade)"
+    },
+    "forstuingOgForvridning": {
+      "kode": "forstuingOgForvridning",
+      "verdi": "Forstuing, forvridning"
+    },
+    "alternativenePasserIkke": {
+      "kode": "alternativenePasserIkke",
+      "verdi": "Alternativene passer ikke"
+    },
+    "bruddskade": {
+      "kode": "bruddskade",
+      "verdi": "Bruddskade"
+    },
+    "knusningsskade": {
+      "kode": "knusningsskade",
+      "verdi": "Knusningsskade"
+    },
+    "tapAvLegemsdel": {
+      "kode": "tapAvLegemsdel",
+      "verdi": "Tap av legemsdel"
+    },
+    "indreSkade": {
+      "kode": "indreSkade",
+      "verdi": "Indre skade"
+    },
+    "kuldeskade": {
+      "kode": "kuldeskade",
+      "verdi": "Kuldeskade"
+    },
+    "varmeskade": {
+      "kode": "varmeskade",
+      "verdi": "Varmeskade"
+    },
+    "etsing": {
+      "kode": "etsing",
+      "verdi": "Etsing"
+    },
+    "akuttForgiftning": {
+      "kode": "akuttForgiftning",
+      "verdi": "Akutt forgiftning"
+    },
+    "oeyeskade": {
+      "kode": "oeyeskade",
+      "verdi": "Øyeskade"
+    },
+    "akustiskSjokk": {
+      "kode": "akustiskSjokk",
+      "verdi": "Akustisk sjokk"
+    },
+    "sjokkEtterAggresjon": {
+      "kode": "sjokkEtterAggresjon",
+      "verdi": "Sjokk etter aggresjon"
+    },
+    "traumatiskSjokk": {
+      "kode": "traumatiskSjokk",
+      "verdi": "Traumatisk sjokk"
+    },
+    "psykiskeEttervirkninger": {
+      "kode": "psykiskeEttervirkninger",
+      "verdi": "Psykiske ettervirkninger"
+    },
+    "infeksjon": {
+      "kode": "infeksjon",
+      "verdi": "Infeksjon"
+    },
+    "nedsattAllmenntilstand": {
+      "kode": "nedsattAllmenntilstand",
+      "verdi": "Nedsatt allmenntilstand"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "kodeverdierMap": {
+    "iAvtaltArbeidstid": {
+      "kode": "iAvtaltArbeidstid",
+      "verdi": "I avtalt arbeidstid"
+    },
+    "utenforArbeidstid": {
+      "kode": "utenforArbeidstid",
+      "verdi": "Utenfor arbeidstid"
+    },
+    "fritidEllerPrivatAktivitet": {
+      "kode": "fritidEllerPrivatAktivitet",
+      "verdi": "Fritid/privat aktivitet"
+    },
+    "alternativenePasserIkke": {
+      "kode": "alternativenePasserIkke",
+      "verdi": "Alternativene passer ikke"
+    },
+    "hvilendeVakt": {
+      "kode": "hvilendeVakt",
+      "verdi": "Hvilende vakt"
+    },
+    "underPermisjon": {
+      "kode": "underPermisjon",
+      "verdi": "Under permisjon"
+    },
+    "underFullSykemelding": {
+      "kode": "underFullSykemelding",
+      "verdi": "Under full sykemelding"
+    },
+    "underFrivilligArbeid": {
+      "kode": "underFrivilligArbeid",
+      "verdi": "Under frivillig arbeid"
+    },
+    "underRedningsarbeidEllerVaktholdEllerRedningsoevelse": {
+      "kode": "underRedningsarbeidEllerVaktholdEllerRedningsoevelse",
+      "verdi": "Under redningsarbeid, vakthold eller redningsøvelse"
+    }
+  }
+}

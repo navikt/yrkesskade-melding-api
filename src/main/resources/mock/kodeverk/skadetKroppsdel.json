@@ -1,0 +1,56 @@
+{
+  "kodeverdierMap": {
+    "hode": {
+      "kode": "hode",
+      "verdi": "Hode"
+    },
+    "ansikt": {
+      "kode": "ansikt",
+      "verdi": "Ansikt"
+    },
+    "venstreOeye": {
+      "kode": "venstreOeye",
+      "verdi": "Øye, venstre"
+    },
+    "hoeyreOeye": {
+      "kode": "hoeyreOeye",
+      "verdi": "Øye, høyre"
+    },
+    "venstreOere": {
+      "kode": "venstreOere",
+      "verdi": "Øre, venstre"
+    },
+    "hoeyreOere": {
+      "kode": "hoeyreOere",
+      "verdi": "Øre, høyre"
+    },
+    "tenner": {
+      "kode": "tenner",
+      "verdi": "Tenner"
+    },
+    "kjeve": {
+      "kode": "kjeve",
+      "verdi": "Kjeve"
+    },
+    "halsOgNakke": {
+      "kode": "halsOgNakke",
+      "verdi": "Hals og nakke"
+    },
+    "rygg": {
+      "kode": "rygg",
+      "verdi": "Rygg"
+    },
+    "seteEllerBekkenEllerHalebein": {
+      "kode": "seteEllerBekkenEllerHalebein",
+      "verdi": "Sete, bekken eller halebein"
+    },
+    "ribbenOgSkulderblad": {
+      "kode": "ribbenOgSkulderblad",
+      "verdi": "Ribben/skulderblad"
+    },
+    "venstreSkulder": {
+      "kode": "venstreSkulder",
+      "verdi": "Skulder, venstre"
+    }
+  }
+}

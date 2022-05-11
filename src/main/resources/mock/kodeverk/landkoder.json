@@ -1,0 +1,16 @@
+{
+  "kodeverdierMap": {
+    "NZL": {
+      "kode": "NZL",
+      "verdi": "NEW ZEALAND"
+    },
+    "FJI": {
+      "kode": "FJI",
+      "verdi": "FIJI"
+    },
+    "NOR": {
+      "kode": "NOR",
+      "verdi": "Norge"
+    }
+  }
+}

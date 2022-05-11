@@ -1,0 +1,20 @@
+{
+  "kodeverdierMap": {
+    "fravaersdagerUkjent": {
+      "kode": "fravaersdagerUkjent",
+      "verdi": "Fraværsdager ukjent"
+    },
+    "treDagerEllerMindre": {
+      "kode": "treDagerEllerMindre",
+      "verdi": "Kjent fravær tre dager eller mindre"
+    },
+    "merEnnTreDager": {
+      "kode": "merEnnTreDager",
+      "verdi": "Kjent fravær mer enn tre dager"
+    },
+    "alternativenePasserIkke": {
+      "kode": "alternativenePasserIkke",
+      "verdi": "Alternativene passer ikke"
+    }
+  }
+}
