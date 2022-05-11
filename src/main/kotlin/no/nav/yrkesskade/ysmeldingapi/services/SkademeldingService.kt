@@ -103,7 +103,6 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         val kodelisteOgVerdi = mutableListOf(
             Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta.hvorSkjeddeUlykken),
             Pair("tidsrom", skademelding.hendelsesfakta.naarSkjeddeUlykken),
-            Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelseTabellF),
         )
 
         check(skademelding.skade!!.skadedeDeler.isNotEmpty(), {"skadedeDeler kan ikke være tom"})
@@ -133,6 +132,9 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
                 kodelisteOgVerdi.add(Pair("stillingstittel", it))
             }
             kodelisteOgVerdi.add(Pair("harSkadelidtHattFravaer", skademelding.skade.antattSykefravaerTabellH!!))
+        }
+        if (skademelding.hendelsesfakta.stedsbeskrivelseTabellF != null && (rolletype == "laerling" || rolletype == "arbeidstaker")) {
+            kodelisteOgVerdi.add(Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelseTabellF!!))
         }
 
         // rolletype benyttes som kategori navn (elev, arbeidstaker, laerling osv)
