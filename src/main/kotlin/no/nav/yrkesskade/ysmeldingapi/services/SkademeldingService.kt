@@ -6,6 +6,7 @@ import no.bekk.bekkopen.person.FodselsnummerValidator
 import no.nav.yrkesskade.model.SkademeldingBeriketData
 import no.nav.yrkesskade.model.SkademeldingInnsendtHendelse
 import no.nav.yrkesskade.model.SkademeldingMetadata
+import no.nav.yrkesskade.model.Systemkilde
 import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.ysmeldingapi.client.enhetsregister.EnhetsregisterClient
 import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendingClient
@@ -41,8 +42,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
     @Transactional
     fun lagreSkademelding(
         skademelding: Skademelding,
-        skademeldingMetadata: SkademeldingMetadata,
-        skademeldingBeriketData: SkademeldingBeriketData
+        skademeldingMetadata: SkademeldingMetadata
     ): SkademeldingDto {
         // Valider skademelding
         validerSkademelding(skademelding)
@@ -54,6 +54,8 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             kilde = skademeldingMetadata.kilde,
             mottattTidspunkt = skademeldingMetadata.tidspunktMottatt
         )
+
+        val skademeldingBeriketData = lagBeriketSkademelding(skademelding)
 
         // lagre i database - returnerer entity
         val lagretSkademeldingDto = skademeldingRepository.save(skademeldingTilLagring.toSkademelding()).toSkademeldingDto()
@@ -69,6 +71,14 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 
         // returner lagrede skademelding
         return lagretSkademeldingDto
+    }
+
+    private fun lagBeriketSkademelding(skademelding: Skademelding): SkademeldingBeriketData {
+        val innmeldersOrganisasjon = enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret(skademelding.innmelder!!.paaVegneAv)
+
+        return SkademeldingBeriketData(
+            innmeldersOrganisasjonsnavn = innmeldersOrganisasjon.navn.orEmpty() to Systemkilde.ENHETSREGISTERET
+        )
     }
 
     private fun validerSkademelding(skademelding: Skademelding) {
@@ -92,7 +102,6 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         check(FodselsnummerValidator.isValid(skademelding.innmelder.norskIdentitetsnummer), { "innmelder.norskIdentitetsnummer er ugyldig. ${skademelding.innmelder.norskIdentitetsnummer} er ikke gyldig norsk person identitetsnummer" })
         check(FodselsnummerValidator.isValid(skademelding.skadelidt.norskIdentitetsnummer), { "skadelidt.norskIdentitetsnummer er ugyldig. ${skademelding.skadelidt.norskIdentitetsnummer} er ikke gyldig norsk person identitetsnummer" })
 
-
         // Hent kodelister basert på rolletype som skal benyttes for å finne gyldige verdier
         check(skademelding.skadelidt!!.dekningsforhold.rolletype != null, { "rolletype er påkrevd" })
 
@@ -100,11 +109,14 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 
         kodeverkValidator.sjekkGyldigKodeverkverdiForType(rolletype, "rolletype", "${rolletype} er ikke en gyldig rolletype kode i kodelisten")
 
+        if (skademelding.hendelsesfakta!!.ulykkessted.adresse != null) {
+            kodeverkValidator.sjekkGyldigKodeverkverdiForType(skademelding.hendelsesfakta!!.ulykkessted.adresse!!.land!!,"landkoderISO2", "${skademelding.hendelsesfakta!!.ulykkessted.adresse!!.land!!} er ikke en gyldig landkode. Sjekk landkoderISO2 for gyldige verdier")
+        }
+
         // felter som skal valideres
         val kodelisteOgVerdi = mutableListOf(
             Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta.hvorSkjeddeUlykken),
             Pair("tidsrom", skademelding.hendelsesfakta.naarSkjeddeUlykken),
-            Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelseTabellF),
         )
 
         check(skademelding.skade!!.skadedeDeler.isNotEmpty(), {"skadedeDeler kan ikke være tom"})
@@ -122,11 +134,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         }
 
         if (skademelding.skade!!.alvorlighetsgrad != null) {
-            Pair("alvorlighetsgrad", skademelding.skade!!.alvorlighetsgrad!!)
-        }
-
-        if (skademelding.hendelsesfakta!!.ulykkessted.adresse != null) {
-            Pair("landkoderISO2", skademelding.hendelsesfakta!!.ulykkessted.adresse!!.land)
+            kodelisteOgVerdi.add(Pair("alvorlighetsgrad", skademelding.skade!!.alvorlighetsgrad!!))
         }
 
         if (skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte != null && (rolletype == "laerling" || rolletype == "arbeidstaker")) {
@@ -134,6 +142,9 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
                 kodelisteOgVerdi.add(Pair("stillingstittel", it))
             }
             kodelisteOgVerdi.add(Pair("harSkadelidtHattFravaer", skademelding.skade.antattSykefravaerTabellH!!))
+        }
+        if (skademelding.hendelsesfakta.stedsbeskrivelseTabellF != null && (rolletype == "laerling" || rolletype == "arbeidstaker")) {
+            kodelisteOgVerdi.add(Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelseTabellF!!))
         }
 
         // rolletype benyttes som kategori navn (elev, arbeidstaker, laerling osv)
