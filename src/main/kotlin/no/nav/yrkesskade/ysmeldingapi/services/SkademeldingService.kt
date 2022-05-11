@@ -92,7 +92,6 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         check(FodselsnummerValidator.isValid(skademelding.innmelder.norskIdentitetsnummer), { "innmelder.norskIdentitetsnummer er ugyldig. ${skademelding.innmelder.norskIdentitetsnummer} er ikke gyldig norsk person identitetsnummer" })
         check(FodselsnummerValidator.isValid(skademelding.skadelidt.norskIdentitetsnummer), { "skadelidt.norskIdentitetsnummer er ugyldig. ${skademelding.skadelidt.norskIdentitetsnummer} er ikke gyldig norsk person identitetsnummer" })
 
-
         // Hent kodelister basert på rolletype som skal benyttes for å finne gyldige verdier
         check(skademelding.skadelidt!!.dekningsforhold.rolletype != null, { "rolletype er påkrevd" })
 
@@ -122,11 +121,11 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         }
 
         if (skademelding.skade!!.alvorlighetsgrad != null) {
-            Pair("alvorlighetsgrad", skademelding.skade!!.alvorlighetsgrad!!)
+            kodelisteOgVerdi.add(Pair("alvorlighetsgrad", skademelding.skade!!.alvorlighetsgrad!!))
         }
 
         if (skademelding.hendelsesfakta!!.ulykkessted.adresse != null) {
-            Pair("landkoderISO2", skademelding.hendelsesfakta!!.ulykkessted.adresse!!.land)
+            kodelisteOgVerdi.add(Pair("landkoderISO2", skademelding.hendelsesfakta!!.ulykkessted.adresse!!.land!!))
         }
 
         if (skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte != null && (rolletype == "laerling" || rolletype == "arbeidstaker")) {
