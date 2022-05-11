@@ -109,6 +109,10 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 
         kodeverkValidator.sjekkGyldigKodeverkverdiForType(rolletype, "rolletype", "${rolletype} er ikke en gyldig rolletype kode i kodelisten")
 
+        if (skademelding.hendelsesfakta!!.ulykkessted.adresse != null) {
+            kodeverkValidator.sjekkGyldigKodeverkverdiForType(skademelding.hendelsesfakta!!.ulykkessted.adresse!!.land!!,"landkoderISO2", "${skademelding.hendelsesfakta!!.ulykkessted.adresse!!.land!!} er ikke en gyldig landkode. Sjekk landkoderISO2 for gyldige verdier")
+        }
+
         // felter som skal valideres
         val kodelisteOgVerdi = mutableListOf(
             Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta.hvorSkjeddeUlykken),
@@ -131,10 +135,6 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 
         if (skademelding.skade!!.alvorlighetsgrad != null) {
             kodelisteOgVerdi.add(Pair("alvorlighetsgrad", skademelding.skade!!.alvorlighetsgrad!!))
-        }
-
-        if (skademelding.hendelsesfakta!!.ulykkessted.adresse != null) {
-            kodelisteOgVerdi.add(Pair("landkoderISO2", skademelding.hendelsesfakta!!.ulykkessted.adresse!!.land!!))
         }
 
         if (skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte != null && (rolletype == "laerling" || rolletype == "arbeidstaker")) {
