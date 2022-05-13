@@ -24,19 +24,19 @@ jobs:
     - uses: actions/setup-java@v1
       with:
           java-version: 11
-      - name: compile and run tests
-        env:
-          GITHUB_USERNAME: x-access-token
-          GITHUB_TOKEN: ${{ secrets.READER_TOKEN }}
-        run: mvn install --settings .m2/maven-settings.xml --file pom.xml
-      - name: Login to GitHub Docker Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push the Docker image
-        run: docker build --pull --tag ${IMAGE} --tag ${LATEST} . && docker push ${IMAGE} && docker push ${LATEST}
+    - name: compile and run tests
+      env:
+        GITHUB_USERNAME: x-access-token
+        GITHUB_TOKEN: ${{ secrets.READER_TOKEN }}
+      run: mvn install --settings .m2/maven-settings.xml --file pom.xml
+    - name: Login to GitHub Docker Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push the Docker image
+      run: docker build --pull --tag ${IMAGE} --tag ${LATEST} . && docker push ${IMAGE} && docker push ${LATEST}
 
   deployAppToDev:
     if: github.ref == 'refs/heads/dev'
@@ -54,7 +54,7 @@ jobs:
           VARS: .nais/dev/dev.yaml
   deployAlertsToDev:
     if: github.ref == 'refs/heads/dev'
-    name: Deploy alerts to dev
+    name: Deploy alerts to DEV
     needs: build
     runs-on: ubuntu-latest
     steps:
