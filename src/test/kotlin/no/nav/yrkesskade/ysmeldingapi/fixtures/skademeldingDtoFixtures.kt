@@ -24,6 +24,10 @@ fun skademeldingMedFeilStillingstittelFormat(): String {
     return Files.readString(Path.of("src/test/resources/skademeldinger/feilStillingstittelFormat.json"))
 }
 
+fun skademeldingMedPeriodeFraDatoSammeSomTilDato(): String {
+    return Files.readString(Path.of("src/test/resources/skademeldinger/fradatoSammeSomTilDato.json"))
+}
+
 fun fullSkademelding(): Skademelding {
     return Skademelding(
         innmelder = arbeidsgiverInnmelder(),
