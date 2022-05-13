@@ -10,13 +10,16 @@
     </appender>
 
     <logger name="no.nav" level="info" additivity="false">
-        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STDOUT_JSON"/>
     </logger>
 
     <springProfile name="!dev &amp; !prod">
         <root level="info">
             <appender-ref ref="STDOUT_JSON"/>
         </root>
+        <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG" additivity="false">
+            <appender-ref ref="STDOUT_JSON"/>
+        </logger>
     </springProfile>
 
     <springProfile  name="dev | prod">
@@ -34,6 +37,11 @@
         </appender>
 
         <logger name="secure" level="info" additivity="false">
+            <appender-ref ref="secureJson"/>
+        </logger>
+
+<!--        Denne må IKKE logge til noe annet enn secureJson -->
+        <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG" additivity="false">
             <appender-ref ref="secureJson"/>
         </logger>
 
