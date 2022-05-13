@@ -2,6 +2,8 @@ server:
   servlet:
     context-path: /api
 spring:
+  main:
+    banner-mode: off
   application.name: yrkesskade-melding-api
   kafka:
     client-id: yrkesskade-melding-api
