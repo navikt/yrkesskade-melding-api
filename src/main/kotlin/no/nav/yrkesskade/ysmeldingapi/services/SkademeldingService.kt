@@ -8,8 +8,12 @@ import no.nav.yrkesskade.model.SkademeldingInnsendtHendelse
 import no.nav.yrkesskade.model.SkademeldingMetadata
 import no.nav.yrkesskade.model.Systemkilde
 import no.nav.yrkesskade.skademelding.model.Skademelding
+import no.nav.yrkesskade.skademelding.model.TidPeriode
+import no.nav.yrkesskade.skademelding.model.Tidstype
 import no.nav.yrkesskade.ysmeldingapi.client.enhetsregister.EnhetsregisterClient
 import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendingClient
+import no.nav.yrkesskade.ysmeldingapi.config.FeatureToggleService
+import no.nav.yrkesskade.ysmeldingapi.config.FeatureToggles
 import no.nav.yrkesskade.ysmeldingapi.metric.MetricService
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.repositories.SkademeldingRepository
@@ -19,13 +23,15 @@ import no.nav.yrkesskade.ysmeldingapi.utils.getSecureLogger
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.lang.invoke.MethodHandles
+import java.time.OffsetDateTime
 
 @Service
 class SkademeldingService(private val skademeldingInnsendingClient: SkademeldingInnsendingClient,
                           private val skademeldingRepository: SkademeldingRepository,
                           private val metricService: MetricService,
                           private val kodeverkValidator: KodeverkValidator,
-                          private val enhetsregisterClient: EnhetsregisterClient
+                          private val enhetsregisterClient: EnhetsregisterClient,
+                          private val featureToggleService: FeatureToggleService
 ) {
 
     private val log = getLogger(MethodHandles.lookup().lookupClass())
@@ -98,9 +104,25 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         val dekningsforholdOrganisasjon = enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret(skademelding.skadelidt.dekningsforhold.organisasjonsnummer)
         check(!dekningsforholdOrganisasjon.organisasjonsnummer.isNullOrBlank(), {"Ugyldig dekningsforhold.organisasjonsnummer enhet. ${skademelding.skadelidt.dekningsforhold.organisasjonsnummer} finnes ikke i enhetsregisteret"})
 
-        // sjekk fødselsnumre
-        check(FodselsnummerValidator.isValid(skademelding.innmelder.norskIdentitetsnummer), { "innmelder.norskIdentitetsnummer er ugyldig. ${skademelding.innmelder.norskIdentitetsnummer} er ikke gyldig norsk person identitetsnummer" })
-        check(FodselsnummerValidator.isValid(skademelding.skadelidt.norskIdentitetsnummer), { "skadelidt.norskIdentitetsnummer er ugyldig. ${skademelding.skadelidt.norskIdentitetsnummer} er ikke gyldig norsk person identitetsnummer" })
+        // sjekk fødselsnumre i produksjon
+        if (!featureToggleService.isEnabled(FeatureToggles.ER_IKKE_PROD.toggleId)) {
+            check(
+                FodselsnummerValidator.isValid(skademelding.innmelder.norskIdentitetsnummer),
+                { "innmelder.norskIdentitetsnummer er ugyldig. ${skademelding.innmelder.norskIdentitetsnummer} er ikke gyldig norsk person identitetsnummer" })
+            check(
+                FodselsnummerValidator.isValid(skademelding.skadelidt.norskIdentitetsnummer),
+                { "skadelidt.norskIdentitetsnummer er ugyldig. ${skademelding.skadelidt.norskIdentitetsnummer} er ikke gyldig norsk person identitetsnummer" })
+        }
+        // valider at norskIdentitetsnumre er ulike
+        check(!skademelding.innmelder.norskIdentitetsnummer.equals(skademelding.skadelidt.norskIdentitetsnummer),
+            {"innsenders norsk identitetsnummer kan ikke være det samme som skadelidtes norske identitetsnummer"})
+
+        // valider tidstype
+        checkNotNull(skademelding.hendelsesfakta.tid.tidstype, {"hendelsesfakta.tid.tidstype er påkrevd"})
+        when (skademelding.hendelsesfakta.tid.tidstype) {
+            Tidstype.tidspunkt -> validerTidspunkt(skademelding.hendelsesfakta.tid.tidspunkt)
+            Tidstype.periode -> validerTidsperiode(skademelding.hendelsesfakta.tid.periode)
+        }
 
         // Hent kodelister basert på rolletype som skal benyttes for å finne gyldige verdier
         check(skademelding.skadelidt!!.dekningsforhold.rolletype != null, { "rolletype er påkrevd" })
@@ -157,5 +179,16 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             )
         }
 
+    }
+
+    private fun validerTidsperiode(periode: TidPeriode?) {
+        checkNotNull(periode, {"hendelsesfakta.tid.periode er påkrevd"})
+        checkNotNull(periode.fra, {"hendelsesfakta.tid.periode.fra er påkrevd"})
+        checkNotNull(periode.til, {"hendelsesfakta.tid.periode.til er påkrevd"})
+        check(periode.fra!!.isBefore(periode.til!!) || periode.fra!!.isEqual(periode.til!!), {"fra dato må være før eller sammme som til dato"})
+    }
+
+    private fun validerTidspunkt(tidspunkt: OffsetDateTime?) {
+        checkNotNull(tidspunkt, {"hendelsesfakta.tid.tidspunkt er påkrevd"})
     }
 }

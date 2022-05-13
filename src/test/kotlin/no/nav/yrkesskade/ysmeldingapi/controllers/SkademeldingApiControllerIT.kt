@@ -4,6 +4,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.ysmeldingapi.fixtures.enkelSkademelding
 import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedFeilStillingstittelFormat
+import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedPeriodeFraDatoSammeSomTilDato
 import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_UTEN_ORGANISASJONER
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
@@ -18,6 +19,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
 
@@ -69,6 +71,16 @@ class SkademeldingApiControllerIT: AbstractIT() {
         postSkademelding(skademeldingMedFeilStillingstittelFormat(), jwt)
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.melding").isNotEmpty)
+    }
+
+    @Test
+    fun `valider skademelding med periode tidstype hvor fra dato er samme som til dato`() {
+        val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
+        assertThat(jwt).isNotNull()
+
+        postSkademelding(skademeldingMedPeriodeFraDatoSammeSomTilDato(), jwt)
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().isCreated)
     }
 
     private fun postSkademelding(skademelding: String, token: String) =
