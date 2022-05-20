@@ -1,37 +1,13 @@
-## Welcome to GitHub Pages
+## Yrkesskade-melding-api
 
-You can use the [editor on GitHub](https://github.com/navikt/yrkesskade-melding-api/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Yrkesskade-melding-api er et REST API som tar imot yrkesskademeldinger. Det er lagt opp til å benyttes på to måter:
+- Intern konsumering av NAV sin egen frontend-applikasjon for yrkesskadeinnmelding
+- Ekstern konsumering av tredjepartsaktører via [yrkesskade-ekstern-gateway](https://github.com/navikt/yrkesskade-ekstern-gateway)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+REST APIet er dokumentert med en [Swaggerdoc](https://raw.githubusercontent.com/navikt/yrkesskade-backend-felles/master/skademelding/src/main/resources/openapi.yaml) som følger OpenAPI 3-standarden.
 
-### Markdown
+## Tilgang for eksterne konsumenter
+Eksterne konsumenter må autentisere seg med et Maskinporten-token for å kunne sende inn skademeldinger. Deretter må vi som API-tilbydere registrere konsumenten sitt organisasjonsnummer. Maskinporten har en egen guide for hvordan man kan [sette opp tilgang](https://docs.digdir.no/docs/Maskinporten/maskinporten_guide_apikonsument).
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Eksterne konsumenter må som nevnt bruke `yrkesskade-ekstern-gateway` for å sende inn yrkesskademeldinger til oss. Dette er måten å tilgjengeliggjøre vårt API til internett på, ved å kreve et gyldig Maskinporten-token med egendefinerte scopes. Dokumentasjon av denne gatewayen kommer snart.
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/navikt/yrkesskade-melding-api/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
