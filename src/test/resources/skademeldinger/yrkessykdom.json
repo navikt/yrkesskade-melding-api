@@ -1,0 +1,53 @@
+{
+  "innmelder": {
+    "norskIdentitetsnummer": "16120101181",
+    "paaVegneAv": "910441205",
+    "innmelderrolle": "virksomhetsrepresentant",
+    "altinnrolleIDer": []
+  },
+  "skadelidt": {
+    "norskIdentitetsnummer": "10117424370",
+    "dekningsforhold": {
+      "stillingstittelTilDenSkadelidte": ["toppledereIOffentligAdministrasjon"],
+      "organisasjonsnummer": "910441205",
+      "navnPaaVirksomheten": "BIRI OG TORPO REGNSKAP",
+      "rolletype": "arbeidstaker"
+    }
+  },
+  "skade": {
+    "alvorlighetsgrad": "antattOppsoektLege",
+    "skadedeDeler": [
+      {
+        "skadeartTabellC": "bloetdelsskadeUtenSaar",
+        "kroppsdelTabellD": "venstreOeye"
+      }
+    ],
+    "antattSykefravaerTabellH": "merEnnTreDager",
+    "sykdomstype": "sykdomIHjernenEllerNervesystemet"
+  },
+  "hendelsesfakta": {
+    "tid": { "tidstype": "Periode",
+      "periode": {
+        "fra": "2020-02-02",
+        "til": "2022-02-02",
+        "sykdomPaavist": "2022-05-01"
+      }
+    },
+    "paavirkningsform": "kjemikalierEllerLoesemidler",
+    "naarSkjeddeUlykken": "fritidEllerPrivatAktivitet",
+    "hvorSkjeddeUlykken": "arbeidsstedInne",
+    "ulykkessted": {
+      "sammeSomVirksomhetensAdresse": true,
+      "adresse": {
+        "adresselinje1": "Testveien 1",
+        "adresselinje2": "1111",
+        "adresselinje3": "TEST",
+        "land": "NO"
+      }
+    },
+    "aarsakUlykkeTabellAogE": ["sammenstoetEllerBittEllerSpark"],
+    "bakgrunnsaarsakTabellBogG": ["verneutstyrFjernet"],
+    "utfyllendeBeskrivelse": "Test",
+    "stedsbeskrivelseTabellF": "idrettsomraade"
+  }
+}

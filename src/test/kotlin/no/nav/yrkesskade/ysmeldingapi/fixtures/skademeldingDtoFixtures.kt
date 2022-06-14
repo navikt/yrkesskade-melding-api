@@ -28,6 +28,10 @@ fun skademeldingMedPeriodeFraDatoSammeSomTilDato(): String {
     return Files.readString(Path.of("src/test/resources/skademeldinger/fradatoSammeSomTilDato.json"))
 }
 
+fun skademeldingMedPeriodeOgSykdomsinformasjon(): String {
+    return Files.readString(Path.of("src/test/resources/skademeldinger/yrkessykdom.json"))
+}
+
 fun fullSkademelding(): Skademelding {
     return Skademelding(
         innmelder = arbeidsgiverInnmelder(),
