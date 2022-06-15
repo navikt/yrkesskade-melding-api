@@ -96,7 +96,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         check(skademelding.innmelder.innmelderrolle == "virksomhetsrepresentant", { "${skademelding.innmelder.innmelderrolle} er ikke en gyldig verdi. Må være virksomhetsrepresentant"})
 
         // Hent kodelister basert på rolletype som skal benyttes for å finne gyldige verdier
-        check(skademelding.skadelidt.dekningsforhold.rolletype != null, { "rolletype er påkrevd" })
+        checkNotNull(skademelding.skadelidt.dekningsforhold.rolletype, { "rolletype er påkrevd" })
 
         val rolletype = skademelding.skadelidt.dekningsforhold.rolletype
 
