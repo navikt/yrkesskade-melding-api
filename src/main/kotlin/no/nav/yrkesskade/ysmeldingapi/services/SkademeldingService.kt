@@ -134,12 +134,6 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             Tidstype.periode -> validerTidsperiode(skademelding.hendelsesfakta.tid.periode)
         }
 
-        // dersom tidstype er periode - valider sykdomsfelter
-        if (skademelding.hendelsesfakta.tid.tidstype == Tidstype.periode) {
-            kodeverkValidator.sjekkGyldigKodeverkverdiForType(skademelding.skade.sykdomstype.orEmpty(), "sykdomstype", "${skademelding.skade.sykdomstype} er ikke en gyldig verdi")
-            kodeverkValidator.sjekkGyldigKodeverkverdiForType(skademelding.hendelsesfakta.paavirkningsform.orEmpty(), "paavirkningsform", "${skademelding.hendelsesfakta.paavirkningsform} er ikke en gyldig verdi")
-        }
-
         if (skademelding.hendelsesfakta.ulykkessted.adresse != null) {
             kodeverkValidator.sjekkGyldigKodeverkverdiForType(skademelding.hendelsesfakta.ulykkessted.adresse!!.land!!,"landkoderISO2", "${skademelding.hendelsesfakta.ulykkessted.adresse!!.land!!} er ikke en gyldig landkode. Sjekk landkoderISO2 for gyldige verdier")
         }
@@ -149,6 +143,18 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta.hvorSkjeddeUlykken),
             Pair("tidsrom", skademelding.hendelsesfakta.naarSkjeddeUlykken),
         )
+
+        // dersom tidstype er periode - valider sykdomsfelter
+        if (skademelding.hendelsesfakta.tid.tidstype == Tidstype.periode) {
+            kodeverkValidator.sjekkGyldigKodeverkverdiForType(
+                skademelding.skade.sykdomstype.orEmpty(),
+                "sykdomstype",
+                "${skademelding.skade.sykdomstype} er ikke en gyldig verdi"
+            )
+            skademelding.hendelsesfakta.paavirkningsform!!.forEach {
+                kodelisteOgVerdi.add(Pair("paavirkningsform", it))
+            }
+        }
 
         check(skademelding.skade.skadedeDeler.isNotEmpty(), {"skadedeDeler kan ikke være tom"})
         skademelding.skade.skadedeDeler.forEach {
