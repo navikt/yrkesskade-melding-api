@@ -26,10 +26,10 @@
   },
   "hendelsesfakta": {
     "tid": { "tidstype": "Periode",
-      "periode": {
+      "perioder": [{
         "fra": "2022-02-02",
         "til": "2022-02-02"
-      }
+      }]
     },
     "naarSkjeddeUlykken": "fritidEllerPrivatAktivitet",
     "hvorSkjeddeUlykken": "arbeidsstedInne",
