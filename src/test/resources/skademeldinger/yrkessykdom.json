@@ -8,7 +8,9 @@
   "skadelidt": {
     "norskIdentitetsnummer": "10117424370",
     "dekningsforhold": {
-      "stillingstittelTilDenSkadelidte": ["toppledereIOffentligAdministrasjon"],
+      "stillingstittelTilDenSkadelidte": [
+        "toppledereIOffentligAdministrasjon"
+      ],
       "organisasjonsnummer": "910441205",
       "navnPaaVirksomheten": "BIRI OG TORPO REGNSKAP",
       "rolletype": "arbeidstaker"
@@ -18,22 +20,26 @@
     "alvorlighetsgrad": "antattOppsoektLege",
     "skadedeDeler": [
       {
-        "skadeartTabellC": "bloetdelsskadeUtenSaar",
-        "kroppsdelTabellD": "venstreOeye"
+        "skadeart": "sykdomIHjernenEllerNervesystemet",
+        "kroppsdel": "venstreOeye"
       }
     ],
-    "antattSykefravaerTabellH": "merEnnTreDager",
-    "sykdomstype": "sykdomIHjernenEllerNervesystemet"
+    "antattSykefravaer": "merEnnTreDager"
   },
   "hendelsesfakta": {
-    "tid": { "tidstype": "Periode",
-      "periode": {
-        "fra": "2020-02-02",
-        "til": "2022-02-02",
-        "sykdomPaavist": "2022-05-01"
-      }
+    "tid": {
+      "tidstype": "Periode",
+      "perioder": [
+        {
+          "fra": "2020-02-02",
+          "til": "2022-02-02",
+          "sykdomPaavist": "2022-05-01"
+        }
+      ]
     },
-    "paavirkningsform": "kjemikalierEllerLoesemidler",
+    "paavirkningsform": [
+      "kjemikalierEllerLoesemidler"
+    ],
     "naarSkjeddeUlykken": "fritidEllerPrivatAktivitet",
     "hvorSkjeddeUlykken": "arbeidsstedInne",
     "ulykkessted": {
@@ -45,9 +51,13 @@
         "land": "NO"
       }
     },
-    "aarsakUlykkeTabellAogE": ["sammenstoetEllerBittEllerSpark"],
-    "bakgrunnsaarsakTabellBogG": ["verneutstyrFjernet"],
+    "aarsakUlykke": [
+      "sammenstoetEllerBittEllerSpark"
+    ],
+    "bakgrunnsaarsak": [
+      "verneutstyrFjernet"
+    ],
     "utfyllendeBeskrivelse": "Test",
-    "stedsbeskrivelseTabellF": "idrettsomraade"
+    "stedsbeskrivelse": "idrettsomraade"
   }
 }
