@@ -175,7 +175,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             }
             kodelisteOgVerdi.add(Pair("harSkadelidtHattFravaer", skademelding.skade.antattSykefravaer!!))
         }
-        if (skademelding.hendelsesfakta.stedsbeskrivelse != null && skjematype.harStedsbeskrivelse) {
+        if (skademelding.hendelsesfakta.stedsbeskrivelse != null && skjematype.harStedsbeskrivelse && !erPeriode(skademelding)) {
             kodelisteOgVerdi.add(Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelse!!))
         }
 
@@ -190,6 +190,8 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         }
 
     }
+
+    private fun erPeriode(skademelding: Skademelding) : Boolean = skademelding.hendelsesfakta.tid.tidstype == Tidstype.periode
 
     private fun validerTidsperioder(perioder: List<Periode>?) {
         checkNotNull(perioder, { "hendelsesfakta.tid.perioder er påkrevd" })
