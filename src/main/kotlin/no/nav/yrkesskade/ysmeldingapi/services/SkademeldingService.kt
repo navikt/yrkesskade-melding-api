@@ -157,12 +157,18 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 
         validerSkadedeDeler(skademelding.skade.skadedeDeler)
 
-        skademelding.hendelsesfakta.aarsakUlykke.forEach {
-            kodelisteOgVerdi.add(Pair("aarsakOgBakgrunn", it))
+        if (!erPeriode(skademelding)) {
+            checkNotNull(skademelding.hendelsesfakta.aarsakUlykke, { "aarsakUlykke er påkrevd ved yrkesskade"})
+            skademelding.hendelsesfakta.aarsakUlykke!!.forEach {
+                kodelisteOgVerdi.add(Pair("aarsakOgBakgrunn", it))
+            }
         }
 
-        skademelding.hendelsesfakta.bakgrunnsaarsak.forEach {
-            kodelisteOgVerdi.add(Pair("bakgrunnForHendelsen", it))
+        if (!erPeriode(skademelding) || skjematype.harBakgrunnAarsak) {
+            checkNotNull(skademelding.hendelsesfakta.bakgrunnsaarsak, { "bakgrunnAarsak er påkrevd ved yrkesskade"})
+            skademelding.hendelsesfakta.bakgrunnsaarsak!!.forEach {
+                kodelisteOgVerdi.add(Pair("bakgrunnForHendelsen", it))
+            }
         }
 
         if (skademelding.skade.alvorlighetsgrad != null) {
