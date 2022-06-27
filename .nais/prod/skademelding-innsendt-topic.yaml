@@ -1,7 +1,7 @@
 apiVersion: kafka.nais.io/v1
 kind: Topic
 metadata:
-  name: privat-yrkesskade-skademeldinginnsendt-v2
+  name: privat-yrkesskade-skademeldinginnsendt
   namespace: yrkesskade
   labels:
     team: yrkesskade
@@ -9,7 +9,7 @@ spec:
   pool: nav-prod
   config:
     cleanupPolicy: delete
-    minimumInSyncReplicas: 2
+    minimumInSyncReplicas: 1
     partitions: 1
     replication: 3
     retentionBytes: -1

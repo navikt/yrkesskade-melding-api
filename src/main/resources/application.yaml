@@ -41,7 +41,7 @@ funksjonsbrytere:
 
 kafka:
   topic:
-    skademelding-innsendt: yrkesskade.privat-yrkesskade-skademeldinginnsendt-v2
+    skademelding-innsendt: yrkesskade.privat-yrkesskade-skademeldinginnsendt
 
 no.nav.security.jwt.issuer:
   tokenx:
