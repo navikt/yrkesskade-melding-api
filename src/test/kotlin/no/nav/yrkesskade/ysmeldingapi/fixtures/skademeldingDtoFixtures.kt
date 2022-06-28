@@ -28,6 +28,10 @@ fun skademeldingMedPeriodeFraDatoSammeSomTilDato(): String {
     return Files.readString(Path.of("src/test/resources/skademeldinger/fradatoSammeSomTilDato.json"))
 }
 
+fun skademeldingMedPeriodeOgSykdomsinformasjon(): String {
+    return Files.readString(Path.of("src/test/resources/skademeldinger/yrkessykdom.json"))
+}
+
 fun fullSkademelding(): Skademelding {
     return Skademelding(
         innmelder = arbeidsgiverInnmelder(),
@@ -51,9 +55,9 @@ fun hendelsesfakta(): Hendelsesfakta {
         tid = Tid(Tidstype.tidspunkt, tidspunkt = Instant.now().atOffset(ZoneOffset.UTC)),
         naarSkjeddeUlykken = "alternativenePasserIkke",
         hvorSkjeddeUlykken = "arbeidsstedInne",
-        aarsakUlykkeTabellAogE = listOf("sammenstoetEllerBittEllerSpark"),
-        bakgrunnsaarsakTabellBogG = listOf("mangelfulleSikkerhetsrutiner"),
-        stedsbeskrivelseTabellF = "alternativenePasserIkke",
+        aarsakUlykke = listOf("sammenstoetEllerBittEllerSpark"),
+        bakgrunnsaarsak = listOf("mangelfulleSikkerhetsrutiner"),
+        stedsbeskrivelse = "alternativenePasserIkke",
         ulykkessted = Ulykkessted(sammeSomVirksomhetensAdresse = true, adresse = Adresse(adresselinje1 = "test 1", adresselinje2 = "test 2", adresselinje3 = "test 3", land = "NO")),
         utfyllendeBeskrivelse = "Dette var dumt"
     )
@@ -61,9 +65,9 @@ fun hendelsesfakta(): Hendelsesfakta {
 
 fun skade(): Skade {
     return Skade(
-        skadedeDeler = listOf(SkadetDel("kuldeskade", kroppsdelTabellD = "ribbenOgSkulderblad")),
+        skadedeDeler = listOf(SkadetDel("kuldeskade", kroppsdel = "ribbenOgSkulderblad")),
         alvorlighetsgrad = "antattOppsoektLege",
-        antattSykefravaerTabellH = "alternativenePasserIkke"
+        antattSykefravaer = "alternativenePasserIkke"
     )
 }
 

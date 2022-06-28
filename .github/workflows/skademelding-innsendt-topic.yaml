@@ -4,12 +4,14 @@ on:
   push:
     branches:
       - 'master'
+      - 'dev'
     paths:
       - '.nais/*/skademelding-innsendt-topic.yaml'
 
 jobs:
   deploy-kafka-topics-dev:
     name: Deploy to Aiven Dev
+    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.4.0

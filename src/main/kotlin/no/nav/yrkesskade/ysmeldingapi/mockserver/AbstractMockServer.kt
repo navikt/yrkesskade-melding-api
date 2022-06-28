@@ -169,7 +169,7 @@ open class AbstractMockSever(private val port: Int?) {
             }
         }
 
-        val kodeverkUtenKategorier = listOf<String>("fravaertype", "landkoderISO2", "rolletype")
+        val kodeverkUtenKategorier = listOf<String>("fravaertype", "landkoderISO2", "rolletype", "sykdomstype", "paavirkningsform", "skadetKroppsdel", "skadetype")
         kodeverkUtenKategorier.forEach {
             log.info("Wiremock stub $it til -> mock/kodeverk/$it.json")
             stubForGet(urlPathMatching("/api/v1/kodeverk/typer/$it/kodeverdier")) {
