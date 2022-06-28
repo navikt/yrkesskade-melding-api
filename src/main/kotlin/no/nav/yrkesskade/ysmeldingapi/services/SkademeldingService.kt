@@ -175,7 +175,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             kodelisteOgVerdi.add(Pair("alvorlighetsgrad", skademelding.skade!!.alvorlighetsgrad!!))
         }
 
-        if (skademelding.skadelidt.dekningsforhold.stillingstittelTilDenSkadelidte != null && skjematype.harStilling) {
+        if (skademelding.skadelidt.dekningsforhold.stillingstittelTilDenSkadelidte != null && skjematype.harStilling && !erPeriode(skademelding)) {
             skademelding.skadelidt.dekningsforhold.stillingstittelTilDenSkadelidte!!.forEach {
                 kodelisteOgVerdi.add(Pair("stillingstittel", it))
             }
