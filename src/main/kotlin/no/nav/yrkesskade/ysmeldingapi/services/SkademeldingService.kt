@@ -164,7 +164,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             }
         }
 
-        if (!erPeriode(skademelding) || skjematype.harBakgrunnAarsak) {
+        if (!erPeriode(skademelding) && skjematype.harBakgrunnAarsak) {
             checkNotNull(skademelding.hendelsesfakta.bakgrunnsaarsak, { "bakgrunnAarsak er påkrevd ved yrkesskade"})
             skademelding.hendelsesfakta.bakgrunnsaarsak!!.forEach {
                 kodelisteOgVerdi.add(Pair("bakgrunnForHendelsen", it))
