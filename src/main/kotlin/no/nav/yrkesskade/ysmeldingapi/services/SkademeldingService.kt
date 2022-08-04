@@ -7,8 +7,9 @@ import no.nav.yrkesskade.model.SkademeldingBeriketData
 import no.nav.yrkesskade.model.SkademeldingInnsendtHendelse
 import no.nav.yrkesskade.model.SkademeldingMetadata
 import no.nav.yrkesskade.model.Systemkilde
+import no.nav.yrkesskade.skademelding.model.Periode
 import no.nav.yrkesskade.skademelding.model.Skademelding
-import no.nav.yrkesskade.skademelding.model.TidPeriode
+import no.nav.yrkesskade.skademelding.model.SkadetDel
 import no.nav.yrkesskade.skademelding.model.Tidstype
 import no.nav.yrkesskade.ysmeldingapi.client.enhetsregister.EnhetsregisterClient
 import no.nav.yrkesskade.ysmeldingapi.client.mottak.SkademeldingInnsendingClient
@@ -16,6 +17,7 @@ import no.nav.yrkesskade.ysmeldingapi.config.FeatureToggleService
 import no.nav.yrkesskade.ysmeldingapi.config.FeatureToggles
 import no.nav.yrkesskade.ysmeldingapi.metric.MetricService
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
+import no.nav.yrkesskade.ysmeldingapi.models.Skjematype
 import no.nav.yrkesskade.ysmeldingapi.repositories.SkademeldingRepository
 import no.nav.yrkesskade.ysmeldingapi.utils.KodeverkValidator
 import no.nav.yrkesskade.ysmeldingapi.utils.getLogger
@@ -80,7 +82,7 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
     }
 
     private fun lagBeriketSkademelding(skademelding: Skademelding): SkademeldingBeriketData {
-        val innmeldersOrganisasjon = enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret(skademelding.innmelder!!.paaVegneAv)
+        val innmeldersOrganisasjon = enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret(skademelding.innmelder.paaVegneAv)
 
         return SkademeldingBeriketData(
             innmeldersOrganisasjonsnavn = innmeldersOrganisasjon.navn.orEmpty() to Systemkilde.ENHETSREGISTERET
@@ -92,11 +94,20 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         checkNotNull(skademelding.skadelidt, {"skadelidt er påkrevd"})
         checkNotNull(skademelding.hendelsesfakta, {"hendelsesfakta er påkrevd"})
         checkNotNull(skademelding.skade, {"skade er påkrevd"})
-        check(skademelding.innmelder!!.innmelderrolle == "virksomhetsrepresentant", { "${skademelding.innmelder!!.innmelderrolle} er ikke en gyldig verdi. Må være virksomhetsrepresentant"})
+        check(skademelding.innmelder.innmelderrolle == "virksomhetsrepresentant", { "${skademelding.innmelder.innmelderrolle} er ikke en gyldig verdi. Må være virksomhetsrepresentant"})
+
+        // Hent kodelister basert på rolletype som skal benyttes for å finne gyldige verdier
+        checkNotNull(skademelding.skadelidt.dekningsforhold.rolletype, { "rolletype er påkrevd" })
+
+        val rolletype = skademelding.skadelidt.dekningsforhold.rolletype
+
+        kodeverkValidator.sjekkGyldigKodeverkverdiForType(rolletype, "rolletype", "${rolletype} er ikke en gyldig rolletype kode i kodelisten")
+        val skjematype = Skjematype.hentSkjematypeForNavn(rolletype)
+        checkNotNull(skjematype, {"Kunne ikke finne skjematype for ${rolletype}"})
 
         // sjekk organisasjon
-        check(!skademelding.innmelder!!.paaVegneAv.isNullOrBlank(), {"paaVegneAv er påkrevd"})
-        check(!skademelding.skadelidt!!.dekningsforhold.organisasjonsnummer.isNullOrBlank(), {"organisasjonsnummer er påkrevd"})
+        check(!skademelding.innmelder.paaVegneAv.isNullOrBlank(), {"paaVegneAv er påkrevd"})
+        check(!skademelding.skadelidt.dekningsforhold.organisasjonsnummer.isNullOrBlank(), {"organisasjonsnummer er påkrevd"})
 
         val paaVegneAvOrganisasjon = enhetsregisterClient.hentEnhetEllerUnderenhetFraEnhetsregisteret(skademelding.innmelder.paaVegneAv)
         check(!paaVegneAvOrganisasjon.organisasjonsnummer.isNullOrBlank(), {"Ugyldig innmelder.paaVegneAv enhet. ${skademelding.innmelder.paaVegneAv} er finnes ikke i enhetsregisteret"})
@@ -121,18 +132,11 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
         checkNotNull(skademelding.hendelsesfakta.tid.tidstype, {"hendelsesfakta.tid.tidstype er påkrevd"})
         when (skademelding.hendelsesfakta.tid.tidstype) {
             Tidstype.tidspunkt -> validerTidspunkt(skademelding.hendelsesfakta.tid.tidspunkt)
-            Tidstype.periode -> validerTidsperiode(skademelding.hendelsesfakta.tid.periode)
+            Tidstype.periode -> validerTidsperioder(skademelding.hendelsesfakta.tid.perioder)
         }
 
-        // Hent kodelister basert på rolletype som skal benyttes for å finne gyldige verdier
-        check(skademelding.skadelidt!!.dekningsforhold.rolletype != null, { "rolletype er påkrevd" })
-
-        val rolletype = skademelding.skadelidt!!.dekningsforhold.rolletype
-
-        kodeverkValidator.sjekkGyldigKodeverkverdiForType(rolletype, "rolletype", "${rolletype} er ikke en gyldig rolletype kode i kodelisten")
-
-        if (skademelding.hendelsesfakta!!.ulykkessted.adresse != null) {
-            kodeverkValidator.sjekkGyldigKodeverkverdiForType(skademelding.hendelsesfakta!!.ulykkessted.adresse!!.land!!,"landkoderISO2", "${skademelding.hendelsesfakta!!.ulykkessted.adresse!!.land!!} er ikke en gyldig landkode. Sjekk landkoderISO2 for gyldige verdier")
+        if (skademelding.hendelsesfakta.ulykkessted.adresse != null) {
+            kodeverkValidator.sjekkGyldigKodeverkverdiForType(skademelding.hendelsesfakta.ulykkessted.adresse!!.land!!,"landkoderISO2", "${skademelding.hendelsesfakta.ulykkessted.adresse!!.land!!} er ikke en gyldig landkode. Sjekk landkoderISO2 for gyldige verdier")
         }
 
         // felter som skal valideres
@@ -141,32 +145,44 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             Pair("tidsrom", skademelding.hendelsesfakta.naarSkjeddeUlykken),
         )
 
-        check(skademelding.skade!!.skadedeDeler.isNotEmpty(), {"skadedeDeler kan ikke være tom"})
-        skademelding.skade!!.skadedeDeler.forEach {
-            kodelisteOgVerdi.add(Pair("skadetype", it.skadeartTabellC))
-            kodelisteOgVerdi.add(Pair("skadetKroppsdel", it.kroppsdelTabellD))
+        // dersom tidstype er periode - valider sykdomsfelter
+        if (skademelding.hendelsesfakta.tid.tidstype == Tidstype.periode) {
+            skademelding.hendelsesfakta.paavirkningsform!!.forEach {
+                kodeverkValidator.sjekkGyldigKodeverkverdiForType(
+                    it,
+                    "paavirkningsform",
+                    "${it} er ikke en gyldig paavirkningsform verdi. Sjekk kodeliste for gyldige verdier")
+            }
         }
 
-        skademelding.hendelsesfakta!!.aarsakUlykkeTabellAogE.forEach {
-            kodelisteOgVerdi.add(Pair("aarsakOgBakgrunn", it))
+        validerSkadedeDeler(skademelding.skade.skadedeDeler)
+
+        if (!erPeriode(skademelding)) {
+            checkNotNull(skademelding.hendelsesfakta.aarsakUlykke, { "aarsakUlykke er påkrevd ved yrkesskade"})
+            skademelding.hendelsesfakta.aarsakUlykke!!.forEach {
+                kodelisteOgVerdi.add(Pair("aarsakOgBakgrunn", it))
+            }
         }
 
-        skademelding.hendelsesfakta!!.bakgrunnsaarsakTabellBogG.forEach {
-            kodelisteOgVerdi.add(Pair("bakgrunnForHendelsen", it))
+        if (!erPeriode(skademelding) && skjematype.harBakgrunnAarsak) {
+            checkNotNull(skademelding.hendelsesfakta.bakgrunnsaarsak, { "bakgrunnAarsak er påkrevd ved yrkesskade"})
+            skademelding.hendelsesfakta.bakgrunnsaarsak!!.forEach {
+                kodelisteOgVerdi.add(Pair("bakgrunnForHendelsen", it))
+            }
         }
 
-        if (skademelding.skade!!.alvorlighetsgrad != null) {
+        if (skademelding.skade.alvorlighetsgrad != null) {
             kodelisteOgVerdi.add(Pair("alvorlighetsgrad", skademelding.skade!!.alvorlighetsgrad!!))
         }
 
-        if (skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte != null && (rolletype == "laerling" || rolletype == "arbeidstaker")) {
-            skademelding.skadelidt!!.dekningsforhold.stillingstittelTilDenSkadelidte!!.forEach {
+        if (skademelding.skadelidt.dekningsforhold.stillingstittelTilDenSkadelidte != null && skjematype.harStilling && !erPeriode(skademelding)) {
+            skademelding.skadelidt.dekningsforhold.stillingstittelTilDenSkadelidte!!.forEach {
                 kodelisteOgVerdi.add(Pair("stillingstittel", it))
             }
-            kodelisteOgVerdi.add(Pair("harSkadelidtHattFravaer", skademelding.skade.antattSykefravaerTabellH!!))
+            kodelisteOgVerdi.add(Pair("harSkadelidtHattFravaer", skademelding.skade.antattSykefravaer!!))
         }
-        if (skademelding.hendelsesfakta.stedsbeskrivelseTabellF != null && (rolletype == "laerling" || rolletype == "arbeidstaker")) {
-            kodelisteOgVerdi.add(Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelseTabellF!!))
+        if (skademelding.hendelsesfakta.stedsbeskrivelse != null && skjematype.harStedsbeskrivelse && !erPeriode(skademelding)) {
+            kodelisteOgVerdi.add(Pair("typeArbeidsplass", skademelding.hendelsesfakta.stedsbeskrivelse!!))
         }
 
         // rolletype benyttes som kategori navn (elev, arbeidstaker, laerling osv)
@@ -181,14 +197,30 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
 
     }
 
-    private fun validerTidsperiode(periode: TidPeriode?) {
-        checkNotNull(periode, {"hendelsesfakta.tid.periode er påkrevd"})
-        checkNotNull(periode.fra, {"hendelsesfakta.tid.periode.fra er påkrevd"})
-        checkNotNull(periode.til, {"hendelsesfakta.tid.periode.til er påkrevd"})
-        check(periode.fra!!.isBefore(periode.til!!) || periode.fra!!.isEqual(periode.til!!), {"fra dato må være før eller sammme som til dato"})
+    private fun erPeriode(skademelding: Skademelding) : Boolean = skademelding.hendelsesfakta.tid.tidstype == Tidstype.periode
+
+    private fun validerTidsperioder(perioder: List<Periode>?) {
+        checkNotNull(perioder, { "hendelsesfakta.tid.perioder er påkrevd" })
+        perioder.forEach {
+            checkNotNull(it.fra, { "hendelsesfakta.tid.perioder[*].fra er påkrevd" })
+            checkNotNull(it.til, { "hendelsesfakta.tid.perioder[*].til er påkrevd" })
+            check(
+                it.fra!!.isBefore(it.til!!) || it.fra!!.isEqual(it.til!!),
+                { "fra dato må være før eller sammme som til dato" })
+
+        }
     }
 
     private fun validerTidspunkt(tidspunkt: OffsetDateTime?) {
         checkNotNull(tidspunkt, {"hendelsesfakta.tid.tidspunkt er påkrevd"})
+    }
+
+    private fun validerSkadedeDeler(skadedeDeler: List<SkadetDel>) {
+        check(skadedeDeler.isNotEmpty(), {"skadedeDeler kan ikke være tom"})
+
+        skadedeDeler.forEach {
+            kodeverkValidator.sjekkGyldigKodeverkverdiForTyper(it.skadeart,"${it.skadeart} er ikke en gyldig verdi. Sjekk kodelistene skadetype og sykdomstype for gyldige verdier", "skadetype", "sykdomstype" )
+            kodeverkValidator.sjekkGyldigKodeverkverdiForType(it.kroppsdel, "skadetKroppsdel", "${it.kroppsdel} er ikke en gyldig verdi. Sjekk kodelisten skadetKroppsdel for gyldige verdier")
+        }
     }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.ysmeldingapi.fixtures.enkelSkademelding
 import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedFeilStillingstittelFormat
 import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedPeriodeFraDatoSammeSomTilDato
+import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedPeriodeOgSykdomsinformasjon
 import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_UTEN_ORGANISASJONER
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
@@ -74,11 +75,21 @@ class SkademeldingApiControllerIT: AbstractIT() {
     }
 
     @Test
-    fun `valider skademelding med periode tidstype hvor fra dato er samme som til dato`() {
+    fun `valider skademelding med periode tidstype hvor fra dato er samme som til dato - mangler sykdomstype, sykdomPaavist og paavirkningsform`() {
         val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
         assertThat(jwt).isNotNull()
 
         postSkademelding(skademeldingMedPeriodeFraDatoSammeSomTilDato(), jwt)
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().is4xxClientError)
+    }
+
+    @Test
+    fun `valider skademelding med periode tidstype`() {
+        val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
+        assertThat(jwt).isNotNull()
+
+        postSkademelding(skademeldingMedPeriodeOgSykdomsinformasjon(), jwt)
             .andDo(MockMvcResultHandlers.print())
             .andExpect(status().isCreated)
     }

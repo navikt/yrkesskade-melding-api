@@ -1,0 +1,16 @@
+{
+  "kodeverdierMap": {
+    "kjemikalierEllerLoesemidler": {
+      "kode": "kjemikalierEllerLoesemidler",
+      "verdi": "Kjemikalier, løsemidler, gift, gass, væske o.l."
+    },
+    "stoevpaavirkning": {
+      "kode": "stoevpaavirkning",
+      "verdi": "Støvpåvirkning, stenstøv, asbest o.l."
+    },
+    "stoey": {
+      "kode": "stoey",
+      "verdi": "Støy"
+    }
+  }
+}
