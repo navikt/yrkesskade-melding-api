@@ -139,6 +139,10 @@ class SkademeldingService(private val skademeldingInnsendingClient: Skademelding
             kodeverkValidator.sjekkGyldigKodeverkverdiForType(skademelding.hendelsesfakta.ulykkessted.adresse!!.land!!,"landkoderISO2", "${skademelding.hendelsesfakta.ulykkessted.adresse!!.land!!} er ikke en gyldig landkode. Sjekk landkoderISO2 for gyldige verdier")
         }
 
+        if (skjematype.harTjenestePeriode) {
+
+        }
+
         // felter som skal valideres
         val kodelisteOgVerdi = mutableListOf(
             Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta.hvorSkjeddeUlykken),

@@ -3,6 +3,7 @@ package no.nav.yrkesskade.ysmeldingapi.fixtures
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.skademelding.model.*
+import no.nav.yrkesskade.ysmeldingapi.models.Adresse
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import java.nio.file.Files
 import java.nio.file.Path
@@ -18,6 +19,14 @@ fun enkelSkademelding(): SkademeldingDto {
         "test-kilde",
         Instant.now()
     )
+}
+
+fun skademelding_ok(rolletype: String, meldingtype: String): String {
+    return Files.readString(Path.of("src/test/resources/skademeldinger/$rolletype/${rolletype}_${meldingtype}_ok.json"))
+}
+
+fun skademelding_feil(rolletype: String, meldingtype: String): String {
+    return Files.readString(Path.of("src/test/resources/skademeldinger/$rolletype/${rolletype}_${meldingtype}_ok.json"))
 }
 
 fun skademeldingMedFeilStillingstittelFormat(): String {

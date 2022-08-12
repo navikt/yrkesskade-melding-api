@@ -2,10 +2,7 @@ package no.nav.yrkesskade.ysmeldingapi.controllers
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import no.nav.yrkesskade.ysmeldingapi.fixtures.enkelSkademelding
-import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedFeilStillingstittelFormat
-import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedPeriodeFraDatoSammeSomTilDato
-import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedPeriodeOgSykdomsinformasjon
+import no.nav.yrkesskade.ysmeldingapi.fixtures.*
 import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_UTEN_ORGANISASJONER
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
@@ -23,6 +20,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
+import java.awt.PageAttributes
+import java.net.http.HttpHeaders
 
 
 @Transactional
@@ -33,6 +32,14 @@ class SkademeldingApiControllerIT: AbstractIT() {
 
     @Autowired
     lateinit var mvc: MockMvc
+
+    val rolletyper = listOf(
+        "arbeidstaker",
+        "elevEllerStudent",
+        "laerling",
+        "tiltaksdeltaker",
+        "vernepliktigIFoerstegangstjeneste"
+    )
 
     val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
@@ -94,11 +101,35 @@ class SkademeldingApiControllerIT: AbstractIT() {
             .andExpect(status().isCreated)
     }
 
+    @Test
+    fun `valider skademeldinger`() {
+        val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
+
+        rolletyper.forEach{
+            val skademelding = skademelding_ok(it, "skade")
+            postSkademelding(skademelding, jwt)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isCreated)
+        }
+    }
+
+    @Test
+    fun `valider sykdomsmeldinger`() {
+        val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
+
+        rolletyper.forEach{
+            val skademelding = skademelding_ok(it, "sykdom")
+            postSkademelding(skademelding, jwt)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isCreated)
+        }
+    }
+
     private fun postSkademelding(skademelding: String, token: String) =
         mvc.perform(
             MockMvcRequestBuilders.post(SKADEMELDING_PATH)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $token")
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(PageAttributes.MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
                 .content(skademelding)
         )
