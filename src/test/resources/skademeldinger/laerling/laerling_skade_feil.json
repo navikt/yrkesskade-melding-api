@@ -13,7 +13,7 @@
       ],
       "organisasjonsnummer": "910441205",
       "navnPaaVirksomheten": "BIRI OG TORPO REGNSKAP",
-      "rolletype": "elevEllerStudent"
+      "rolletype": "laerling"
     }
   },
   "skade": {
@@ -29,10 +29,9 @@
   "hendelsesfakta": {
     "tid": {
       "tidstype": "Tidspunkt",
-      "tidspunkt": "2022-08-12T12:19:02"
+      "tidspunkt": "2022-08-12T12:19:02+02:00"
     },
     "naarSkjeddeUlykken": "fritidEllerPrivatAktivitet",
-    "hvorSkjeddeUlykken": "arbeidsstedInne",
     "ulykkessted": {
       "sammeSomVirksomhetensAdresse": true,
       "adresse": {

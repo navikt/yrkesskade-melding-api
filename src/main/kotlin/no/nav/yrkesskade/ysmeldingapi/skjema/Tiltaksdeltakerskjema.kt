@@ -1,6 +1,6 @@
-package no.nav.yrkesskade.ysmeldingapi.models.skjema
+package no.nav.yrkesskade.ysmeldingapi.skjema
 
-import no.nav.yrkesskade.ysmeldingapi.models.skjema.SkjemaUtils.Companion.erPeriode
+import no.nav.yrkesskade.ysmeldingapi.skjema.SkjemaUtils.Companion.erPeriode
 
 class Tiltaksdeltakerskjema(
     private val skjemaContext: SkjemaContext,
@@ -12,7 +12,7 @@ class Tiltaksdeltakerskjema(
 
         val rolletype = SkjemaUtils.rolletype(skjemaContext.skademelding)
         val kodelisteOgVerdi = mutableListOf(
-            Pair("hvorSkjeddeUlykken", skjemaContext.skademelding.hendelsesfakta.hvorSkjeddeUlykken),
+            Pair("hvorSkjeddeUlykken", skjemaContext.skademelding.hendelsesfakta.hvorSkjeddeUlykken.orEmpty()),
         )
 
         if (!erPeriode(skjemaContext.skademelding)) {

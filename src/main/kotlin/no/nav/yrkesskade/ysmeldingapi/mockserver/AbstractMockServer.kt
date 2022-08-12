@@ -6,6 +6,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer
 import com.github.tomakehurst.wiremock.matching.UrlPattern
+import no.nav.yrkesskade.ysmeldingapi.models.Skjematype
 import no.nav.yrkesskade.ysmeldingapi.utils.getLogger
 import org.apache.commons.io.IOUtils
 import org.springframework.beans.factory.annotation.Value
@@ -164,8 +165,11 @@ open class AbstractMockSever(private val port: Int?) {
         )
         kodeverkMedKategorier.forEach {
             log.info("Wiremock stub $it til -> mock/kodeverk/$it.json")
-            stubForGet(urlPathMatching("/api/v1/kodeverk/typer/$it/kategorier/arbeidstaker/kodeverdier")) {
-                willReturnJson(hentStringFraFil("kodeverk/$it.json"))
+            val kategori = it
+            Skjematype.values().forEach {
+                stubForGet(urlPathMatching("/api/v1/kodeverk/typer/$kategori/kategorier/${it.rolletype}/kodeverdier")) {
+                    willReturnJson(hentStringFraFil("kodeverk/$kategori.json"))
+                }
             }
         }
 

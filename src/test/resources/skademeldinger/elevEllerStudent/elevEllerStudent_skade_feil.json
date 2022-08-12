@@ -8,12 +8,9 @@
   "skadelidt": {
     "norskIdentitetsnummer": "10117424370",
     "dekningsforhold": {
-      "stillingstittelTilDenSkadelidte": [
-        "toppledereIOffentligAdministrasjon"
-      ],
       "organisasjonsnummer": "910441205",
       "navnPaaVirksomheten": "BIRI OG TORPO REGNSKAP",
-      "rolletype": "tiltaksdeltaker"
+      "rolletype": "elevEllerStudent"
     }
   },
   "skade": {
@@ -31,7 +28,6 @@
       "tidstype": "Tidspunkt",
       "tidspunkt": "2022-08-12T12:19:02+02:00"
     },
-    "naarSkjeddeUlykken": "fritidEllerPrivatAktivitet",
     "hvorSkjeddeUlykken": "arbeidsstedInne",
     "ulykkessted": {
       "sammeSomVirksomhetensAdresse": true,

@@ -1,4 +1,4 @@
-package no.nav.yrkesskade.ysmeldingapi.models.skjema
+package no.nav.yrkesskade.ysmeldingapi.skjema
 
 class Foerstegangstjenesteskjema(
     private val skjemaContext: SkjemaContext,

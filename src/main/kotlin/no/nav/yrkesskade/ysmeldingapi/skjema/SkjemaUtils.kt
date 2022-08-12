@@ -1,4 +1,4 @@
-package no.nav.yrkesskade.ysmeldingapi.models.skjema
+package no.nav.yrkesskade.ysmeldingapi.skjema
 
 import no.nav.yrkesskade.skademelding.model.Skademelding
 import no.nav.yrkesskade.skademelding.model.Tidstype

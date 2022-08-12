@@ -1,12 +1,12 @@
-package no.nav.yrkesskade.ysmeldingapi.models.skjema
+package no.nav.yrkesskade.ysmeldingapi.skjema
 
 import no.bekk.bekkopen.person.FodselsnummerValidator
 import no.nav.yrkesskade.skademelding.model.Periode
 import no.nav.yrkesskade.skademelding.model.SkadetDel
 import no.nav.yrkesskade.skademelding.model.Tidstype
 import no.nav.yrkesskade.ysmeldingapi.config.FeatureToggles
-import no.nav.yrkesskade.ysmeldingapi.models.skjema.SkjemaUtils.Companion.erPeriode
-import no.nav.yrkesskade.ysmeldingapi.models.skjema.SkjemaUtils.Companion.rolletype
+import no.nav.yrkesskade.ysmeldingapi.skjema.SkjemaUtils.Companion.erPeriode
+import no.nav.yrkesskade.ysmeldingapi.skjema.SkjemaUtils.Companion.rolletype
 import java.time.OffsetDateTime
 
 class Grunnskjema(private val skjemaContext: SkjemaContext) : Innmeldingsskjema {

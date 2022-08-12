@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.yrkesskade.ysmeldingapi.fixtures.*
 import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_UTEN_ORGANISASJONER
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
+import no.nav.yrkesskade.ysmeldingapi.models.Skjematype
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
 import no.nav.yrkesskade.ysmeldingapi.test.TestMockServerInitialization
 import org.assertj.core.api.Assertions.assertThat
@@ -20,9 +21,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
-import java.awt.PageAttributes
-import java.net.http.HttpHeaders
-
 
 @Transactional
 @SpringBootTest
@@ -33,13 +31,7 @@ class SkademeldingApiControllerIT: AbstractIT() {
     @Autowired
     lateinit var mvc: MockMvc
 
-    val rolletyper = listOf(
-        "arbeidstaker",
-        "elevEllerStudent",
-        "laerling",
-        "tiltaksdeltaker",
-        "vernepliktigIFoerstegangstjeneste"
-    )
+    val rolletyper = Skjematype.values().map { it.rolletype }
 
     val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
@@ -125,11 +117,35 @@ class SkademeldingApiControllerIT: AbstractIT() {
         }
     }
 
+    @Test
+    fun `valider skademeldinger med feil`() {
+        val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
+
+        rolletyper.forEach{
+            val skademelding = skademelding_feil(it, "skade")
+            postSkademelding(skademelding, jwt)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is4xxClientError)
+        }
+    }
+
+    @Test
+    fun `valider sykdomsmeldinger med feil`() {
+        val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
+
+        rolletyper.forEach{
+            val skademelding = skademelding_feil(it, "sykdom")
+            postSkademelding(skademelding, jwt)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is4xxClientError)
+        }
+    }
+
     private fun postSkademelding(skademelding: String, token: String) =
         mvc.perform(
             MockMvcRequestBuilders.post(SKADEMELDING_PATH)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $token")
-                .contentType(PageAttributes.MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(Charsets.UTF_8)
                 .content(skademelding)
         )

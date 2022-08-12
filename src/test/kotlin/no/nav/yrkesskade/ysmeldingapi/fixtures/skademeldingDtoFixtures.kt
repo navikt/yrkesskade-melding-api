@@ -26,7 +26,7 @@ fun skademelding_ok(rolletype: String, meldingtype: String): String {
 }
 
 fun skademelding_feil(rolletype: String, meldingtype: String): String {
-    return Files.readString(Path.of("src/test/resources/skademeldinger/$rolletype/${rolletype}_${meldingtype}_ok.json"))
+    return Files.readString(Path.of("src/test/resources/skademeldinger/$rolletype/${rolletype}_${meldingtype}_feil.json"))
 }
 
 fun skademeldingMedFeilStillingstittelFormat(): String {
