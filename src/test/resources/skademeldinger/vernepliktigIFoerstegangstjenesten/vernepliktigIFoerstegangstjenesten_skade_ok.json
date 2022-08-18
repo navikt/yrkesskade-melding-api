@@ -14,7 +14,8 @@
       "tjenesteperiode": {
         "fra": "2020-02-02",
         "til": "2022-02-02"
-      }
+      },
+      "tjenestegjoerendeAvdeling": "Kompani Lauritzen"
     }
   },
   "skade": {
