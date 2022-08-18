@@ -17,5 +17,7 @@ class Foerstegangstjenesteskjema(
         check(
             tjenesteperiode.fra!!.isBefore(tjenesteperiode.til!!) || tjenesteperiode.fra!!.isEqual(tjenesteperiode.til!!),
             { "fra dato må være før eller sammme som til dato" })
+        val tjenestegjoerendeAvdeling = skademelding.skadelidt.dekningsforhold.tjenestegjoerendeAvdeling
+        checkNotNull(tjenestegjoerendeAvdeling, { "skadelidt.dekningsforhold.tjenestegjoerendeAvdeling er påkrevd" })
     }
 }
