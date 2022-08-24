@@ -67,7 +67,7 @@ fun hendelsesfakta(): Hendelsesfakta {
         aarsakUlykke = listOf("sammenstoetEllerBittEllerSpark"),
         bakgrunnsaarsak = listOf("mangelfulleSikkerhetsrutiner"),
         stedsbeskrivelse = "alternativenePasserIkke",
-        ulykkessted = Ulykkessted(sammeSomVirksomhetensAdresse = true, adresse = Adresse(adresselinje1 = "test 1", adresselinje2 = "test 2", adresselinje3 = "test 3", land = "NO")),
+        ulykkessted = Ulykkessted(sammeSomVirksomhetensAdresse = true, adresse = Ulykkesadresse(adresselinje1 = "test 1", adresselinje2 = "test 2", adresselinje3 = "test 3", land = "NO")),
         utfyllendeBeskrivelse = "Dette var dumt"
     )
 }
