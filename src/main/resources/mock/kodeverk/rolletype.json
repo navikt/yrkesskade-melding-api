@@ -4,9 +4,21 @@
       "kode": "arbeidstaker",
       "verdi": "Arbeidstaker"
     },
+    "elevEllerStudent": {
+      "kode": "elevEllerStudent",
+      "verdi": "Elev eller student"
+    },
     "laerling": {
       "kode": "laerling",
       "verdi": "Lærling"
+    },
+    "tiltaksdeltaker": {
+      "kode": "tiltaksdeltaker",
+      "verdi": "Deltaker i tiltak godkjent av NAV"
+    },
+    "vernepliktigIFoerstegangstjenesten": {
+      "kode": "vernepliktigIFoerstegangstjenesten",
+      "verdi": "Personell i førstegangstjenesten"
     }
   }
 }

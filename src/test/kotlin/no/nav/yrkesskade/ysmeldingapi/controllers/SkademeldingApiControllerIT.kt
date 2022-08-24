@@ -2,12 +2,10 @@ package no.nav.yrkesskade.ysmeldingapi.controllers
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import no.nav.yrkesskade.ysmeldingapi.fixtures.enkelSkademelding
-import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedFeilStillingstittelFormat
-import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedPeriodeFraDatoSammeSomTilDato
-import no.nav.yrkesskade.ysmeldingapi.fixtures.skademeldingMedPeriodeOgSykdomsinformasjon
+import no.nav.yrkesskade.ysmeldingapi.fixtures.*
 import no.nav.yrkesskade.ysmeldingapi.mockserver.FNR_UTEN_ORGANISASJONER
 import no.nav.yrkesskade.ysmeldingapi.models.SkademeldingDto
+import no.nav.yrkesskade.ysmeldingapi.models.Skjematype
 import no.nav.yrkesskade.ysmeldingapi.test.AbstractIT
 import no.nav.yrkesskade.ysmeldingapi.test.TestMockServerInitialization
 import org.assertj.core.api.Assertions.assertThat
@@ -24,7 +22,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
 
-
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -33,6 +30,8 @@ class SkademeldingApiControllerIT: AbstractIT() {
 
     @Autowired
     lateinit var mvc: MockMvc
+
+    val rolletyper = Skjematype.values().map { it.rolletype }
 
     val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
@@ -92,6 +91,54 @@ class SkademeldingApiControllerIT: AbstractIT() {
         postSkademelding(skademeldingMedPeriodeOgSykdomsinformasjon(), jwt)
             .andDo(MockMvcResultHandlers.print())
             .andExpect(status().isCreated)
+    }
+
+    @Test
+    fun `valider skademeldinger`() {
+        val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
+
+        rolletyper.forEach{
+            val skademelding = skademelding_ok(it, "skade")
+            postSkademelding(skademelding, jwt)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isCreated)
+        }
+    }
+
+    @Test
+    fun `valider sykdomsmeldinger`() {
+        val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
+
+        rolletyper.forEach{
+            val skademelding = skademelding_ok(it, "sykdom")
+            postSkademelding(skademelding, jwt)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isCreated)
+        }
+    }
+
+    @Test
+    fun `valider skademeldinger med feil`() {
+        val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
+
+        rolletyper.forEach{
+            val skademelding = skademelding_feil(it, "skade")
+            postSkademelding(skademelding, jwt)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is4xxClientError)
+        }
+    }
+
+    @Test
+    fun `valider sykdomsmeldinger med feil`() {
+        val jwt = mvc.perform(MockMvcRequestBuilders.get("/local/jwt")).andReturn().response.contentAsString
+
+        rolletyper.forEach{
+            val skademelding = skademelding_feil(it, "sykdom")
+            postSkademelding(skademelding, jwt)
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().is4xxClientError)
+        }
     }
 
     private fun postSkademelding(skademelding: String, token: String) =
