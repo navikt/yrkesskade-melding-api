@@ -19,6 +19,14 @@
     "vernepliktigIFoerstegangstjenesten": {
       "kode": "vernepliktigIFoerstegangstjenesten",
       "verdi": "Personell i førstegangstjenesten"
+    },
+    "tjenestepliktigOgfrivilligTjenestegjoerende": {
+      "kode": "tjenestepliktigOgfrivilligTjenestegjoerende",
+      "verdi": "Tjenestepliktig og frivillig tjenestegjørende"
+    },
+    "redningsEllerBranntjenesteUtenforArbeidsforhold": {
+      "kode": "redningsEllerBranntjenesteUtenforArbeidsforhold",
+      "verdi": "Rednings eller branntjeneste utenfor arbeidsforhold"
     }
   }
 }

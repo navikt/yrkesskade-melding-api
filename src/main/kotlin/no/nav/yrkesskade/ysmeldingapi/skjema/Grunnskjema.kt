@@ -63,7 +63,7 @@ class Grunnskjema(private val skjemaContext: SkjemaContext) : Innmeldingsskjema 
         )
 
         // dersom tidstype er periode - valider sykdomsfelter
-        if (skademelding.hendelsesfakta.tid.tidstype == Tidstype.periode) {
+        if (erPeriode(skademelding)) {
             skademelding.hendelsesfakta.paavirkningsform!!.forEach {
                 skjemaContext.kodeverkValidator.sjekkGyldigKodeverkverdiForType(
                     it,
@@ -75,7 +75,7 @@ class Grunnskjema(private val skjemaContext: SkjemaContext) : Innmeldingsskjema 
         validerSkadedeDeler(skademelding.skade.skadedeDeler)
 
         if (!erPeriode(skademelding)) {
-            checkNotNull(skademelding.hendelsesfakta.aarsakUlykke, { "aarsakUlykke er påkrevd ved yrkesskade"})
+            checkNotNull(skademelding.hendelsesfakta.aarsakUlykke, { "aarsakUlykke er påkrevd ved yrkesskade" })
             skademelding.hendelsesfakta.aarsakUlykke!!.forEach {
                 kodelisteOgVerdi.add(Pair("aarsakOgBakgrunn", it))
             }
