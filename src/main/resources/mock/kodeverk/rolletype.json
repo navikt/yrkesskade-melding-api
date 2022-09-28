@@ -19,6 +19,18 @@
     "vernepliktigIFoerstegangstjenesten": {
       "kode": "vernepliktigIFoerstegangstjenesten",
       "verdi": "Personell i førstegangstjenesten"
+    },
+    "innsatt": {
+      "kode": "innsatt",
+      "verdi": "Innsatt"
+    },
+    "personIVaretekt": {
+      "kode": "personIVaretekt",
+      "verdi": "Person i varetekt"
+    },
+    "personSomUtfoererSamfunnsstraff": {
+      "kode": "personSomUtfoererSamfunnsstraff",
+      "verdi": "Person som utfører samfunnsstraff"
     }
   }
 }
