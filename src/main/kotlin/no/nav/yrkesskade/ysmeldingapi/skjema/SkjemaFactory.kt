@@ -13,6 +13,8 @@ class SkjemaFactory {
               Skjematype.ELEV_ELLER_STUDENT.rolletype -> ElevEllerStudentskjema(skjemaContext, grunnskjema)
               Skjematype.TILTAKSDELTAKER.rolletype -> Tiltaksdeltakerskjema(skjemaContext, grunnskjema)
               Skjematype.VERNEPLIKTIG_I_FOERSTEGANGSTJENESTEN.rolletype -> Foerstegangstjenesteskjema(skjemaContext, grunnskjema)
+              Skjematype.REDNING_ELLER_BRANNTJENESTE_UTENFOR_ARBEIDSFORHOLD.rolletype -> RedningEllerBranntjenesteUtenforArbeidstidSkjema(skjemaContext, grunnskjema)
+              Skjematype.TJENESTEPLIKTIG_OG_FRIVILLIG_TJENESTEGJOERENDE.rolletype -> RedningEllerBranntjenesteUtenforArbeidstidSkjema(skjemaContext, grunnskjema)
               else -> grunnskjema
           }
         }
