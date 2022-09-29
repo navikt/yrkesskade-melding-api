@@ -7,6 +7,7 @@ enum class Skjematype(
     ELEV_ELLER_STUDENT("elevEllerStudent"),
     TILTAKSDELTAKER("tiltaksdeltaker"),
     VERNEPLIKTIG_I_FOERSTEGANGSTJENESTEN("vernepliktigIFoerstegangstjenesten"),
+    MILITAER_TILSATT("militaerTilsatt"),
     TJENESTEPLIKTIG_OG_FRIVILLIG_TJENESTEGJOERENDE("tjenestepliktigOgfrivilligTjenestegjoerende"),
     REDNING_ELLER_BRANNTJENESTE_UTENFOR_ARBEIDSFORHOLD("redningsEllerBranntjenesteUtenforArbeidsforhold")
     ;
