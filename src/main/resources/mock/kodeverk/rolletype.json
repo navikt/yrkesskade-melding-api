@@ -19,6 +19,10 @@
     "vernepliktigIFoerstegangstjenesten": {
       "kode": "vernepliktigIFoerstegangstjenesten",
       "verdi": "Personell i førstegangstjenesten"
+    },
+    "militaerTilsatt": {
+      "kode": "militaerTilsatt",
+      "verdi": "Militær tilsatt"
     }
   }
 }
