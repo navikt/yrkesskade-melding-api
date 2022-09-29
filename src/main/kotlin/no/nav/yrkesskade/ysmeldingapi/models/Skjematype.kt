@@ -12,7 +12,8 @@ enum class Skjematype(
     REDNING_ELLER_BRANNTJENESTE_UTENFOR_ARBEIDSFORHOLD("redningsEllerBranntjenesteUtenforArbeidsforhold"),
     INNSATT("innsatt"),
     PERSON_SOM_UTFOERER_SAMFUNNSSTRAFF("personSomUtfoererSamfunnsstraff"),
-    PERSON_I_VARETEKT("personIVaretekt")
+    PERSON_I_VARETEKT("personIVaretekt"),
+    VERNEPLIKTIG_I_REPETISJONSTJENESTE("vernepliktigIRepetisjonstjeneste")
     ;
 
     companion object {

@@ -39,6 +39,7 @@ class SkjemaFactory {
                     skjemaContext,
                     grunnskjema
                 )
+                Skjematype.VERNEPLIKTIG_I_REPETISJONSTJENESTE.rolletype -> Foerstegangstjenesteskjema(skjemaContext, grunnskjema)
 
 
                 else -> throw IllegalStateException("${skjemaContext.skademelding.skadelidt.dekningsforhold.rolletype} er ikke en støttet rolletype")

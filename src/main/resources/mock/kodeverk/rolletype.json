@@ -43,6 +43,10 @@
     "personSomUtfoererSamfunnsstraff": {
       "kode": "personSomUtfoererSamfunnsstraff",
       "verdi": "Person som utfører samfunnsstraff"
+    },
+    "vernepliktigIRepetisjonstjeneste": {
+      "kode": "vernepliktigIRepetisjonstjeneste",
+      "verdi": "Vernepliktig i repetisjonstjeneste"
     }
   }
 }
