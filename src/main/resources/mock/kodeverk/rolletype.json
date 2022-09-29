@@ -19,6 +19,10 @@
     "vernepliktigIFoerstegangstjenesten": {
       "kode": "vernepliktigIFoerstegangstjenesten",
       "verdi": "Personell i førstegangstjenesten"
+    },
+    "vernepliktigIRepetisjonstjeneste": {
+      "kode": "vernepliktigIRepetisjonstjeneste",
+      "verdi": "Vernepliktig i repetisjonstjeneste"
     }
   }
 }

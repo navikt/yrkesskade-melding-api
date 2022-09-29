@@ -11,11 +11,11 @@
       "organisasjonsnummer": "910441205",
       "navnPaaVirksomheten": "BIRI OG TORPO REGNSKAP",
       "rolletype": "vernepliktigIFoerstegangstjenesten",
-      "tjenesteperiode": {
+      "tjenesteperiodeEllerManoever": {
         "fra": "2020-02-02",
         "til": "2022-02-02"
       },
-      "tjenestegjoerendeAvdeling": "Kompani Lauritzen"
+      "tjenestegjoerendeAvdelingNavnPaaFartoey": "Kompani Lauritzen"
     }
   },
   "skade": {
