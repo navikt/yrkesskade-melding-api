@@ -33,6 +33,14 @@ class SkjemaFactory {
                     grunnskjema
                 )
 
+                Skjematype.INNSATT.rolletype -> Institusjonsskjema(skjemaContext, grunnskjema)
+                Skjematype.PERSON_I_VARETEKT.rolletype -> Institusjonsskjema(skjemaContext, grunnskjema)
+                Skjematype.PERSON_SOM_UTFOERER_SAMFUNNSSTRAFF.rolletype -> Institusjonsskjema(
+                    skjemaContext,
+                    grunnskjema
+                )
+
+
                 else -> throw IllegalStateException("${skjemaContext.skademelding.skadelidt.dekningsforhold.rolletype} er ikke en støttet rolletype")
             }
         }
