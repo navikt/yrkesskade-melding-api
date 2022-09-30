@@ -1,0 +1,41 @@
+{
+  "innmelder": {
+    "norskIdentitetsnummer": "16120101181",
+    "paaVegneAv": "910441205",
+    "innmelderrolle": "virksomhetsrepresentant",
+    "altinnrolleIDer": []
+  },
+  "skadelidt": {
+    "norskIdentitetsnummer": "10117424370",
+    "dekningsforhold": {
+      "organisasjonsnummer": "910441205",
+      "navnPaaVirksomheten": "BIRI OG TORPO REGNSKAP",
+      "rolletype": "innsatt"
+    }
+  },
+  "skade": {
+    "alvorlighetsgrad": "antattOppsoektLege",
+    "skadedeDeler": [
+      {
+        "skadeart": "sykdomIHjernenEllerNervesystemet",
+        "kroppsdel": "venstreOeye"
+      }
+    ],
+    "antattSykefravaer": "merEnnTreDager"
+  },
+  "hendelsesfakta": {
+    "tid": {
+      "tidstype": "Tidspunkt",
+      "tidspunkt": "2022-08-12T12:19:02+02:00"
+    },
+    "naarSkjeddeUlykken": "fritidEllerPrivatAktivitet",
+    "aarsakUlykke": [
+      "sammenstoetEllerBittEllerSpark"
+    ],
+    "bakgrunnsaarsak": [
+      "verneutstyrFjernet"
+    ],
+    "utfyllendeBeskrivelse": "Test",
+    "stedsbeskrivelse": "idrettsomraade"
+  }
+}
