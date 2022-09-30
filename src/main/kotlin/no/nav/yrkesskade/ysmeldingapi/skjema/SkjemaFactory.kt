@@ -18,6 +18,11 @@ class SkjemaFactory {
                     grunnskjema
                 )
 
+                Skjematype.VERNEPLIKTIG_I_REPETISJONSTJENESTE.rolletype -> Foerstegangstjenesteskjema(
+                    skjemaContext,
+                    grunnskjema
+                )
+
                 Skjematype.MILITAER_TILSATT.rolletype -> MilitaerTilsattskjema(
                     skjemaContext,
                     Foerstegangstjenesteskjema(skjemaContext, grunnskjema)

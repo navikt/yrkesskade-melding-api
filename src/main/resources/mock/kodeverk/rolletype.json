@@ -20,6 +20,10 @@
       "kode": "vernepliktigIFoerstegangstjenesten",
       "verdi": "Personell i førstegangstjenesten"
     },
+    "vernepliktigIRepetisjonstjeneste": {
+      "kode": "vernepliktigIRepetisjonstjeneste",
+      "verdi": "Vernepliktig i repetisjonstjeneste"
+    },
     "militaerTilsatt": {
       "kode": "militaerTilsatt",
       "verdi": "Militær tilsatt"
