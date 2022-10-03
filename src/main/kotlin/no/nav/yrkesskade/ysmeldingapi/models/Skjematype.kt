@@ -6,7 +6,13 @@ enum class Skjematype(
     LAERLING("laerling"),
     ELEV_ELLER_STUDENT("elevEllerStudent"),
     TILTAKSDELTAKER("tiltaksdeltaker"),
-    VERNEPLIKTIG_I_FOERSTEGANGSTJENESTEN("vernepliktigIFoerstegangstjenesten");
+    VERNEPLIKTIG_I_FOERSTEGANGSTJENESTEN("vernepliktigIFoerstegangstjenesten"),
+    MILITAER_TILSATT("militaerTilsatt"),
+    MILITAER_LAERLING("militaerLaerling"),
+    MILITAER_ELEV("militaerElev"),
+    VERNEPLIKTIG_I_REPETISJONSTJENESTE("vernepliktigIRepetisjonstjeneste"),
+    MILITAER_FRIVILLIG_TJENESTEGJOERENDE("frivilligTjenestegjoerendeIForsvaret")
+    ;
 
     companion object {
         private val map = Skjematype.values().associateBy(Skjematype::rolletype)

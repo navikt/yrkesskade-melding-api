@@ -9,15 +9,16 @@ class Foerstegangstjenesteskjema(
         delegertSkjema.valider()
         val rolletype = SkjemaUtils.rolletype(skjemaContext.skademelding)
         val skademelding = skjemaContext.skademelding
-        checkNotNull(skademelding.skadelidt.dekningsforhold.tjenesteperiode, { "skadelidt.dekningsforhold.tjenesteperiode er påkrevd" })
 
-        val tjenesteperiode = skademelding.skadelidt.dekningsforhold.tjenesteperiode!!
-        checkNotNull(tjenesteperiode.fra, { "skadelidt.dekningsforhold.tjenesteperiode.fra er påkrevd" })
-        checkNotNull(tjenesteperiode.til, { "skadelidt.dekningsforhold.tjenesteperiode.til er påkrevd" })
+        checkNotNull(skademelding.skadelidt.dekningsforhold.tjenesteperiodeEllerManoever, { "skadelidt.dekningsforhold.tjenesteperiodeEllerManoever er påkrevd" })
+
+        val tjenesteperiodeEllerManoever = skademelding.skadelidt.dekningsforhold.tjenesteperiodeEllerManoever!!
+        checkNotNull(tjenesteperiodeEllerManoever.fra, { "skadelidt.dekningsforhold.tjenesteperiodeEllerManoever.fra er påkrevd" })
+        checkNotNull(tjenesteperiodeEllerManoever.til, { "skadelidt.dekningsforhold.tjenesteperiodeEllerManoever.til er påkrevd" })
         check(
-            tjenesteperiode.fra!!.isBefore(tjenesteperiode.til!!) || tjenesteperiode.fra!!.isEqual(tjenesteperiode.til!!),
+            tjenesteperiodeEllerManoever.fra!!.isBefore(tjenesteperiodeEllerManoever.til!!) || tjenesteperiodeEllerManoever.fra!!.isEqual(tjenesteperiodeEllerManoever.til!!),
             { "fra dato må være før eller sammme som til dato" })
-        val tjenestegjoerendeAvdeling = skademelding.skadelidt.dekningsforhold.tjenestegjoerendeAvdeling
-        checkNotNull(tjenestegjoerendeAvdeling, { "skadelidt.dekningsforhold.tjenestegjoerendeAvdeling er påkrevd" })
+        val navnPaatjenestegjoerendeavdelingEllerFartoeyEllerStudiested = skademelding.skadelidt.dekningsforhold.navnPaatjenestegjoerendeavdelingEllerFartoeyEllerStudiested
+        checkNotNull(navnPaatjenestegjoerendeavdelingEllerFartoeyEllerStudiested, { "skadelidt.dekningsforhold.navnPaatjenestegjoerendeavdelingEllerFartoeyEllerStudiested er påkrevd" })
     }
 }
