@@ -10,13 +10,7 @@
     "dekningsforhold": {
       "organisasjonsnummer": "910441205",
       "navnPaaVirksomheten": "BIRI OG TORPO REGNSKAP",
-      "rolletype": "militaerTilsatt",
-      "tjenesteperiodeEllerManoever": {
-        "fra": "2020-02-02",
-        "til": "2022-02-02"
-      },
-      "navnPaatjenestegjoerendeavdelingEllerFartoeyEllerStudiested": "Kompani Lauritzen",
-      "underOrdreOmManoever": "false"
+      "rolletype": "frivilligTjenestegjoerendeIForsvaret"
     }
   },
   "skade": {
@@ -31,19 +25,9 @@
   },
   "hendelsesfakta": {
     "tid": {
-      "tidstype": "Periode",
-      "perioder": [
-        {
-          "fra": "2020-02-02",
-          "til": "2022-02-02",
-          "sykdomPaavist": "2022-05-01"
-        }
-      ]
+      "tidstype": "Tidspunkt",
+      "tidspunkt": "2022-08-12T12:19:02+02:00"
     },
-    "paavirkningsform": [
-      "kjemikalierEllerLoesemidler"
-    ],
-    "hvorSkjeddeUlykken": "arbeidsstedInne",
     "naarSkjeddeUlykken": "fritidEllerPrivatAktivitet",
     "aarsakUlykke": [
       "sammenstoetEllerBittEllerSpark"
