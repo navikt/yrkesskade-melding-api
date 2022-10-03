@@ -12,6 +12,7 @@ class MilitaerTilsattskjema (
 
         checkNotNull(skademelding.skadelidt.dekningsforhold.underOrdreOmManoever, { "skadelidt.dekningsforhold.underOrdreOmManoever er påkrevd "})
 
+        checkNotNull(skademelding.hendelsesfakta.hvorSkjeddeUlykken, { "skademelding.hendelsesfakta.hvorSkjeddeUlykken er påkrevd "})
         val kodelisteOgVerdi = mutableListOf(
             Pair("hvorSkjeddeUlykken", skademelding.hendelsesfakta.hvorSkjeddeUlykken.orEmpty()),
         )

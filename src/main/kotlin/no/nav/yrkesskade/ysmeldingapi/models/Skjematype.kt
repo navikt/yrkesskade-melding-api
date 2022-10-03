@@ -8,7 +8,10 @@ enum class Skjematype(
     TILTAKSDELTAKER("tiltaksdeltaker"),
     VERNEPLIKTIG_I_FOERSTEGANGSTJENESTEN("vernepliktigIFoerstegangstjenesten"),
     MILITAER_TILSATT("militaerTilsatt"),
-    VERNEPLIKTIG_I_REPETISJONSTJENESTE("vernepliktigIRepetisjonstjeneste")
+    MILITAER_LAERLING("militaerLaerling"),
+    MILITAER_ELEV("militaerElev"),
+    VERNEPLIKTIG_I_REPETISJONSTJENESTE("vernepliktigIRepetisjonstjeneste"),
+    MILITAER_FRIVILLIG_TJENESTEGJOERENDE("frivilligTjenestegjoerendeIForsvaret")
     ;
 
     companion object {

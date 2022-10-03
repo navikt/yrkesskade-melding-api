@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>no.nav.yrkesskade</groupId>
 			<artifactId>skademelding</artifactId>
-			<version>${yrkesskade-felles-backend.version}</version>
+			<version>88a96f46_202210030932</version> <!-- for å unngå evt versjons problemer -->
 		</dependency>
 		<dependency>
 			<groupId>no.nav.yrkesskade</groupId>

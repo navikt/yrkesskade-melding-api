@@ -27,6 +27,18 @@
     "militaerTilsatt": {
       "kode": "militaerTilsatt",
       "verdi": "Militær tilsatt"
+    },
+    "militaerLaerling": {
+      "kode": "militaerLaerling",
+      "verdi": "Militær lærling"
+    },
+    "militaerElev": {
+      "kode": "militaerElev",
+      "verdi": "Militær tilsatt"
+    },
+    "frivilligTjenestegjoerendeIForsvaret": {
+      "kode": "frivilligTjenestegjoerendeIForsvaret",
+      "verdi": "Frivillig tjenestjørende i forsvaret"
     }
   }
 }

@@ -6,7 +6,7 @@ import no.nav.yrkesskade.ysmeldingapi.skjema.SkjemaUtils.Companion.rolletype
 class ArbeidstakerEllerLaerlingskjema(
     private val skjemaContext: SkjemaContext,
     private val delegertSkjema: Innmeldingsskjema
-) : Innmeldingsskjema by delegertSkjema {
+) : Innmeldingsskjema {
 
     override fun valider() {
         delegertSkjema.valider()
