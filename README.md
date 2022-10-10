@@ -1,3 +1,6 @@
+Dette repoet er flyttet til https://github.com/navikt/yrkesskade
+
+
 # yrkesskade-melding-api
 API for innsending av melding om yrkesskade, -sykdom og menerstatning.
 
